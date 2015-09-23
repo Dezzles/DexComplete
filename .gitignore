@@ -1,2 +1,4 @@
 *.suo
 DexCompleteWin/DexCompleteWin.Windows/AppPackages/
+bin/
+obj/

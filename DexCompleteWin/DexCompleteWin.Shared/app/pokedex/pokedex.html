@@ -1,0 +1,4 @@
+﻿<h1>{{ ::GameName }} - Pokedex</h1>
+<div ng-repeat="mon in Data.Pokemon" class="pokemonWrapper">
+    <div class="pokeBall{{ getValue(mon.Id) }}" ng-click="updateValue(mon.Id)"></div><div class="pokemonText">#{{ ::mon.Index }} - {{ ::mon.Name }}</div>
+</div>
