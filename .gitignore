@@ -3,4 +3,4 @@ DexCompleteWin/DexCompleteWin.Windows/AppPackages/
 bin/
 obj/
 bld/
-packages/
+packages/*/
