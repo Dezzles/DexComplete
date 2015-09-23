@@ -1,0 +1,25 @@
+﻿Id|i	Title|s	Identifier|s
+0	National	national1
+1	National	national2
+2	Kanto	kanto
+3	National	national3
+4	Hoenn	hoenn
+5	Kanto	kanto
+6	National	national4
+7	Sinnoh	sinnoh
+8	Johto	johto
+9	National	national5
+10	Unova	unova
+11	New Unova	newunova
+12	National	national6
+13	Central Kalos	centralkalos
+14	Coastal Kalos	coastalkalos
+15	Mountain Kalos	mountainkalos
+16	Hoenn	hoenn
+17	Gen I	gen1
+18	Gen II	gen2
+19	Gen III	gen3
+20	Gen IV	gen4
+21	Gen V	gen5
+22	Gen VI	gen6
+23	Sinnoh	newsinnoh

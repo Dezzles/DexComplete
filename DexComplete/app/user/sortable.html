@@ -1,0 +1,30 @@
+﻿<div class="top-nav notification-row">
+    <!-- notificatoin dropdown start-->
+    <ul class="nav pull-right top-menu" ng-if="sortVisible">
+        <!-- user login dropdown start-->
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle">
+                <!--<span class="profile-ava">
+                    <img alt="" src="img/avatar1_small.jpg">
+                </span>-->
+
+                <span class="username">View Mode</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu extended">
+                <div class="log-arrow-up"></div>
+                <li class="eborder-top">
+                    <a ng-click="setAll()"><i class=""></i> All </a>
+                </li>
+                <li>
+                    <a ng-click="setMarked()"><i class=""></i> Marked </a>
+                </li>
+                <li>
+                    <a ng-click="setUnmarked()"><i class=""></i> Unmarked </a>
+                </li>
+            </ul>
+        </li>
+        <!-- user login dropdown end -->
+    </ul>
+    <!-- notificatoin dropdown end-->
+</div>

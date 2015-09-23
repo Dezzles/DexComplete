@@ -1,0 +1,16 @@
+﻿<h1>Add Game</h1>
+<form class="login-form">
+    <div class="login-wrap">
+        <label>Game Name</label>
+        <div class="input-group col-lg-12">
+            <input type="text" class="form-control" placeholder="Game Name" ng-model="gameName" autofocus />
+        </div>
+        <label>Version</label>
+        <div class="input-group col-lg-12">
+            <select class="form-control" ng-model="gameIdentifier" ng-options="item.Identifier as item.Title for item in Games"></select>
+        </div>
+        <label>{{ Message }}</label>
+        <button class="btn btn-primary btn-lg btn-block" ng-click="tryAddGame()">Add Game</button>
+        <a href="#/"><button class="btn btn-info btn-lg btn-block" type="submit">Cancel</button></a>
+    </div>
+</form>

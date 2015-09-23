@@ -1,0 +1,11 @@
+﻿<h1>{{ ::GameName }} - Hidden Ability Collection</h1>
+<div ng-repeat="set in Data" class="abilityWrapper" ng-if="(sortMode == 0) || ((sortMode == 1) && (getValue(set.AbilityId) > 0)) || ((sortMode == 2) &&(getValue(set.AbilityId) == 0))">
+    <div class="abilityBallWrapper">
+        <div class="pokeBall{{ getValue(set.AbilityId) }}" ng-click="updateValue(set.AbilityId)"></div>
+    </div>
+    <div class="abilityBallText">
+        <div ng-repeat="mon in set.Pokemon">
+            #{{ mon.Id }} {{ mon.Name }} - {{ mon.Ability }} {{ mon.Note }}
+        </div>
+    </div>
+</div> 

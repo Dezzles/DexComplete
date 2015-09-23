@@ -1,0 +1,4 @@
+﻿<h1>{{ ::GameName }} - TM Collection</h1>
+<div ng-repeat="set in Data" class="pokemonWrapper" ng-if="(sortMode == 0) || ((sortMode == 1) && (getValue(set.Id) > 0)) || ((sortMode == 2) &&(getValue(set.Id) == 0))">
+    <div class="pokeBall{{ getValue(set.Id) }}" ng-click="updateValue(set.Id)"></div><div class="pokemonText">#{{ set.Id }} - {{ ::set.Name }}</div>
+</div>

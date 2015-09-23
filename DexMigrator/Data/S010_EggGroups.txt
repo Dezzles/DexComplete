@@ -1,0 +1,15 @@
+﻿Id|i	Name|s	Index|i
+0	Monster	0
+1	Water 1	1
+2	Bug	2
+3	Flying	3
+4	Field	4
+5	Fairy	5
+6	Grass	6
+7	Human-Like	7
+8	Water 3	8
+9	Mineral	9
+10	Amorphous	10
+11	Water 2	11
+12	Ditto	12
+13	Dragon	13

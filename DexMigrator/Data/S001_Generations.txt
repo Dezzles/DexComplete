@@ -1,0 +1,7 @@
+﻿Id|i	Title|s	Identifier|s
+1	Generation I	gen1
+2	Generation II	gen2
+3	Generation III	gen3
+4	Generation IV	gen4
+5	Generation V	gen5
+6	Generation VI	gen6

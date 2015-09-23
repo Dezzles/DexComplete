@@ -1,0 +1,26 @@
+﻿Id|i	Title|s	GenerationId|i	Identifier|s
+1	Green	1	green
+2	Red	1	red
+3	Blue	1	blue
+4	Yellow	1	yellow
+5	Gold	2	gold
+6	Silver	2	silver
+7	Crystal	2	crystal
+8	Ruby	3	ruby
+9	Sapphire	3	sapphire
+10	Emerald	3	emerald
+11	Fire Red	3	firered
+12	Leaf Green	3	leafgreen
+15	Diamond	4	diamond
+16	Pearl	4	pearl
+17	Platinum	4	platinum
+18	Heart Gold	4	heartgold
+19	Soul Silver	4	soulsilver
+20	Black	5	black
+21	White	5	white
+22	Black 2	5	black2
+23	White 2	5	white2
+24	Pokemon X	6	pkmnx
+25	Pokemon Y	6	pkmny
+26	Omega Ruby	6	omegaruby
+27	Alpha Sapphire	6	alphasapphire
