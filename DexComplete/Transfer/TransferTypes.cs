@@ -60,4 +60,17 @@ namespace DexComplete.Transfer
 		public string Name { get; set; }
 	}
 
+	public class GameProgress
+	{
+		public List<ItemProgress> Pokedexes { get; set; }
+		public List<ItemProgress> Collections { get; set; }
+	}
+
+	public class ItemProgress
+	{
+		public string Identifier { get; set; }
+		public string Title { get; set; }
+		public int Completion { get; set; }
+		public int Total { get; set; }
+	}
 }

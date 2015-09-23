@@ -215,5 +215,140 @@ namespace DexComplete.View
 				return true;
 			}
 		}
+
+		public static Transfer.GameProgress GetGameProgress(string user, string save)
+		{
+			var progress = new Transfer.GameProgress();
+			progress.Pokedexes = new List<Transfer.ItemProgress>();
+			progress.Collections = new List<Transfer.ItemProgress>();
+			using (Data.PokedexModel model = new Data.PokedexModel())
+			{
+				var saveData = model.Saves.Single(u => (u.User.Username.ToLower() == user.ToLower()) && (u.SaveName.ToLower() == save.ToLower()));
+				var gameTools = GameRepository.GetGameTools(saveData.Game.Identifier);
+				var dexes = PokedexRepository.GetPokedexesByGame(saveData.Game.Identifier);
+				int[] dex = ConvertData(saveData.Code, 2);
+				int[] tm = ConvertData(saveData.TMData);
+				int[] abilities = ConvertData(saveData.AbilityData, 2);
+				int[] dittos = ConvertData(saveData.DittoData);
+				int[] berries = ConvertData(saveData.BerryData);
+				int[] eggGroup = ConvertData(saveData.EggGroupData);
+
+				foreach (var d in dexes)
+				{
+					var item = new Transfer.ItemProgress();
+					var entries = PokedexRepository.GetPokedex(d.Id);
+					item.Title = entries.Title;
+					item.Identifier = d.Identifier;
+					item.Total = entries.Pokemon.Count();
+					foreach (var entry in entries.Pokemon)
+					{
+						if (dex[entry.Id] > 0)
+							item.Completion++;
+					}
+					progress.Pokedexes.Add(item);
+
+				}
+				if (gameTools.Collections.Any(u => u.Identifier == "abilities"))
+				{
+					var item = new Transfer.ItemProgress();
+					var entries = AbilityRepository.GetAbilitiesByGame(saveData.Game.Identifier);
+					item.Title = "Hidden Abilities";
+					item.Total = entries.Count();
+					item.Identifier = "abilities";
+					foreach (var entry in entries)
+					{
+						if (abilities[entry.AbilityId] > 0)
+							item.Completion++;
+					}
+					progress.Collections.Add(item);
+				}
+
+				if (gameTools.Collections.Any(u => u.Identifier == "eggGroups"))
+				{
+					var item = new Transfer.ItemProgress();
+					var entries = EggGroupRepository.GetEggGroupsByGame(saveData.Game.Identifier);
+					item.Title = "Egg Groups";
+					item.Total = entries.Count();
+					item.Identifier = "egggroups";
+					foreach (var entry in entries)
+					{
+						if (eggGroup[entry.Id] > 0)
+							item.Completion++;
+					}
+					progress.Collections.Add(item);
+				}
+
+				if (gameTools.Collections.Any(u => u.Identifier == "berries"))
+				{
+					var item = new Transfer.ItemProgress();
+					var entries = BerryRepository.GetBerriesByGame(saveData.Game.Identifier);
+					item.Title = "Berries";
+					item.Identifier = "berries";
+					item.Total = entries.Count();
+					foreach (var entry in entries)
+					{
+						if (berries[entry.Id] > 0)
+							item.Completion++;
+					}
+					progress.Collections.Add(item);
+				}
+
+				if (gameTools.Collections.Any(u => u.Identifier == "dittos"))
+				{
+					var item = new Transfer.ItemProgress();
+					item.Title = "Ditto Natures";
+					item.Identifier = "dittos";
+					item.Total = 25;
+					for (int i = 0; i < 25; ++i )
+					{
+						if (dittos[i] > 0)
+							item.Completion++;
+					}
+					progress.Collections.Add(item);
+				}
+
+				if (gameTools.Collections.Any(u => u.Identifier == "tms"))
+				{
+					var item = new Transfer.ItemProgress();
+					var entries = TmRepository.GetTmsByGame(saveData.Game.Identifier);
+					item.Title = "Technical Machines";
+					item.Identifier = "tms";
+					item.Total = entries.Count();
+					foreach (var entry in entries)
+					{
+						if (tm[entry.Id] > 0)
+							item.Completion++;
+					}
+					progress.Collections.Add(item);
+				}
+			}
+			return progress;
+		}
+
+		public static int[] ConvertData(byte[] data, int bitCount = 1)
+		{
+			int mod = 0;
+			int pow = 1;
+			for (int i = 0; i < bitCount; ++i)
+			{
+				mod += pow;
+				pow *= 2;
+			}
+			int Index = 0;
+			int[] ret = new int[data.Length * 8 / bitCount];
+			foreach (var u in data)
+			{
+				int p = 0;
+				int c = u;
+				while (p < 8)
+				{
+					ret[Index] = c & mod;
+					c = c >> bitCount;
+					p += bitCount;
+					++Index;
+				}
+			}
+			return ret;
+		}
 	}
 }

@@ -37,7 +37,8 @@
 }
 
 .pokemonWrapper,
-.abilityWrapper {
+.abilityWrapper,
+.chartWrapper {
     display: inline-block;
     border: 1px solid black;
     border-radius: 3px;
@@ -47,6 +48,11 @@
 .abilityWrapper {
     width: 300px;
     vertical-align: top;
+}
+
+.chartWrapper {
+    width: 250px;
+    text-align: center  ;
 }
 
 .pokemonWrapper {

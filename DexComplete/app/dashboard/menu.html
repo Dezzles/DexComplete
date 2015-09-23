@@ -18,7 +18,7 @@
         </a>
         <ul class="" id="dexMenu">
             <li ng-repeat="dex in dexes" style="display: none;">
-                <a class="" href="#/user/{{ User }}/game/{{ GameName }}/pokedex/{{ dex.Identifier }}">{{ dex.Title }}</a>
+                <a class="" href="#/user/{{ User }}/game/{{ GameName }}/pokedex/{{ dex.Identifier }}" onclick="hideAll()">{{ dex.Title }}</a>
             </li>
         </ul>
     </li>
@@ -30,7 +30,7 @@
         </a>
         <ul class="" id="collectionMenu">
             <li ng-repeat="coll in data.Collections" style="display: none;">
-                <a class="" href="#/user/{{ User }}/game/{{ GameName }}/{{ coll.Identifier }}">{{ coll.Title }}</a>
+                <a class="" href="#/user/{{ User }}/game/{{ GameName }}/{{ coll.Identifier }}" onclick="hideAll()">{{ coll.Title }}</a>
             </li>
         </ul>
     </li>
@@ -42,7 +42,7 @@
         </a>
         <ul class="sub-menu" id="toolMenu">
             <li ng-repeat="tool in tools">
-                <a class="" href="#/user/{{ User }}/game/{{GameName}}{{ tool.Identifier }}" style="display: none;">{{ tool.Title }}</a>
+                <a class="" href="#/user/{{ User }}/game/{{GameName}}{{ tool.Identifier }}" style="display: none;" onclick="hideAll()">{{ tool.Title }}</a>
             </li>
         </ul>
     </li>
