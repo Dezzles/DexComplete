@@ -19,7 +19,7 @@ angular.module('dexComplete.game', ['ngRoute'])
     $scope.chartData = [];
     DexComplete.Users.GetSaveData(
         {
-            User: user.Username,
+            User: $routeParams.userId,
             Save: $routeParams.gameName
         }, function (Result) {
             if (Result.Result == 0) {
@@ -38,7 +38,7 @@ angular.module('dexComplete.game', ['ngRoute'])
 
     DexComplete.Users.GetSaveProgress(
     {
-        User: user.Username,
+        User: $routeParams.userId,
         Save: $routeParams.gameName
     }, function (Result) {
         if (Result.Result == 0) {

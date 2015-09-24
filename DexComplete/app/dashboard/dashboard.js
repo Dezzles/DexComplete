@@ -28,11 +28,14 @@ angular.module('dexComplete.dashboard', ['ngRoute'])
 .controller('DashboardCtrl', ['$scope', '$cookieStore', 'DexComplete', '$rootScope', '$routeParams', function ($scope, $cookieStore, DexComplete, $rootScope, $routeParams) {
     $scope.viewType = 'pokedex'
     var user = $cookieStore.get('user');
-    $scope.user = user.Username;
+    $scope.CanAddGame = false;
+    if (user != null) {
+        $scope.user = user.Username;
+        $scope.CanAddGame = (user.Username == $scope.user);
+    }
     if ($routeParams.user != null)
         $scope.user = $routeParams.user;
     $rootScope.gameIdentifier = null;
-    $scope.CanAddGame = (user.Username == $scope.user);
     DexComplete.Users.GetAllGames($scope.user, function (Result) {
         if (Result.Result == 0) {
             $scope.games = Result.Value;
