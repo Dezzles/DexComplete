@@ -67,10 +67,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/07/2015 12:55:58</publishTime>
     </File>
     <File Include="app/games/game.html">
-      <publishTime>08/31/2015 13:54:30</publishTime>
+      <publishTime>09/23/2015 23:36:28</publishTime>
     </File>
     <File Include="app/games/game.js">
-      <publishTime>09/01/2015 11:58:50</publishTime>
+      <publishTime>09/23/2015 21:25:36</publishTime>
     </File>
     <File Include="app/games/gameitem.html">
       <publishTime>08/31/2015 14:21:45</publishTime>
@@ -97,7 +97,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/02/2015 11:01:49</publishTime>
     </File>
     <File Include="app/modules/DexCompleteService.js">
-      <publishTime>09/09/2015 18:20:56</publishTime>
+      <publishTime>09/23/2015 19:51:45</publishTime>
     </File>
     <File Include="app/pokedex/pokedex.html">
       <publishTime>09/18/2015 22:56:20</publishTime>
@@ -212,6 +212,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="assets/chart-master/site/styles.css">
       <publishTime>08/19/2015 18:54:02</publishTime>
+    </File>
+    <File Include="assets/charts.js">
+      <publishTime>09/23/2015 21:09:05</publishTime>
     </File>
     <File Include="assets/ckeditor/.DS_Store">
       <publishTime>08/19/2015 18:54:02</publishTime>
@@ -1537,16 +1540,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2015 18:54:09</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/23/2015 10:21:45</publishTime>
+      <publishTime>09/23/2015 23:39:37</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/23/2015 10:21:44</publishTime>
+      <publishTime>09/23/2015 23:39:37</publishTime>
     </File>
     <File Include="bin/BCrypt.Net.dll">
       <publishTime>09/14/2015 09:27:04</publishTime>
     </File>
     <File Include="bin/DexComplete.dll">
-      <publishTime>09/23/2015 10:21:30</publishTime>
+      <publishTime>09/23/2015 23:39:21</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>08/11/2015 20:34:53</publishTime>
@@ -1573,7 +1576,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2015 18:54:10</publishTime>
     </File>
     <File Include="css/dexcomplete.css">
-      <publishTime>09/07/2015 11:33:08</publishTime>
+      <publishTime>09/23/2015 21:33:13</publishTime>
     </File>
     <File Include="css/elegant-icons-style.css">
       <publishTime>08/19/2015 18:54:10</publishTime>
@@ -1774,7 +1777,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2015 18:54:10</publishTime>
     </File>
     <File Include="index.html">
-      <publishTime>09/18/2015 22:24:00</publishTime>
+      <publishTime>09/23/2015 21:09:37</publishTime>
     </File>
     <File Include="js/additional-methods.min.js">
       <publishTime>08/19/2015 18:54:10</publishTime>
@@ -1957,10 +1960,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/14/2015 09:27:05</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/23/2015 10:21:39</publishTime>
+      <publishTime>09/23/2015 23:39:27</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/23/2015 10:21:35</publishTime>
+      <publishTime>09/23/2015 23:38:36</publishTime>
     </File>
   </ItemGroup>
 </Project>

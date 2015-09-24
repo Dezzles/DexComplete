@@ -13,6 +13,12 @@ namespace DexComplete.Data
 			Database.SetInitializer<PokedexModel>(null);
 		}
 
+		public PokedexModel(string settingName)
+			: base("name=" + settingName)
+		{
+			Database.SetInitializer<PokedexModel>(null);
+		}
+
 		public virtual DbSet<Entry> Entries { get; set; }
 		public virtual DbSet<Game> Games { get; set; }
 		public virtual DbSet<Generation> Generations { get; set; }

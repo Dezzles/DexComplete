@@ -1,2 +1,22 @@
-﻿<h1>{{ GameName }}</h1>
-<h2>{{GameTitle}}</h2>
+﻿<h1>{{ GameName }} - {{ GameTitle}}</h1>
+<h2>Progress</h2>
+
+<div>
+    <div ng-repeat="dex in Progress.Pokedexes" class="chartWrapper">
+        <h3>{{ dex.Title }}</h3> 
+        <canvas id="chart-{{dex.Identifier}}" width="180" height="100"></canvas>
+        <div>{{ dex.Completion }} / {{ dex.Total }}</div>
+        <div ng-show="renderGraph(dex.Identifier)"></div>
+    </div>
+
+</div>
+<div >
+    <h3> Collections</h3>
+    <div ng-show="Progress.Collections.length == 0">No collections for {{ GameTitle }}</div>
+    <div ng-repeat="dex in Progress.Collections" class="chartWrapper">
+        <h3>{{ dex.Title }}</h3>
+        <canvas id="chart-{{dex.Identifier}}" width="180" height="100"></canvas>
+        <div>{{ dex.Completion }} / {{ dex.Total }} ( {{ dex.Completion / dex.Total * 100 | number :2 }}%)</div>
+        <div ng-show="renderGraph(dex.Identifier)"></div>
+    </div>
+</div>

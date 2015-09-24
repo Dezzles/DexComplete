@@ -41,8 +41,11 @@
         function hideMiniMenu(menu, visible) {
             var ele = document.getElementById(menu);
             var ele2 = document.getElementById(menu + '-Arrow');
+            if ((ele == null) || (ele2 == null)) {
+                return;
+            }
             if (visible == true) {
-                ele.isHidden = false;
+                ele.notHidden = true;
                 ele2.className = 'menu-arrow arrow_carrot-down';
                 for (var v in ele.childNodes) {
                     if (ele.childNodes[v].nodeName == "LI")
@@ -50,7 +53,7 @@
                 }
             }
             else {
-                ele.isHidden = true;
+                ele.notHidden = false;
                 ele2.className = 'menu-arrow arrow_carrot-right';
                 for (var v in ele.childNodes) {
                     if (ele.childNodes[v].nodeName == "LI")
@@ -60,9 +63,17 @@
         }
         function hideMenu(menu) {
             var items = ['dexMenu', 'collectionMenu', 'toolMenu'];
+            var ele = document.getElementById(menu);
+            var andVis = !ele.notHidden;
             for (var u in items) {
-                var vis = items[u] == menu;
+                var vis = (items[u] == menu) && andVis;
                 hideMiniMenu(items[u], vis);
+            }
+        }
+        function hideAll() {
+            var items = ['dexMenu', 'collectionMenu', 'toolMenu'];
+            for (var u in items) {
+                hideMiniMenu(items[u], false);
             }
         }
     </script>
@@ -109,6 +120,7 @@
     </section>
     <!-- container section start -->
     <!-- angular js -->
+    <script src="assets/charts.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/angular-route.min.js"></script>
     <script src="js/angular-cookies.min.js"></script>

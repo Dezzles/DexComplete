@@ -83,5 +83,12 @@ namespace DexComplete.Api.V1
 			data.SaveName = save;
 			return Response.Succeed(View.UserRepository.SetSaveData(user, data));
 		}
+	
+		[HttpGet, Route("user/{user}/game/{save}/progress")]
+		public Response GetGameProgress(string user, string save)
+		{
+			View.ServerRepository.ThrowMaintenance();
+			return Response<GameProgress>.Succeed(View.UserRepository.GetGameProgress(user, save));
+		}
 	}
 }

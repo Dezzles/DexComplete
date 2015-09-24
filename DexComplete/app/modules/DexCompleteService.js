@@ -121,6 +121,24 @@
 
                 },
 
+                GetSaveProgress: function (params, onComplete) {
+                    var req = {
+                        method: 'GET',
+                        url: address + '/api/v1/user/' + params.User + '/game/' + params.Save + '/progress'
+                    };
+
+                    $http(req).then(function (summary) {
+                        if (summary.data.Status == 0) {
+                            onComplete({ Result: 0, Value: summary.data.Value });
+                        }
+                        else {
+                            onComplete({ Result: 1, Message: summary.data.Message });
+                        }
+                    });
+
+
+                },
+
                 SetSaveData: function (params, onComplete) {
                     var user = $cookieStore.get('user')
                     var req = {
