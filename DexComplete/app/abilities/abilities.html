@@ -1,4 +1,9 @@
-﻿<h1>{{ ::GameName }} - Hidden Ability Collection</h1>
+﻿<div class="minHeaderHeight">
+    <div class="col-il-8"><h1>{{ ::GameName }} - Hidden Ability Collection</h1></div>
+    <div class="col-lg-4">
+        <div sort-box></div>
+    </div>
+</div>
 <div ng-repeat="set in Data" class="abilityWrapper" ng-if="(sortMode == 0) || ((sortMode == 1) && (getValue(set.AbilityId) > 0)) || ((sortMode == 2) &&(getValue(set.AbilityId) == 0))">
     <div class="abilityBallWrapper">
         <div class="pokeBall{{ getValue(set.AbilityId) }}" ng-click="updateValue(set.AbilityId)"></div>
