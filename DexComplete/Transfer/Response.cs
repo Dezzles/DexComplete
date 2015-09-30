@@ -62,51 +62,8 @@ namespace DexComplete.Transfer
 		Success,
 		Error,
 		NotLoggedIn,
-		Maintenance
+		Maintenance,
+		ServerError
 	}
-	public class Response<T> : Response
-		where T : class
-	{
-		private Response()
-		{
 
-		}
-		public T Value { get; set; }
-
-		public static Response<T> Succeed(T value)
-		{
-			return new Response<T>()
-			{
-				Message = "",
-				Status = ResponseCode.Success,
-				Value = value
-			};
-		}
-		new public static Response<T> Error(string Error)
-		{
-			return new Response<T>()
-			{
-				Status = ResponseCode.Error,
-				Message = Error,
-				Value = null
-			};
-		}
-
-		new public static Response<T> Maintenance(string Message)
-		{
-			return new Response<T>()
-			{
-				Message = Message,
-				Status = ResponseCode.Maintenance
-			};
-		}
-
-		new public static Response<T> NotLoggedIn()
-		{
-			return new Response<T>()
-			{
-				Status = ResponseCode.NotLoggedIn
-			};
-		}
-	}
 }

@@ -32,7 +32,7 @@ namespace DexComplete.Api.V1
 		{
 			View.ServerRepository.ThrowMaintenance();
 			if (!View.UserRepository.Validate(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First()))
-				return Response<string>.NotLoggedIn();
+				return Response.NotLoggedIn();
 			return Response.Succeed(View.UserRepository.Logout(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First()));
 		}
 
@@ -46,7 +46,7 @@ namespace DexComplete.Api.V1
 			if (query.Count() == 0)
 				throw new Code.ExceptionResponse("Invalid token");
 			else
-				return Response<string>.Succeed("Success");
+				return Response.Succeed("Success");
 		}
 
 		[HttpPost, Route("user/games/add")]
@@ -54,9 +54,9 @@ namespace DexComplete.Api.V1
 		{
 			View.ServerRepository.ThrowMaintenance();
 			if (!View.UserRepository.Validate(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First()))
-				return Response<string>.NotLoggedIn();
+				return Response.NotLoggedIn();
 			if (string.IsNullOrWhiteSpace(request.SaveName))
-				return Response<string>.Error("Save name cannot be empty");
+				return Response.Error("Save name cannot be empty");
 			return Response.Succeed(View.UserRepository.CreateGame(Request.Headers.GetValues("username").First(), request));
 		}
 
@@ -79,7 +79,7 @@ namespace DexComplete.Api.V1
 		{
 			View.ServerRepository.ThrowMaintenance();
 			if (!View.UserRepository.Validate(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First()))
-				return Response<string>.NotLoggedIn();
+				return Response.NotLoggedIn();
 			data.SaveName = save;
 			return Response.Succeed(View.UserRepository.SetSaveData(user, data));
 		}
@@ -88,7 +88,7 @@ namespace DexComplete.Api.V1
 		public Response GetGameProgress(string user, string save)
 		{
 			View.ServerRepository.ThrowMaintenance();
-			return Response<GameProgress>.Succeed(View.UserRepository.GetGameProgress(user, save));
+			return Response.Succeed(View.UserRepository.GetGameProgress(user, save));
 		}
 	}
 }
