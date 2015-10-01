@@ -130,7 +130,6 @@
 
 @media (max-width: 768px) {
     .wrapper {
-        margin-top: 120px;
     }
     .minHeaderHeight{
         height: 120px;
