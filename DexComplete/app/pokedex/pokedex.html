@@ -1,7 +1,7 @@
 ﻿<div class="minHeaderHeight">
     <h1 >{{ ::GameName }} - Pokedex</h1>
-    <div sort-box></div>
 </div>
+<div sort-box></div>
 <div ng-repeat="mon in Data.Pokemon" class="pokemonWrapper" ng-if="(sortMode == 0) || ((sortMode == 1) && (getValue(mon.Id) > 0)) || ((sortMode == 2) &&(getValue(mon.Id) == 0))">
     <div class="pokeBall{{ getValue(mon.Id) }}" ng-click="updateValue(mon.Id)"></div><div class="pokemonText">#{{ ::mon.Index }} - {{ ::mon.Name }}</div>
 </div>
