@@ -121,3 +121,27 @@
 	vertical-align: middle;
 
 }
+
+.wrapper {
+    display: inline-block;
+    padding: 15px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+    }
+    .minHeaderHeight{
+        height: 120px;
+        width: 100%;
+    }
+}
+@media (min-width: 768px) {
+    .wrapper {
+        margin-top: 60px;
+    }
+    .minHeaderHeight{
+        height: 100px;
+        width: 100%;
+    }
+}

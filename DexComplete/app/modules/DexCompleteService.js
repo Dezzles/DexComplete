@@ -2,7 +2,7 @@
         'ngCookies'
 ])
     .factory('DexComplete', ['$cookieStore', '$http', function ($cookieStore, $http) {
-        var address = 'http://localhost:58496';
+        var address = '';
         var _user = {};
 
         return {

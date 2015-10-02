@@ -28,14 +28,14 @@ namespace DexComplete.Api.V1
 				}
 				sb.AppendLine();
 			}
-			return Response<string>.Succeed(sb.ToString());
+			return Response.Succeed(sb.ToString());
 		}
 
 		[HttpGet, Route("pokedex/{gameId}/{pokedexId}")]
 		public Response GetPokedexByGameAndId(string gameId, string pokedexId)
 		{
 			View.ServerRepository.ThrowMaintenance();
-			return Response<Models.PokedexModel>.Succeed(View.PokedexRepository.GetPokedex(gameId, pokedexId));
+			return Response.Succeed(View.PokedexRepository.GetPokedex(gameId, pokedexId));
 		}
 	}
 }

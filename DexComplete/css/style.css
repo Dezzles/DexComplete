@@ -260,9 +260,15 @@ table tr th { color: #688a7e;}
 #sidebar {
     width: 180px;
     height: 100%;
-    position: fixed;
     background: #394a59;
+    position: fixed;
 }
+@media (min-width: 500px) {
+    #siderbar {
+        position: static !important;
+    }
+}
+
 
 .nav-collapse.collapse {
     display: inline;
@@ -520,13 +526,6 @@ ul.sidebar-menu li.active a i {
 .panel-content{
     padding: 10px;
 }
-.wrapper {
-    display: inline-block;
-    margin-top: 60px;
-    padding: 15px;
-    width: 100%;
-}
-
 a.logo {
     font-size: 22px;
     font-weight: 300;

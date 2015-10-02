@@ -16,7 +16,7 @@ namespace DexComplete.Api.V1
 		{
 			View.ServerRepository.ThrowMaintenance();
 			var result = View.AbilityRepository.GetAbilitiesByGame(gameId);
-			return Response<IEnumerable<AbilitySetTfr>>.Succeed(result);
+			return Response.Succeed(result);
 		}
 
 	}

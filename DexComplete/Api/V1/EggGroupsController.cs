@@ -16,7 +16,7 @@ namespace DexComplete.Api.V1
 		{
 			View.ServerRepository.ThrowMaintenance();
 			var result = View.EggGroupRepository.GetEggGroupsByGame(gameId);
-			return Response<IEnumerable<IdNameTransfer>>.Succeed(result);
+			return Response.Succeed(result);
 		}
 
 	}

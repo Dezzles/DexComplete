@@ -37,7 +37,7 @@ namespace DexComplete.Code
 				context.Result = new TextPlainErrorResult
 				{
 					Request = context.ExceptionContext.Request,
-					Content = Transfer.Response.Error(context.Exception.Message + "\n\n" + context.Exception.InnerException)
+					Content = Transfer.Response.Error(context.Exception.Message)
 				};
 			}
 		}

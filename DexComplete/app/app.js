@@ -46,11 +46,11 @@ dexApp.run(['$rootScope', '$location', '$cookieStore', 'DexComplete', function (
                 });
             }
             var hasSortMode = next.$$route.hasSortMode;
-            $rootScope.sortMode = 0;
             if (hasSortMode && hasSortMode()) {
                 $rootScope.sortable = true;
             }
             else {
+                $rootScope.sortMode = 0;
                 $rootScope.sortable = false;
             }
         }
