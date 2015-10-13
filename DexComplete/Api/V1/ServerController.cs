@@ -18,5 +18,15 @@ namespace DexComplete.Api.V1
 			return Response.Succeed(true);
 		}
 
+		[HttpGet, Route("server/updates")]
+		public Response Updates()
+		{
+			View.ServerRepository.ThrowMaintenance();
+			var comingSoon = View.UpdatesRepository.GetComingSoon();
+			var updates = View.UpdatesRepository.GetRecentUpdates();
+
+			return Response.Succeed(new SiteUpdates() { ComingSoon = comingSoon, Updates = updates });
+		}
+
 	}
 }

@@ -22,6 +22,7 @@ var dexApp = angular.module('dexComplete', [
   'dexComplete.addGame',
   'dexComplete.maintenance',
   'dexComplete.logout',
+  'dexComplete.userDashboard',
   'dexComplete.sortBox'
 
 ]);

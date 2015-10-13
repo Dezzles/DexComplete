@@ -1,14 +1,53 @@
-﻿<h1>Dashboard</h1>
-<div class="col-il-12" >
-    <div class="col-il-8"><h1>Games</h1></div>
-    <div class="col-il-4" ng-if="CanAddGame">
-        <a href="#/user/addgame"><button class="btn btn-info btn-lg btn-block" type="submit">Add Game</button></a>
-    </div>
-</div>
-<p>
-<div class="col-lg-12">
-    <div ng-repeat="game in games" class="col-lg-3 add-bottom-padding">
-        <div game-item entry="game" user="user">
+﻿<h1>Home</h1>
+<div class="col-il-12">
+    <div class="col-il-6 roundedBorder">
+        <h2>Updates</h2>
+        <div ng-repeat="(date,val) in Updates">
+            <b>{{ date | date : yyyy-MM-dd}} </b>
+            <div ng-repeat="text in val">
+                {{ text }}
+            </div>
         </div>
+        <div>&nbsp;</div>
+    </div>
+    <div class="col-lg-6 roundedBorder">
+        <h2>Coming Soon</h2>
+        <div ng-repeat="date in ComingSoon">
+            {{ date }}
+        </div>
+        <div>&nbsp;</div>
     </div>
 </div>
+
+<h2>What is DexComplete</h2>
+DexComplete is a website designed to help you complete all of your in game Pokemon collections!<br />
+Want to track which Pokemon you have in your Pokedex? Got it.
+Want to track which TMs you have? That too
+
+<h2>What can I track in my Pokemon games?</h2>
+You can track the following items, each of them will be specific to the game you're playing (none of them pesky 6th gen berries in your 3rd gen lists!):
+<div>
+    <ul>
+        <li>Pokemon (all games)</li>
+        <li>Hidden Abilities (Gen 5+)</li>
+        <li>Berries (Gen 3+)</li>
+        <li>Technical Machines (Gen 5+)</li>
+        <li>Ditto Natures</li>
+        <li>Egg Groups (for your max stats)</li>
+        <li>AND MORE TO COME (probably)</li>
+    </ul>
+</div>
+You can check out my progress in my main game by <a href="#/user/Dezzles/game/Main">clicking right here!</a>
+
+<h2>How do I even?</h2>
+Well first up create an account (do that in the top right hand corner), that'll take you to your player dashboard. From there you can create a game and you'll have all the tracking stuff available to you!<br/>
+Once you go to say your pokedex, just click or tap on one of these <img src="img/dex/pokeball0.png" /> and it'll cycle through these <img src="img/dex/pokeball1.png" /> <img src="img/dex/pokeball2.png" /> <img src="img/dex/pokeball3.png" />
+or sometimes just the first two, depending on the particular collection. <br/>
+How you use these is entirely up to you, BUT the greyed out Pokeball is treated as something you don't have by the website's stats.
+
+<h2>How do I odd?</h2>
+You don't...
+
+<h2>Are there pretty pie charts that show me my progress!?</h2>
+YES
+

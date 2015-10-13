@@ -496,6 +496,42 @@ namespace DexMigrator.Migrations
 			}
 
 		}
+
+		[FluentMigrator.Migration(201510013)]
+		public class M0013_UpdatesAndComingSoon : FluentMigrator.Migration
+		{
+			public override void Up()
+			{
+				Create.Table("Updates")
+					.WithColumn("Id").AsInt32().PrimaryKey().Identity()
+					.WithColumn("Date").AsDateTime()
+					.WithColumn("Text").AsString();
+
+				Create.Table("ComingSoon")
+					.WithColumn("Id").AsInt32().PrimaryKey().Identity()
+					.WithColumn("Identifier").AsString()
+					.WithColumn("Text").AsString();
+				DateTime now = DateTime.Now;
+				now = new DateTime(now.Year, now.Month, now.Day);
+				Insert.IntoTable("Updates")
+					.Row(new { Date = now, Text = "Added Updates and Coming Soon" })
+					.Row(new { Date = now, Text = "Add home page instead of immediately going to login page." } )
+					.Row(new { Date = now, Text = "Shuffled around the user page." })
+					.Row(new { Date = now, Text = "Added FAQ section on main page." })
+					;
+
+				Insert.IntoTable("ComingSoon")
+					.Row(new { Identifier = "CS0001", Text = "Ability to reset your passwords." })
+					.Row(new { Identifier = "CS0002", Text = "Spinners to let you know when things are loading." })
+					.Row(new { Identifier = "CS0003", Text = "Move FAQ section to its own page." })
+					;
+			}
+
+			public override void Down()
+			{
+				throw new NotImplementedException();
+			}
+		}
 	}
 }
 

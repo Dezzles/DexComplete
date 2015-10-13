@@ -1,9 +1,11 @@
 ﻿'use strict';
 
 angular.module('dexComplete.menu', ['ngRoute'])
-.controller('MenuCtrl', ['$scope', '$rootScope', '$routeParams', 'DexComplete', function ($scope, $rootScope, $routeParams, DexComplete) {
+.controller('MenuCtrl', ['$scope', '$rootScope', '$routeParams', 'DexComplete', '$cookieStore', function ($scope, $rootScope, $routeParams, DexComplete, $cookieStore) {
     $scope.GameName = $routeParams.gameName;
     $scope.User = $routeParams.userId;
+    $scope.loggedInUser = $cookieStore.get('user');
+    $scope.dashboardText = '';
 
     $rootScope.$watch('gameIdentifier', function (newVal, oldVal) {
         if (newVal != null) {

@@ -37,9 +37,14 @@ namespace DexComplete.Data
 		public virtual DbSet<TM> TMs { get; set; }
 		public virtual DbSet<TMSet> TMSet { get; set; }
 		public virtual DbSet<ServerSetting> ServerSettings { get; set; }
+		public virtual DbSet<Update> Updates { get; set; }
+		public virtual DbSet<ComingSoon> ComingSoon { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<ComingSoon>()
+				.ToTable("ComingSoon");
+
 			modelBuilder.Entity<Game>()
 				.HasMany(e => e.Saves)
 				.WithRequired(e => e.Game)

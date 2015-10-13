@@ -1,8 +1,14 @@
 ﻿<ul class="sidebar-menu">
-    <li class="active">
+    <li class="active" ng-if="loggedInUser">
+        <a class="" href="#/user/{{loggedInUser.Username}}">
+            <i class="icon_house_alt"></i>
+            <span>My Games</span>
+        </a>
+    </li>
+    <li class="active" ng-if="ViewUser">
         <a class="" href="#/">
             <i class="icon_house_alt"></i>
-            <span>Dashboard</span>
+            <span>{{ User }}'s Games</span>
         </a>
     </li>
     <li>

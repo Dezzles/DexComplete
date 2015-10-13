@@ -59,6 +59,7 @@
     <Compile Include="..\DexComplete\Data\Berry.cs" />
     <Compile Include="..\DexComplete\Data\BerryMap.cs" />
     <Compile Include="..\DexComplete\Data\Collection.cs" />
+    <Compile Include="..\DexComplete\Data\ComingSoon.cs" />
     <Compile Include="..\DexComplete\Data\DatabaseTypes.cs" />
     <Compile Include="..\DexComplete\Data\EggGroups.cs" />
     <Compile Include="..\DexComplete\Data\Entry.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="..\DexComplete\Data\TM.cs" />
     <Compile Include="..\DexComplete\Data\TMSet.cs" />
     <Compile Include="..\DexComplete\Data\Token.cs" />
+    <Compile Include="..\DexComplete\Data\Update.cs" />
     <Compile Include="..\DexComplete\Data\User.cs" />
   </ItemGroup>
   <ItemGroup>
