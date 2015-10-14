@@ -524,6 +524,7 @@ namespace DexMigrator.Migrations
 					.Row(new { Identifier = "CS0001", Text = "Ability to reset your passwords." })
 					.Row(new { Identifier = "CS0002", Text = "Spinners to let you know when things are loading." })
 					.Row(new { Identifier = "CS0003", Text = "Move FAQ section to its own page." })
+					.Row(new { Identifier = "CS0004", Text = "Ability to set a description of yourself." })
 					;
 			}
 
