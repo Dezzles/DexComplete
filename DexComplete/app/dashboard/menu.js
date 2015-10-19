@@ -4,7 +4,9 @@ angular.module('dexComplete.menu', ['ngRoute'])
 .controller('MenuCtrl', ['$scope', '$rootScope', '$routeParams', 'DexComplete', '$cookieStore', function ($scope, $rootScope, $routeParams, DexComplete, $cookieStore) {
     $scope.GameName = $routeParams.gameName;
     $scope.User = $routeParams.userId;
-    $scope.loggedInUser = $cookieStore.get('user');
+    $rootScope.$watch('user', function (newVal, oldVal) {
+        $scope.loggedInUser = $cookieStore.get('user');
+    }
     $scope.dashboardText = '';
 
     $rootScope.$watch('gameIdentifier', function (newVal, oldVal) {
