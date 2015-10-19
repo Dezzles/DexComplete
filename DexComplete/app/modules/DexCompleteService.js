@@ -348,6 +348,22 @@
                         }
                     });
 
+                },
+                GetUpdates: function (params, onComplete) {
+                    var req = {
+                        method: 'GET',
+                        url: address + '/api/v1/server/updates'
+                    };
+
+                    $http(req).then(function (summary) {
+                        if (summary.data.Status == 0) {
+                            onComplete({ Result: 0, Value: summary.data.Value });
+                        }
+                        else {
+                            onComplete({ Result: 1, Message: summary.data.Message });
+                        }
+                    });
+
                 }
             }
         };

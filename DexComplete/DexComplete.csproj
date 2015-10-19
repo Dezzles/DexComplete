@@ -88,6 +88,8 @@
     <Content Include="app\app.js" />
     <Content Include="app\berries\berries.html" />
     <Content Include="app\berries\berries.js" />
+    <Content Include="app\dashboard\userdashboard.html" />
+    <Content Include="app\dashboard\userdashboard.js" />
     <Content Include="app\dashboard\dashboard.html" />
     <Content Include="app\dashboard\dashboard.js" />
     <Content Include="app\dashboard\maintenance.html" />
@@ -302,6 +304,7 @@
     <Compile Include="Data\Berry.cs" />
     <Compile Include="Data\BerryMap.cs" />
     <Compile Include="Data\Collection.cs" />
+    <Compile Include="Data\ComingSoon.cs" />
     <Compile Include="Data\DatabaseTypes.cs" />
     <Compile Include="Data\EggGroups.cs" />
     <Compile Include="Data\Entry.cs" />
@@ -316,6 +319,7 @@
     <Compile Include="Data\TM.cs" />
     <Compile Include="Data\TMSet.cs" />
     <Compile Include="Data\Token.cs" />
+    <Compile Include="Data\Update.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -336,6 +340,7 @@
     <Compile Include="View\PokedexRepository.cs" />
     <Compile Include="View\ServerRepository.cs" />
     <Compile Include="View\TmRepository.cs" />
+    <Compile Include="View\UpdatesRepository.cs" />
     <Compile Include="View\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

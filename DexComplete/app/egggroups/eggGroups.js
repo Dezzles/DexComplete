@@ -12,6 +12,16 @@ angular.module('dexComplete.eggGroups', ['ngRoute'])
             return true;
         }
     });
+    $routeProvider.when('/user/:userId/game/:gameName/egggroups', {
+        templateUrl: 'app/egggroups/eggGroups.html',
+        controller: 'EggGroupsCtrl',
+        auth: function (user) {
+            return true;
+        },
+        hasSortMode: function () {
+            return true;
+        }
+    });
 
 }
 

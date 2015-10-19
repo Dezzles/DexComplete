@@ -73,4 +73,10 @@ namespace DexComplete.Transfer
 		public int Completion { get; set; }
 		public int Total { get; set; }
 	}
+
+	public class SiteUpdates
+	{
+		public Dictionary<DateTime, List<string>> Updates { get; set; }
+		public IEnumerable<string> ComingSoon { get; set; }
+	}
 }

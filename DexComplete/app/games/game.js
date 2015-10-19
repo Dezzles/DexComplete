@@ -17,6 +17,8 @@ angular.module('dexComplete.game', ['ngRoute'])
     $scope.GameName = $routeParams.gameName;
     var user = $cookieStore.get('user');
     $scope.chartData = [];
+    $scope.userId = $routeParams.userId;
+    $scope.gameName = $routeParams.gameName;
     DexComplete.Users.GetSaveData(
         {
             User: $routeParams.userId,
