@@ -497,7 +497,7 @@ namespace DexMigrator.Migrations
 
 		}
 
-		[FluentMigrator.Migration(201510013)]
+		[FluentMigrator.Migration(201510011313)]
 		public class M0013_UpdatesAndComingSoon : FluentMigrator.Migration
 		{
 			public override void Up()
@@ -529,6 +529,21 @@ namespace DexMigrator.Migrations
 			}
 
 			public override void Down()
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+		[FluentMigrator.Migration(201510211834)]
+		public class M0014_TestUpdate : FluentMigrator.Migration
+		{
+
+			public override void Down()
+			{
+				throw new NotImplementedException();
+			}
+
+			public override void Up()
 			{
 				throw new NotImplementedException();
 			}

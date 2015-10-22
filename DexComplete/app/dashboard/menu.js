@@ -6,8 +6,23 @@ angular.module('dexComplete.menu', ['ngRoute'])
     $scope.User = $routeParams.userId;
     $rootScope.$watch('user', function (newVal, oldVal) {
         $scope.loggedInUser = $cookieStore.get('user');
-    }
+    });
     $scope.dashboardText = '';
+    $scope.ViewUser = $rootScope.currentViewUser;
+    if ($scope.ViewUser != null) {
+        if ($scope.loggedInUser != null) {
+            if ($scope.loggedInUser.Username == $scope.ViewUser) {
+                $scope.ViewUser = null;
+            }
+        }
+    }
+
+    $rootScope.$watch('currentViewUser', function (newVal, oldVal) {
+        $scope.ViewUser = null;
+        if ((newVal != null) && (newVal != $scope.loggedInUser.Username)) {
+            $scope.ViewUser = newVal;
+        }
+    });
 
     $rootScope.$watch('gameIdentifier', function (newVal, oldVal) {
         if (newVal != null) {

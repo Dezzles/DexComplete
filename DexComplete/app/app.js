@@ -32,7 +32,7 @@ dexApp.config(['$routeProvider', '$compileProvider', function ($routeProvider, $
 }
 
 ]);
-dexApp.run(['$rootScope', '$location', '$cookieStore', 'DexComplete', function ($rootScope, $location, $cookieStore, DexComplete) {
+dexApp.run(['$rootScope', '$location', '$cookieStore', 'DexComplete', '$routeParams', function ($rootScope, $location, $cookieStore, DexComplete, $routeParams) {
     $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
         if (next.$$route) {
             var user = $cookieStore.get('user')
@@ -54,6 +54,13 @@ dexApp.run(['$rootScope', '$location', '$cookieStore', 'DexComplete', function (
                 $rootScope.sortMode = 0;
                 $rootScope.sortable = false;
             }
+
         }
+    })
+    $rootScope.$on('$routeChangeSuccess', function (ev, next, curr) {
+        if ($routeParams.gameName == null) {
+            $rootScope.gameIdentifier = null;
+        }
+        $rootScope.currentViewUser = $routeParams.userId;
     })
 } ])

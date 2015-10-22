@@ -30,7 +30,7 @@ namespace DexMigrator
 				Namespace = "DexMigrator.Migrations"
 				
 			};
-
+			System.Console.WriteLine("This does stuff -----------------------------------------------------");
 			var options = new MigrationOptions { PreviewOnly = false, Timeout = 60 };
 			var factory = new FluentMigrator.Runner.Processors.SqlServer.SqlServer2008ProcessorFactory();
 			using (var processor = factory.Create(connectionString, announcer, options))
