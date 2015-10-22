@@ -90,5 +90,17 @@ namespace DexComplete.Api.V1
 			View.ServerRepository.ThrowMaintenance();
 			return Response.Succeed(View.UserRepository.GetGameProgress(user, save));
 		}
+
+		[HttpGet, Route("user/{user}/game/{save}/identifier")]
+		public Response GetGameIdentifier(string user, string save)
+		{
+			View.ServerRepository.ThrowMaintenance();
+			var games = View.UserRepository.GetAllGames(user);
+			var single = games.SingleOrDefault(u => u.SaveName.ToLower() == save.ToLower());
+			if (single != null)
+				return Response.Succeed(single.GameIdentifier);
+			return Response.Error("No save found");
+
+		}
 	}
 }

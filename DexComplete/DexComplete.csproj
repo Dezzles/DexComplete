@@ -115,6 +115,7 @@
     <Content Include="app\modules\auth.js" />
     <Content Include="app\modules\baseStorage.js" />
     <Content Include="app\modules\DexCompleteService.js" />
+    <Content Include="app\modules\RouteData.js" />
     <Content Include="app\pokedex\pokedex.html" />
     <Content Include="app\pokedex\pokedex.js" />
     <Content Include="app\register\register.html" />
