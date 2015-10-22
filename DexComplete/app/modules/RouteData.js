@@ -8,6 +8,7 @@
         var _gameIdentifier = null;
         var _sortable = false;
         var _sortMode = 0;
+        var _dexId = null;
         return {
             marker: 0,
             currentViewUser: function () { return _currentViewUser; },
@@ -15,9 +16,10 @@
             gameIdentifier: function () { return _gameIdentifier; },
             sortable: function () { return _sortable; },
             sortMode: function () { return _sortMode; },
-
+            dexId: function() { return _dexId; },
             update: function () {
                 var changed = false;
+                _dexId = $routeParams.dexId;
                 if ((_currentViewUser != $routeParams.userId) || (_gameName != $routeParams.gameName)) {
 
                     _currentViewUser = $routeParams.userId;

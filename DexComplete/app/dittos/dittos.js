@@ -13,8 +13,8 @@ angular.module('dexComplete.dittos', ['ngRoute'])
 }
 
 ])
-.controller('DittosCtrl', ['$scope', '$rootScope', '$routeParams', '$cookieStore', 'DexComplete', function ($scope, $rootScope, $routeParams, $cookieStore, DexComplete) {
-    $scope.GameName = $routeParams.gameName;
+.controller('DittosCtrl', ['$scope', 'RouteData', '$cookieStore', 'DexComplete', function ($scope, RouteData, $cookieStore, DexComplete) {
+    $scope.GameName = RouteData.gameName();
     var user = $cookieStore.get('user');
     $scope.currentStats = [];
     $scope.saveBits = 1;
@@ -25,7 +25,7 @@ angular.module('dexComplete.dittos', ['ngRoute'])
         return $scope.data[v];
     }
     $scope.updateValue = function (v) {
-        if (user.Username != $routeParams.userId)
+        if (user.Username != RouteData.currentViewUser())
             return;
         var val = $scope.getValue(v);
         val++;
@@ -40,15 +40,14 @@ angular.module('dexComplete.dittos', ['ngRoute'])
     }
     DexComplete.Users.GetSaveData(
     {
-        User: $routeParams.userId,
-        Save: $routeParams.gameName
+        User: RouteData.currentViewUser(),
+        Save: RouteData.gameName()
     }, function (Result) {
         if (Result.Result == 0) {
             $scope.GameName = Result.Value.SaveName;
             $scope.SaveData = Result.Value.DittoData;
             $scope.DecryptCode(Result.Value.DittoData);
             $scope.GameTitle = Result.Value.GameTitle;
-            $rootScope.gameIdentifier = Result.Value.GameIdentifier;
         }
     });
 

@@ -16,19 +16,20 @@ angular.module('dexComplete.pokedex', ['ngRoute'])
 }
 
 ])
-.controller('PokedexCtrl', ['$scope', '$rootScope', '$routeParams', '$cookieStore', 'DexComplete', function ($scope, $rootScope, $routeParams, $cookieStore, DexComplete) {
-    $scope.GameName = $routeParams.gameName;
+.controller('PokedexCtrl', ['$scope', 'RouteData', '$cookieStore', 'DexComplete', function ($scope, RouteData, $cookieStore, DexComplete) {
+    $scope.GameName = RouteData.gameName();
     var user = $cookieStore.get('user');
     $scope.currentStats = [];
     $scope.saveBits = 2;
     $scope.maxValue = 3;
     BaseStorage($scope);
+    $scope.sortMode = RouteData.sortMode;
 
     $scope.getValue = function (v) {
         return $scope.data[v];
     }
     $scope.updateValue = function (v) {
-        if (user.Username != $routeParams.userId)
+        if (user.Username != RouteData.currentViewUser())
             return;
         var val = $scope.getValue(v);
         val++;
@@ -43,19 +44,18 @@ angular.module('dexComplete.pokedex', ['ngRoute'])
     }
     DexComplete.Users.GetSaveData(
     {
-        User: $routeParams.userId,
-        Save: $routeParams.gameName
+        User: RouteData.currentViewUser(),
+        Save: RouteData.gameName()
     }, function (Result) {
         if (Result.Result == 0) {
             $scope.GameName = Result.Value.SaveName;
             $scope.SaveData = Result.Value.SaveData;
             $scope.DecryptCode(Result.Value.SaveData);
             $scope.GameTitle = Result.Value.GameTitle;
-            $rootScope.gameIdentifier = Result.Value.GameIdentifier;
             DexComplete.Pokedexes.GetPokedexEntries(
             {
                 GameId: Result.Value.GameIdentifier,
-                DexId: $routeParams.dexId
+                DexId: RouteData.dexId()
             }, function (Result2) {
                 if (Result2.Result == 0) {
                     $scope.Data = Result2.Value;
@@ -64,14 +64,6 @@ angular.module('dexComplete.pokedex', ['ngRoute'])
         }
     });
 
-    $rootScope.$watch('sortMode', function (newVal, oldVal) {
-        if (newVal != null) {
-            $scope.sortMode = newVal;
-        }
-        else {
-            $scope.sortMode = 0;
-        }
-    }, true);
 
 }])
 
