@@ -23,7 +23,7 @@
                     $http.post(address + "/api/v1/user/register",
                         {
                             username: params.username,
-                            password: params.password1,
+                            password: params.password,
                             email: params.email
                         }).success(function (summary) {
                             if (summary.Status == 0) {
