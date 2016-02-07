@@ -37,5 +37,46 @@ namespace DexComplete.View
 				ctr.SaveChanges();
 			}
 		}
+
+		public static string GetEmailAddress()
+		{
+			using (Data.PokedexModel ctr = new Data.PokedexModel())
+			{
+				return ctr.ServerSettings.Single(e => e.Config == "EmailAddress").String;
+			}
+
+		}
+		public static string GetSMTPSettings()
+		{
+			using (Data.PokedexModel ctr = new Data.PokedexModel())
+			{
+				return ctr.ServerSettings.Single(e => e.Config == "SMTPDetails").String;
+			}
+
+		}
+		public static string GetEmailPassword()
+		{
+			using (Data.PokedexModel ctr = new Data.PokedexModel())
+			{
+				return ctr.ServerSettings.Single(e => e.Config == "EmailPassword").String;
+			}
+
+		}
+		public static int GetSMTPPort()
+		{
+			using (Data.PokedexModel ctr = new Data.PokedexModel())
+			{
+				return ctr.ServerSettings.Single(e => e.Config == "SMTPPort").Integer.Value;
+			}
+
+		}
+
+		public static string GetServerAddress()
+		{
+			using (Data.PokedexModel ctr = new Data.PokedexModel())
+			{
+				return ctr.ServerSettings.Single(e => e.Config == "ServerAddress").String;
+			}
+		}
 	}
 }

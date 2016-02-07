@@ -17,6 +17,8 @@ var dexApp = angular.module('dexComplete', [
   'dexComplete.abilities',
   'dexComplete.berries',
   'dexComplete.dittos',
+  'dexComplete.requestReset',
+  'dexComplete.reset',
   'dexComplete.eggGroups',
   'dexComplete.tms',
   'dexComplete.dittoStat',

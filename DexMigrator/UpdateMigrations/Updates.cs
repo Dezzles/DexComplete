@@ -26,7 +26,29 @@ namespace DexMigrator.UpdateMigrations
 	{
 		public override void Up()
 		{
-			UpdateUtil.AddUpdate(this, "Improved navigation menu when viewing other user's pages" );
+			UpdateUtil.AddUpdate(this, "Improved navigation menu when viewing other user's pages");
+		}
+
+		public override void Down()
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	[FluentMigrator.Migration(201602061757)]
+	public class Update_0002 : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			UpdateUtil.AddUpdate(this, "Implemented password resetting");
+			UpdateUtil.AddUpdate(this, "Fixed issue where logins weren't working");
+			UpdateUtil.AddUpdate(this, "Improved password security");
+
+			Insert.IntoTable("ServerSettings")
+				.Row(new { Config = "EmailAddress", String = "no-reply@dezzles.com" })
+				.Row(new { Config = "EmailPassword", String = "testPasswordHere" })
+				.Row(new { Config = "SMTPDetails", String = "smtp.gmail.com"})
+				.Row(new { Config = "SMTPPort", Integer = 587 });
 		}
 
 		public override void Down()
