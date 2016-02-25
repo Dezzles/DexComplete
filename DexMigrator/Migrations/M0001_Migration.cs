@@ -534,20 +534,6 @@ namespace DexMigrator.Migrations
 			}
 		}
 
-		[FluentMigrator.Migration(201510211834)]
-		public class M0014_TestUpdate : FluentMigrator.Migration
-		{
-
-			public override void Down()
-			{
-				throw new NotImplementedException();
-			}
-
-			public override void Up()
-			{
-				throw new NotImplementedException();
-			}
-		}
 	}
 }
 

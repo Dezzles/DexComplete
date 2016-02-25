@@ -1,15 +1,15 @@
-﻿using DexComplete.Transfer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace DexComplete
+namespace DexComplete.Utilities
 {
-	static class Utilities
+	public static class Encryption
 	{
 		public static string GetMd5Hash(string input)
 		{
@@ -60,6 +60,8 @@ namespace DexComplete
 			Regex rg = new Regex(@"^[a-zA-Z0-9\s]*$");
 			return rg.IsMatch(strToCheck);
 		}
+
+		
 
 	}
 }
