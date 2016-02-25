@@ -16,8 +16,8 @@ angular.module('dexComplete.tms', ['ngRoute'])
 }
 
 ])
-.controller('TmsCtrl', ['$scope', '$rootScope', '$routeParams', '$cookieStore', 'DexComplete', function ($scope, $rootScope, $routeParams, $cookieStore, DexComplete) {
-    $scope.GameName = $routeParams.gameName;
+.controller('TmsCtrl', ['$scope', 'RouteData', '$cookieStore', 'DexComplete', function ($scope, RouteData, $cookieStore, DexComplete) {
+    $scope.GameName = RouteData.gameName();
     var user = $cookieStore.get('user');
     $scope.currentStats = [];
     $scope.saveBits = 1;
@@ -28,7 +28,7 @@ angular.module('dexComplete.tms', ['ngRoute'])
         return $scope.data[v];
     }
     $scope.updateValue = function (v) {
-        if (user.Username != $routeParams.userId)
+        if (user.Username != RouteData.currentViewUser())
             return;
         var val = $scope.getValue(v);
         val++;
@@ -43,15 +43,14 @@ angular.module('dexComplete.tms', ['ngRoute'])
     }
     DexComplete.Users.GetSaveData(
     {
-        User: $routeParams.userId,
-        Save: $routeParams.gameName
+        User: RouteData.currentViewUser(),
+        Save: RouteData.gameName()
     }, function (Result) {
         if (Result.Result == 0) {
             $scope.GameName = Result.Value.SaveName;
             $scope.SaveData = Result.Value.TMData;
             $scope.DecryptCode(Result.Value.TMData);
             $scope.GameTitle = Result.Value.GameTitle;
-            $rootScope.gameIdentifier = Result.Value.GameIdentifier;
             DexComplete.TMs.GetTMList(
             {
                 GameId: Result.Value.GameIdentifier
@@ -62,15 +61,8 @@ angular.module('dexComplete.tms', ['ngRoute'])
             });
         }
     });
+    $scope.sortMode = RouteData.sortMode;
 
-    $rootScope.$watch('sortMode', function (newVal, oldVal) {
-        if (newVal != null) {
-            $scope.sortMode = newVal;
-        }
-        else {
-            $scope.sortMode = 0;
-        }
-    }, true);
 
 }])
 

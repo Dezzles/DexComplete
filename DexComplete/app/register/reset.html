@@ -1,0 +1,27 @@
+﻿<h1>Reset Password</h1>
+<form class="register-form">
+	<div class="register-wrap">
+		<div class="input-group col-il-8">
+			<label class="col-il-4">Username:</label>
+		</div>
+		<div class="input-group col-il-6">
+			<input type="text" class="col-il-8 form-control " placeholder="Username" ng-model="username" autofocus />
+		</div>
+		<div class="input-group col-il-8">
+			<label class="col-il-4">Password:</label>
+		</div>
+		<div class="input-group col-il-6">
+			<input type="password" class="col-il-8 form-control" placeholder="Password" ng-model="password1" />
+		</div>
+		<div class="input-group col-il-8">
+			<label class="col-il-8">Confirm password:</label>
+		</div>
+		<div class="input-group col-il-6">
+			<input type="password" class="col-il-8 form-control" placeholder="Password" ng-model="password2" />
+		</div>
+		<div class="input-group col-il-12">
+			<label>{{ Message }}</label>
+		</div>
+		<button class="btn btn-primary btn-lg btn-block" id="btnRegister" ng-click="register()">Reset Password</button>
+	</div>
+</form>

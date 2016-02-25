@@ -2,7 +2,7 @@
 
 angular.module('dexComplete.userDashboard', ['ngRoute'])
 .config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/user/:user', {
+    $routeProvider.when('/user/:userId', {
         templateUrl: 'app/dashboard/userdashboard.html',
         controller: 'UserDashboardCtrl',
 
@@ -14,8 +14,8 @@ angular.module('dexComplete.userDashboard', ['ngRoute'])
 .controller('UserDashboardCtrl', ['$scope', '$cookieStore', 'DexComplete', '$rootScope', '$routeParams', function ($scope, $cookieStore, DexComplete, $rootScope, $routeParams) {
     $scope.viewType = 'pokedex'
     var user = $cookieStore.get('user');
-    if ($routeParams.user != null)
-        $scope.user = $routeParams.user;
+    if ($routeParams.userId != null)
+        $scope.user = $routeParams.userId;
     $scope.CanAddGame = false;
     if (user != null) {
         $scope.CanAddGame = (user.Username == $scope.user);

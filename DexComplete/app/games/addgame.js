@@ -13,7 +13,7 @@ angular.module('dexComplete.addGame', ['ngRoute'])
 }
 
 ])
-.controller('AddGameCtrl', ['$scope', '$rootScope', '$location', '$cookieStore', 'DexComplete', function ($scope, $rootScope, $location, $cookieStore, DexComplete) {
+.controller('AddGameCtrl', ['$scope', '$location', '$cookieStore', 'DexComplete', function ($scope, $location, $cookieStore, DexComplete) {
     var user = $cookieStore.get('user');/**/
     DexComplete.Games.GetGameList(
         {

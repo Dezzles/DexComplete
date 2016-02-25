@@ -8,7 +8,7 @@
         return {
             Users: {
                 Login: function (params, onComplete) {
-                    $http.post(address + "/api/v1/user/login", { username: params.username, password: params.password }).success(function (summary) {
+                    $http.post(address + "/api/v1/users/login", { username: params.username, password: params.password }).success(function (summary) {
                         if (summary.Status == 0) {
                             $cookieStore.put('user', { Username: summary.Value.Username, Token: summary.Value.Token });
                             onComplete({ Result: 0 });
@@ -20,10 +20,10 @@
                 },
 
                 Register: function (params, onComplete) {
-                    $http.post(address + "/api/v1/user/register",
+                    $http.post(address + "/api/v1/users/register",
                         {
                             username: params.username,
-                            password: params.password1,
+                            password: params.password,
                             email: params.email
                         }).success(function (summary) {
                             if (summary.Status == 0) {
@@ -40,7 +40,7 @@
                     var user = $cookieStore.get('user')
                     var req = {
                         method: 'POST',
-                        url: address + '/api/v1/user/games/add',
+                        url: address + '/api/v1/users/games/add',
                         headers: {
                             'username': user.Username,
                             'token': user.Token
@@ -66,7 +66,7 @@
                     var user = $cookieStore.get('user')
                     var req = {
                         method: 'POST',
-                        url: address + '/api/v1/user/logout',
+                        url: address + '/api/v1/users/logout',
                         headers: {
                             'username': user.Username,
                             'token': user.Token
@@ -122,21 +122,57 @@
                 },
 
                 GetSaveProgress: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/user/' + params.User + '/game/' + params.Save + '/progress'
-                    };
+                	var req = {
+                		method: 'GET',
+                		url: address + '/api/v1/user/' + params.User + '/game/' + params.Save + '/progress'
+                	};
 
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
+                	$http(req).then(function (summary) {
+                		if (summary.data.Status == 0) {
+                			onComplete({ Result: 0, Value: summary.data.Value });
+                		}
+                		else {
+                			onComplete({ Result: 1, Message: summary.data.Message });
+                		}
+                	});
 
 
+                },
+                RequestReset: function (params, onComplete) {
+                	var req = {
+                		method: 'GET',
+                		url: address + '/api/v1/user/' + params.User + '/resetpassword'
+                	};
+
+                	$http(req).then(function (summary) {
+                		if (summary.data.Status == 0) {
+                			onComplete({ Result: 0, Value: summary.data.Value });
+                		}
+                		else {
+                			onComplete({ Result: 1, Message: summary.data.Message });
+                		}
+                	});
+                },
+
+                ResetPassword: function (params, onComplete) {
+                	var req = {
+                		method: 'POST',
+                		url: address + '/api/v1/users/resetpassword',
+                		data: {
+                			Username: params.username,
+                			Token: params.token,
+							Password: params.password
+                		}
+                	};
+
+                	$http(req).then(function (summary) {
+                		if (summary.data.Status == 0) {
+                			onComplete({ Result: 0, Value: summary.data.Value });
+                		}
+                		else {
+                			onComplete({ Result: 1, Message: summary.data.Message });
+                		}
+                	});
                 },
 
                 SetSaveData: function (params, onComplete) {
@@ -155,6 +191,26 @@
                             TMData: params.TMData,
                             EggGroupData: params.EggGroupData,
                             BerryData: params.BerryData
+                        }
+                    };
+
+                    $http(req).then(function (summary) {
+                        if (summary.data.Status == 0) {
+                            onComplete({ Result: 0, Value: summary.data.Value });
+                        }
+                        else {
+                            onComplete({ Result: 1, Message: summary.data.Message });
+                        }
+                    });
+
+
+                },
+                GetGameIdentifier: function (params, onComplete) {
+                    var req = {
+                        method: 'GET',
+                        url: address + '/api/v1/user/' + params.Username + '/game/' + params.Save + "/identifier",
+                        data: {
+                            Identifier: params
                         }
                     };
 

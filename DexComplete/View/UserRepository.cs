@@ -23,7 +23,7 @@ namespace DexComplete.View
 		{
 			using (Data.PokedexModel mdl = new Data.PokedexModel())
 			{
-				if (!Utilities.isAlphaNumeric(addGame.SaveName))
+				if (!Utilities.Encryption.isAlphaNumeric(addGame.SaveName))
 					throw new Code.ExceptionResponse("Save name can only contain alphanumeric characters and spaces");
 
 				Data.User user = mdl.Users.Where(e => e.Username == Username).First();
@@ -147,12 +147,12 @@ namespace DexComplete.View
 			{
 				throw new Code.ExceptionResponse("Email address already in use");
 			}
-			string seed = Utilities.GenerateText(16);
 
 			Data.User newuser = ctr.Users.Create();
 			newuser.Email = user.Email;
 			newuser.Username = user.Username.ToLower();
-			newuser.Password = Utilities.GetMd5Hash(user.Password + seed);
+			string seed = Utilities.Encryption.GenerateText(16);
+			newuser.Password = Utilities.Encryption.GetMd5Hash(user.Password + seed);
 			newuser.Salt = seed;
 			ctr.Users.Add(newuser);
 			ctr.SaveChanges();
@@ -172,7 +172,12 @@ namespace DexComplete.View
 					throw new Code.ExceptionResponse("Incorrect username or password");
 				}
 				Data.User user = query.First();
-				string password = Utilities.GetMd5Hash(User.Password + user.Salt);
+				string password = Utilities.Encryption.GetMd5Hash(User.Password + user.Salt);
+				string brokenPassword = Utilities.Encryption.GetMd5Hash(user.Salt);
+				if (user.Password.Equals(brokenPassword))
+				{
+					throw new Code.ExceptionResponse("Password reset required");
+				}
 				if (user.Password.Equals(password))
 				{
 					string token = GetToken(User.Username, Data.TokenType.LoginToken);
@@ -188,7 +193,7 @@ namespace DexComplete.View
 			{
 
 				DateTime expiry = DateTime.Now.AddMonths(1);
-				string token = Utilities.GetMd5Hash(Utilities.GenerateText(16) + expiry.ToLongDateString());
+				string token = Utilities.Encryption.GetMd5Hash(Utilities.Encryption.GenerateText(16) + expiry.ToLongDateString());
 
 				var query = ctr.Users.Where(e => Username.ToLower() == e.Username);
 				Data.User user = query.First();
@@ -212,6 +217,54 @@ namespace DexComplete.View
 					ctr.Tokens.Remove(tkn);
 					return true;
 				}
+				return true;
+			}
+		}
+
+		public static string GetResetContents(string Username, string Token)
+		{
+			string contents = Utilities.Templates.GetTemplate("passwordReset.html");
+			contents = contents.Replace("{URL}", View.ServerRepository.GetServerAddress());
+			contents = contents.Replace("{TOKEN}", Token);
+
+			return contents;
+		}
+
+		public static void RequestPasswordReset(string username)
+		{
+			using (Data.PokedexModel model = new Data.PokedexModel())
+			{
+				{
+					var theUser = model.Users.FirstOrDefault(u => u.Username == username.ToLower());
+					if (theUser == null)
+						return;
+					var token = GetToken(username, Data.TokenType.PasswordReset);
+					string Contents = GetResetContents(theUser.Username, token);
+					Utilities.Email.SendEmail(theUser.Email, "DexComplete Password Reset", Contents);
+				}
+				
+				{
+
+				}
+
+			}
+		}
+
+		public static bool ResetPassword(string user, string password, string token)
+		{
+			using (Data.PokedexModel model = new Data.PokedexModel())
+			{
+				var theUser = model.Users.FirstOrDefault(u => u.Username == user.ToLower());
+				if (!theUser.Tokens.Any(v => v.TokenType == Data.TokenType.PasswordReset && v.Value == token))
+					return false;
+				if (theUser == null)
+					return false;
+				string seed = Utilities.Encryption.GenerateText(16);
+				theUser.Password = Utilities.Encryption.GetMd5Hash(password + seed);
+				theUser.Salt = seed;
+				var allTokens = model.Tokens.Where(u => u.User.Id == theUser.Id);
+				model.Tokens.RemoveRange(allTokens);
+				model.SaveChanges();
 				return true;
 			}
 		}

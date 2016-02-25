@@ -26,8 +26,8 @@ angular.module('dexComplete.eggGroups', ['ngRoute'])
 }
 
 ])
-.controller('EggGroupsCtrl', ['$scope', '$rootScope', '$routeParams', '$cookieStore', 'DexComplete', function ($scope, $rootScope, $routeParams, $cookieStore, DexComplete) {
-    $scope.GameName = $routeParams.gameName;
+.controller('EggGroupsCtrl', ['$scope', 'RouteData', '$cookieStore', 'DexComplete', function ($scope, RouteData, $cookieStore, DexComplete) {
+    $scope.GameName = RouteData.gameName();
     var user = $cookieStore.get('user');
     $scope.currentStats = [];
     $scope.saveBits = 1;
@@ -38,7 +38,7 @@ angular.module('dexComplete.eggGroups', ['ngRoute'])
         return $scope.data[v];
     }
     $scope.updateValue = function (v) {
-        if (user.Username != $routeParams.userId)
+        if (user.Username != RouteData.currentViewUser())
             return;
         var val = $scope.getValue(v);
         val++;
@@ -53,15 +53,14 @@ angular.module('dexComplete.eggGroups', ['ngRoute'])
     }
     DexComplete.Users.GetSaveData(
     {
-        User: $routeParams.userId,
-        Save: $routeParams.gameName
+        User: RouteData.currentViewUser(),
+        Save: RouteData.gameName()
     }, function (Result) {
         if (Result.Result == 0) {
             $scope.GameName = Result.Value.SaveName;
             $scope.SaveData = Result.Value.EggGroupData;
             $scope.DecryptCode(Result.Value.EggGroupData);
             $scope.GameTitle = Result.Value.GameTitle;
-            $rootScope.gameIdentifier = Result.Value.GameIdentifier;
             DexComplete.EggGroups.GetEggGroupList(
             {
                 GameId: Result.Value.GameIdentifier
@@ -72,15 +71,8 @@ angular.module('dexComplete.eggGroups', ['ngRoute'])
             });
         }
     });
+    $scope.sortMode = RouteData.sortMode;
 
-    $rootScope.$watch('sortMode', function (newVal, oldVal) {
-        if (newVal != null) {
-            $scope.sortMode = newVal;
-        }
-        else {
-            $scope.sortMode = 0;
-        }
-    }, true);
 
 }])
 

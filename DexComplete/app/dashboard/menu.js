@@ -1,21 +1,44 @@
 ﻿'use strict';
 
 angular.module('dexComplete.menu', ['ngRoute'])
-.controller('MenuCtrl', ['$scope', '$rootScope', '$routeParams', 'DexComplete', '$cookieStore', function ($scope, $rootScope, $routeParams, DexComplete, $cookieStore) {
-    $scope.GameName = $routeParams.gameName;
-    $scope.User = $routeParams.userId;
+.controller('MenuCtrl', ['$scope', 'RouteData', 'DexComplete', '$cookieStore', '$rootScope', function ($scope, RouteData, DexComplete, $cookieStore, $rootScope) {
+    $scope.GameName = RouteData.gameName();
+    $scope.User = RouteData.currentViewUser();
+    $scope.RouteData = RouteData;
     $rootScope.$watch('user', function (newVal, oldVal) {
         $scope.loggedInUser = $cookieStore.get('user');
-    }
+    });
     $scope.dashboardText = '';
+    $scope.ViewUser = RouteData.currentViewUser();
+    if ($scope.ViewUser != null) {
+        if ($scope.loggedInUser != null) {
+            if ($scope.loggedInUser.Username == $scope.ViewUser) {
+                $scope.ViewUser = null;
+            }
+        }
+    }
 
-    $rootScope.$watch('gameIdentifier', function (newVal, oldVal) {
-        if (newVal != null) {
+    $scope.$watch('RouteData', function (newVal, oldVal) {
+        $scope.ViewUser = null;
+        if ((RouteData.currentViewUser() != null) && (RouteData.currentViewUser() != $scope.loggedInUser.Username)) {
+            $scope.ViewUser = RouteData.currentViewUser();
+        }
+    }, true);
+
+
+    $scope.$watch('RouteData', function (newVal, oldVal) {
+        $scope.updateGameMenu();
+
+    }, true);
+
+    $scope.updateGameMenu = function () {
+        if (RouteData.gameIdentifier() != null) {
+            var identifier = RouteData.gameIdentifier();
+            $scope.GameName = RouteData.gameName();
+            $scope.User = RouteData.currentViewUser();
             DexComplete.Games.GetGameTools(
-                { GameName: newVal }, function (Result) {
+                { GameName: RouteData.gameIdentifier() }, function (Result) {
                     if (Result.Result == 0) {
-                        $scope.GameName = $routeParams.gameName;
-                        $scope.User = $routeParams.userId;
                         $scope.dexes = Result.Value.Pokedex;
                         $scope.data = Result.Value;
                     }
@@ -27,9 +50,10 @@ angular.module('dexComplete.menu', ['ngRoute'])
             $scope.dexes = null;
             $scope.data = null;
         }
+    }
 
-    }, true);
 
+    $scope.updateGameMenu();
 }])
 
 .directive('menu', function () {

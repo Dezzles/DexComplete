@@ -13,35 +13,28 @@ angular.module('dexComplete.game', ['ngRoute'])
 }
 
 ])
-.controller('GameCtrl', ['$scope', '$rootScope', '$routeParams', '$cookieStore', 'DexComplete', function ($scope, $rootScope, $routeParams, $cookieStore, DexComplete) {
-    $scope.GameName = $routeParams.gameName;
+.controller('GameCtrl', ['$scope', 'RouteData', '$cookieStore', 'DexComplete', function ($scope, RouteData, $cookieStore, DexComplete) {
+    $scope.GameName = RouteData.gameName();
     var user = $cookieStore.get('user');
     $scope.chartData = [];
-    $scope.userId = $routeParams.userId;
-    $scope.gameName = $routeParams.gameName;
+    $scope.userId = RouteData.currentViewUser();
+    $scope.gameName = RouteData.gameName();
     DexComplete.Users.GetSaveData(
         {
-            User: $routeParams.userId,
-            Save: $routeParams.gameName
+            User: RouteData.currentViewUser(),
+            Save: RouteData.gameName()
         }, function (Result) {
             if (Result.Result == 0) {
                 $scope.GameName = Result.Value.SaveName;
                 $scope.SaveData = Result.Value.SaveData;
                 $scope.GameTitle = Result.Value.GameTitle;
-                $rootScope.gameIdentifier = Result.Value.GameIdentifier;
-
             }
         })
-    $('.national6').easyPieChart({
-        //your configuration goes here
-        size: 110
-    });
-
 
     DexComplete.Users.GetSaveProgress(
     {
-        User: $routeParams.userId,
-        Save: $routeParams.gameName
+        User: RouteData.currentViewUser(),
+        Save: RouteData.gameName()
     }, function (Result) {
         if (Result.Result == 0) {
             $scope.Progress = Result.Value;
@@ -69,13 +62,6 @@ angular.module('dexComplete.game', ['ngRoute'])
     })
 
     $scope.renderGraph = function (identifier) {
-        //       setTimeout(function() { // You might need this timeout to be sure its run after DOM render.
-        /*        $('.' + identifier).easyPieChart({
-                    //your configuration goes here
-                    size: 100
-                });
-                */
-        //        }, 2000)
         var ctx = document.getElementById('chart-' + identifier).getContext("2d");
         var options = {
 

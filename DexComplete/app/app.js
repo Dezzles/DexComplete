@@ -4,6 +4,7 @@
 var dexApp = angular.module('dexComplete', [
   'ngRoute',
   'ngCookies',
+  'RouteData',
   'DexCompleteService',
   'dexComplete.gameItem',
   'dexComplete.dashboard',
@@ -16,6 +17,8 @@ var dexApp = angular.module('dexComplete', [
   'dexComplete.abilities',
   'dexComplete.berries',
   'dexComplete.dittos',
+  'dexComplete.requestReset',
+  'dexComplete.reset',
   'dexComplete.eggGroups',
   'dexComplete.tms',
   'dexComplete.dittoStat',
@@ -32,7 +35,7 @@ dexApp.config(['$routeProvider', '$compileProvider', function ($routeProvider, $
 }
 
 ]);
-dexApp.run(['$rootScope', '$location', '$cookieStore', 'DexComplete', function ($rootScope, $location, $cookieStore, DexComplete) {
+dexApp.run(['$location', '$cookieStore', 'DexComplete', 'RouteData', '$rootScope', function ($location, $cookieStore, DexComplete, RouteData, $rootScope) {
     $rootScope.$on('$routeChangeStart', function (ev, next, curr) {
         if (next.$$route) {
             var user = $cookieStore.get('user')
@@ -48,12 +51,16 @@ dexApp.run(['$rootScope', '$location', '$cookieStore', 'DexComplete', function (
             }
             var hasSortMode = next.$$route.hasSortMode;
             if (hasSortMode && hasSortMode()) {
-                $rootScope.sortable = true;
+                RouteData.setSortable(true);
             }
             else {
-                $rootScope.sortMode = 0;
-                $rootScope.sortable = false;
+                RouteData.setSortMode(0);
+                RouteData.setSortable(false);
             }
+
         }
+    })
+    $rootScope.$on('$routeChangeSuccess', function (ev, next, curr) {
+        RouteData.update();
     })
 } ])

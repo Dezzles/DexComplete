@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -115,10 +116,15 @@
     <Content Include="app\modules\auth.js" />
     <Content Include="app\modules\baseStorage.js" />
     <Content Include="app\modules\DexCompleteService.js" />
+    <Content Include="app\modules\RouteData.js" />
     <Content Include="app\pokedex\pokedex.html" />
     <Content Include="app\pokedex\pokedex.js" />
     <Content Include="app\register\register.html" />
     <Content Include="app\register\register.js" />
+    <Content Include="app\register\reset.html" />
+    <Content Include="app\register\reset.js" />
+    <Content Include="app\register\resetrequest.html" />
+    <Content Include="app\register\resetrequest.js" />
     <Content Include="app\tms\tms.html" />
     <Content Include="app\tms\tms.js" />
     <Content Include="app\user\dropdown.html" />
@@ -284,6 +290,7 @@
     <Content Include="js\sparklines.js" />
     <Content Include="js\xcharts.min.js" />
     <Content Include="LICENSE.txt" />
+    <EmbeddedResource Include="Templates\passwordReset.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -332,7 +339,9 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transfer\TransferTypes.cs" />
-    <Compile Include="Utilities.cs" />
+    <Compile Include="Utilities\Email.cs" />
+    <Compile Include="Utilities\Encryption.cs" />
+    <Compile Include="Utilities\Templates.cs" />
     <Compile Include="View\AbilityRepository.cs" />
     <Compile Include="View\BerryRepository.cs" />
     <Compile Include="View\EggGroupRepository.cs" />
@@ -360,6 +369,7 @@
     <Content Include="assets\jquery-easy-pie-chart\Readme.md" />
     <Content Include="assets\jquery-knob\.DS_Store" />
     <Content Include="assets\jquery-knob\README.md" />
+    <None Include="Properties\PublishProfiles\To Folder C.pubxml" />
     <None Include="Properties\PublishProfiles\ToFolder.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

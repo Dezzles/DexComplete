@@ -16,8 +16,8 @@ angular.module('dexComplete.berries', ['ngRoute'])
 }
 
 ])
-.controller('BerriesCtrl', ['$scope', '$rootScope', '$routeParams', '$cookieStore', 'DexComplete', function ($scope, $rootScope, $routeParams, $cookieStore, DexComplete) {
-    $scope.GameName = $routeParams.gameName;
+.controller('BerriesCtrl', ['$scope', 'RouteData', '$cookieStore', 'DexComplete', function ($scope, RouteData, $cookieStore, DexComplete) {
+    $scope.GameName = RouteData.gameName();
     var user = $cookieStore.get('user');
     $scope.currentStats = [];
     $scope.saveBits = 1;
@@ -28,7 +28,7 @@ angular.module('dexComplete.berries', ['ngRoute'])
         return $scope.data[v];
     }
     $scope.updateValue = function (v) {
-        if (user.Username != $routeParams.userId)
+        if (user.Username != RouteData.currentViewUser())
             return;
         var val = $scope.getValue(v);
         val++;
@@ -43,15 +43,15 @@ angular.module('dexComplete.berries', ['ngRoute'])
     }
     DexComplete.Users.GetSaveData(
     {
-        User: $routeParams.userId,
-        Save: $routeParams.gameName
+        User: RouteData.currentViewUser(),
+        Save: RouteData.gameName()
     }, function (Result) {
         if (Result.Result == 0) {
             $scope.GameName = Result.Value.SaveName;
             $scope.SaveData = Result.Value.BerryData;
             $scope.DecryptCode(Result.Value.BerryData);
             $scope.GameTitle = Result.Value.GameTitle;
-            $rootScope.gameIdentifier = Result.Value.GameIdentifier;
+            RouteData.setGameIdentifier(Result.Value.GameIdentifier);
             DexComplete.Berries.GetBerryList(
             {
                 GameId: Result.Value.GameIdentifier
@@ -63,14 +63,7 @@ angular.module('dexComplete.berries', ['ngRoute'])
         }
     });
 
-    $rootScope.$watch('sortMode', function (newVal, oldVal) {
-        if (newVal != null) {
-            $scope.sortMode = newVal;
-        }
-        else {
-            $scope.sortMode = 0;
-        }
-    }, true);
+    $scope.sortMode = RouteData.sortMode;
 
 }])
 
