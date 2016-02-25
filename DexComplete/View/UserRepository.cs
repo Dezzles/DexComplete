@@ -172,16 +172,12 @@ namespace DexComplete.View
 					throw new Code.ExceptionResponse("Incorrect username or password");
 				}
 				Data.User user = query.First();
-<<<<<<< HEAD
-				string password = Utilities.GetMd5Hash(User.Password + user.Salt);
-				string brokenPassword = Utilities.GetMd5Hash(user.Salt);
+				string password = Utilities.Encryption.GetMd5Hash(User.Password + user.Salt);
+				string brokenPassword = Utilities.Encryption.GetMd5Hash(user.Salt);
 				if (user.Password.Equals(brokenPassword))
 				{
 					throw new Code.ExceptionResponse("Password reset required");
 				}
-=======
-				string password = Utilities.Encryption.GetMd5Hash(User.Password + user.Salt);
->>>>>>> 710a9d561e59a78b5f475e1b0f9cd0634d7d75e5
 				if (user.Password.Equals(password))
 				{
 					string token = GetToken(User.Username, Data.TokenType.LoginToken);
