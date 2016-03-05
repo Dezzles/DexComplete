@@ -369,6 +369,7 @@
     <Content Include="assets\jquery-easy-pie-chart\Readme.md" />
     <Content Include="assets\jquery-knob\.DS_Store" />
     <Content Include="assets\jquery-knob\README.md" />
+    <None Include="Properties\PublishProfiles\To Folder C.pubxml" />
     <None Include="Properties\PublishProfiles\ToFolder.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -173,6 +173,11 @@ namespace DexComplete.View
 				}
 				Data.User user = query.First();
 				string password = Utilities.Encryption.GetMd5Hash(User.Password + user.Salt);
+				string brokenPassword = Utilities.Encryption.GetMd5Hash(user.Salt);
+				if (user.Password.Equals(brokenPassword))
+				{
+					throw new Code.ExceptionResponse("Password reset required");
+				}
 				if (user.Password.Equals(password))
 				{
 					string token = GetToken(User.Username, Data.TokenType.LoginToken);
