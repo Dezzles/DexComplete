@@ -1,1 +1,1 @@
-migrate -db SqlServer2014 -assembly DexMigrator.exe -connection "Data Source=.\SQLEXPRESS;Initial Catalog=dexcomplete;Integrated Security=True;Connect Timeout=15;"
+migrate -db SqlServer2016 -assembly DexMigrator.exe -connection "Data Source=.\SQLEXPRESS;Initial Catalog=dexcomplete;Integrated Security=True;Connect Timeout=15;"
