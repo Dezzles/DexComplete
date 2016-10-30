@@ -13,7 +13,7 @@ namespace DexComplete.View
 			List<Transfer.IdNameTransfer> ret = new List<Transfer.IdNameTransfer>();
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
-				var generation = ctr.Generations.SingleOrDefault(e => e.Games.Any(u => u.Identifier == GameId));
+				var generation = ctr.Generations.SingleOrDefault(e => e.Games.Any(u => u.GameId == GameId));
 				if (generation == null)
 					throw new Code.ExceptionResponse("Invalid game");
 				if (generation.Berries.Count == 0)
@@ -24,7 +24,8 @@ namespace DexComplete.View
 					ret.Add(new Transfer.IdNameTransfer()
 						{
 							Id = b.BerryId,
-							Name = b.Berry.Name
+							Name = b.Berry.Name,
+							Index = b.Berry.Index
 						});
 				}
 			}

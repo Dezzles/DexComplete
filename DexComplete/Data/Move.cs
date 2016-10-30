@@ -8,7 +8,7 @@ namespace DexComplete.Data
 {
 	public partial class Move
 	{
-		public int Id { get; set; }
+		public string MoveId { get; set; }
 		public string Name { get; set; }
 		public virtual ICollection<TM> Tms { get; set; }
 	}

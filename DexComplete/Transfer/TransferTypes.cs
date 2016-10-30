@@ -40,7 +40,7 @@ namespace DexComplete.Transfer
 
 	public class AbilityPokemonTfr
 	{
-		public int Id { get; set; }
+		public string Id { get; set; }
 		public string Name { get; set; }
 		public string Ability { get; set; }
 		public string Note { get; set; }
@@ -48,7 +48,7 @@ namespace DexComplete.Transfer
 
 	public class AbilitySetTfr
 	{
-		public int SetId { get; set; }
+		public string SetId { get; set; }
 		public List<AbilityPokemonTfr> Pokemon { get; set; }
 
 		public int AbilityId { get; set; }
@@ -56,8 +56,9 @@ namespace DexComplete.Transfer
 
 	public class IdNameTransfer
 	{
-		public int Id { get; set; }
+		public string Id { get; set; }
 		public string Name { get; set; }
+		public int Index { get; set; }
 	}
 
 	public class GameProgress

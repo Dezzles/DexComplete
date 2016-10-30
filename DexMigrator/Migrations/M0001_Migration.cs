@@ -27,85 +27,61 @@ namespace DexMigrator.Migrations
 		public override void Up()
 		{
 			Create.Table("Users")
-				.WithColumn("Id").AsInt64().Identity()
+				.WithColumn("UserId").AsInt64().Identity().PrimaryKey()
 				.WithColumn("Username").AsString()
 				.WithColumn("Email").AsString()
 				.WithColumn("Password").AsString()
 				.WithColumn("Salt").AsString();
 
 			Create.Table("Tokens")
-				.WithColumn("Id").AsInt64().Identity()
+				.WithColumn("TokenId").AsInt64().Identity().PrimaryKey()
 				.WithColumn("Value").AsString()
 				.WithColumn("ExpiryDate").AsDateTime()
 				.WithColumn("UserId").AsInt64();
 
 			Create.Table("Pokedexes")
-				.WithColumn("Id").AsInt32()
-				.WithColumn("Title").AsString()
-				.WithColumn("Identifier").AsString();
+				.WithColumn("PokedexId").AsString().PrimaryKey()
+				.WithColumn("Title").AsString();
 
 			Create.Table("Games")
-				.WithColumn("Id").AsInt32()
+				.WithColumn("GameId").AsString().PrimaryKey()
 				.WithColumn("Title").AsString()
-				.WithColumn("GenerationId").AsInt32()
-				.WithColumn("Identifier").AsString();
+				.WithColumn("GenerationId").AsString()
+				.WithColumn("TmSetId").AsString().Nullable();
 
 			Create.Table("Generations")
-				.WithColumn("Id").AsInt32()
-				.WithColumn("Title").AsString()
-				.WithColumn("Identifier").AsString();
+				.WithColumn("GenerationId").AsString().PrimaryKey()
+				.WithColumn("Title").AsString();
 
 			Create.Table("Saves")
-				.WithColumn("Id").AsInt64().Identity()
+				.WithColumn("SaveId").AsInt64().Identity().PrimaryKey()
 				.WithColumn("Code").AsBinary(256)
 				.WithColumn("SaveName").AsString()
 				.WithColumn("UserId").AsInt64()
-				.WithColumn("GameId").AsInt32();
+				.WithColumn("GameId").AsString()
+				.WithColumn("AbilityData").AsBinary(256);
 
 			Create.Table("Pokemon")
-				.WithColumn("Id").AsInt32()
+				.WithColumn("PokemonId").AsString().PrimaryKey()
+				.WithColumn("Index").AsInt32()
 				.WithColumn("Name").AsString();
 
-			Create.Table("Entries")
-				.WithColumn("Id").AsInt32().Identity()
+			Create.Table("PokedexEntries")
+				.WithColumn("PokedexEntryId").AsInt32().Identity().PrimaryKey()
 				.WithColumn("Index").AsInt32()
-				.WithColumn("PokedexId").AsInt32()
-				.WithColumn("PokemonId").AsInt32();
+				.WithColumn("PokedexId").AsString()
+				.WithColumn("PokemonId").AsString();
 
 			Create.Table("GamePokedex")
-				.WithColumn("GameId").AsInt32()
-				.WithColumn("PokedexId").AsInt32();
-
-			Create.PrimaryKey("PK_Users")
-				.OnTable("Users").Column("Id");
-
-			Create.PrimaryKey("PK_Tokens")
-				.OnTable("Tokens").Column("Id");
-
-			Create.PrimaryKey("PK_Pokedexes")
-				.OnTable("Pokedexes").Column("Id");
-
-			Create.PrimaryKey("PK_Games")
-				.OnTable("Games").Column("Id");
-
-			Create.PrimaryKey("PK_Generations")
-				.OnTable("Generations").Column("Id");
-
-			Create.PrimaryKey("PK_Saves")
-				.OnTable("Saves").Column("Id");
-
-			Create.PrimaryKey("PK_Pokemon")
-				.OnTable("Pokemon").Column("Id");
-
-			Create.PrimaryKey("PK_Entries")
-				.OnTable("Entries").Column("Id");
+				.WithColumn("GameId").AsString()
+				.WithColumn("PokedexId").AsString();
 
 			Create.PrimaryKey("PK_GamePokedex")
 				.OnTable("GamePokedex").Columns(new string[] { "GameId", "PokedexId" });
 
 			Create.ForeignKey("FK_UserToken")
 				.FromTable("Tokens").ForeignColumn("UserId")
-				.ToTable("Users").PrimaryColumn("Id");
+				.ToTable("Users").PrimaryColumn("UserId");
 
 			Create.Index("IX_FK_UserToken")
 				.OnTable("Tokens")
@@ -113,7 +89,7 @@ namespace DexMigrator.Migrations
 			
 			Create.ForeignKey("FK_GameGeneration")
 				.FromTable("Games").ForeignColumn("GenerationId")
-				.ToTable("Generations").PrimaryColumn("Id");
+				.ToTable("Generations").PrimaryColumn("GenerationId");
 
 			Create.Index("IX_FK_GameGeneration")
 				.OnTable("Games")
@@ -121,7 +97,7 @@ namespace DexMigrator.Migrations
 
 			Create.ForeignKey("FK_SaveUser")
 				.FromTable("Saves").ForeignColumn("UserId")
-				.ToTable("Users").PrimaryColumn("Id");
+				.ToTable("Users").PrimaryColumn("UserId");
 
 			Create.Index("IX_FK_SaveUser")
 				.OnTable("Saves")
@@ -129,7 +105,7 @@ namespace DexMigrator.Migrations
 
 			Create.ForeignKey("FK_SaveGame")
 				.FromTable("Saves").ForeignColumn("GameId")
-				.ToTable("Games").PrimaryColumn("Id");
+				.ToTable("Games").PrimaryColumn("GameId");
 
 			Create.Index("IX_FK_SaveGame")
 				.OnTable("Saves")
@@ -137,46 +113,33 @@ namespace DexMigrator.Migrations
 
 			Create.ForeignKey("FK_GamePokedex")
 				.FromTable("GamePokedex").ForeignColumn("GameId")
-				.ToTable("Games").PrimaryColumn("Id");
+				.ToTable("Games").PrimaryColumn("GameId");
 
 			Create.ForeignKey("FK_GamePokedex_Game")
 				.FromTable("GamePokedex").ForeignColumn("PokedexId")
-				.ToTable("Pokedexes").PrimaryColumn("Id");
+				.ToTable("Pokedexes").PrimaryColumn("PokedexId");
 
 			Create.Index("IX_FK_GamePokedex_Pokedex")
 				.OnTable("GamePokedex")
 				.OnColumn("PokedexId");
 
 			Create.ForeignKey("FK_PokedexEntry")
-				.FromTable("Entries").ForeignColumn("PokedexId")
-				.ToTable("Pokedexes").PrimaryColumn("Id");
+				.FromTable("PokedexEntries").ForeignColumn("PokedexId")
+				.ToTable("Pokedexes").PrimaryColumn("PokedexId");
 
 			Create.Index("IX_FK_PokedexEntry")
-				.OnTable("Entries")
+				.OnTable("PokedexEntries")
 				.OnColumn("PokedexId");
 
 			Create.ForeignKey("FK_EntryPokemon")
-				.FromTable("Entries").ForeignColumn("PokemonId")
-				.ToTable("Pokemon").PrimaryColumn("Id");
+				.FromTable("PokedexEntries").ForeignColumn("PokemonId")
+				.ToTable("Pokemon").PrimaryColumn("PokemonId");
 
 			Create.Index("IX_FK_EntryPokemon")
-				.OnTable("Entries")
+				.OnTable("PokedexEntries")
 				.OnColumn("PokemonId");
-		}
 
-		public override void Down()
-		{
-			throw new NotImplementedException();
-		}
 
-	}
-
-	[FluentMigrator.Migration(201508140832)]
-	public class M0002_InsertData : FluentMigrator.Migration
-	{
-
-		public override void Up()
-		{
 			// Load Generations Data
 			List<Dictionary<string, object>> generation = Utilities.GetEntries("DexMigrator.Data.S001_Generations.txt");
 			List<Dictionary<string, object>> games = Utilities.GetEntries("DexMigrator.Data.S002_Games.txt");
@@ -185,12 +148,12 @@ namespace DexMigrator.Migrations
 			List<Dictionary<string, object>> pokemon = Utilities.GetEntries("DexMigrator.Data.S005_Pokemon.txt");
 			List<Dictionary<string, object>> pokedexentries = Utilities.GetEntries("DexMigrator.Data.S006_PokedexEntries.txt");
 
-			InputTable("Generations", generation);
-			InputTable("Games", games);
-			InputTable("Pokedexes", pokedexes);
-			InputTable("GamePokedex", pokedexgame);
-			InputTable("Pokemon", pokemon);
-			InputTable("Entries", pokedexentries);
+			MigrationTools.InputTable(this, "Generations", generation);
+			MigrationTools.InputTable(this, "Games", games);
+			MigrationTools.InputTable(this, "Pokedexes", pokedexes);
+			MigrationTools.InputTable(this, "GamePokedex", pokedexgame);
+			MigrationTools.InputTable(this, "Pokemon", pokemon);
+			MigrationTools.InputTable(this, "PokedexEntries", pokedexentries);
 		}
 
 		public override void Down()
@@ -198,21 +161,10 @@ namespace DexMigrator.Migrations
 			throw new NotImplementedException();
 		}
 
-		public void InputTable(string Table, List<Dictionary<string, object>> data)
-		{
-			System.Console.WriteLine("Adding Table: " + Table);
-			foreach (var entry in data)
-			{
-				Insert.IntoTable(Table)
-					.Row(entry);
-			}
-			System.Console.WriteLine("Added Table: " + Table);
-
-		}
 	}
 
 	[FluentMigrator.Migration(201509021714)]
-	public class M0003_AddSaveTitle : FluentMigrator.Migration
+	public class M0003_AddAbilities : FluentMigrator.Migration
 	{
 
 		public override void Down()
@@ -227,44 +179,29 @@ namespace DexMigrator.Migrations
 			var entries = Utilities.GetEntries("DexMigrator.Data.S009_Entries.txt");
 
 			Create.Table("Abilities")
-				.WithColumn("Id").AsInt32().PrimaryKey()
+				.WithColumn("AbilityId").AsString().PrimaryKey()
 				.WithColumn("Name").AsString();
 
 			Create.Table("AbilitySets")
-				.WithColumn("Id").AsInt32().PrimaryKey()
-				.WithColumn("Index").AsInt32()
-				.WithColumn("GenerationId").AsInt32().ForeignKey("Generations", "Id");
+				.WithColumn("PokemonId").AsString()
+				.WithColumn("GenerationId").AsString().ForeignKey("Generations", "GenerationId");
+
+			Create.PrimaryKey("PK_AbilitySet")
+				.OnTable("AbilitySets").Columns(new string[] { "PokemonId", "GenerationId" });
 
 			Create.Table("AbilityEntries")
 				.WithColumn("Id").AsInt32().PrimaryKey().Identity()
-				.WithColumn("PokemonId").AsInt32().NotNullable().ForeignKey("Pokemon", "Id")
+				.WithColumn("PokemonId").AsString().NotNullable().ForeignKey("Pokemon", "PokemonId")
 				.WithColumn("Index").AsInt32().NotNullable()
 				.WithColumn("Note").AsString()
-				.WithColumn("AbilityId").AsInt32().NotNullable().ForeignKey("Abilities", "Id")
-				.WithColumn("AbilitySetId").AsInt32().NotNullable().ForeignKey("AbilitySets", "Id");
+				.WithColumn("AbilityId").AsString().NotNullable().ForeignKey("Abilities", "AbilityId")
+				.WithColumn("AbilitySetId").AsString().NotNullable()
+				.WithColumn("GenerationId").AsString().NotNullable();
 
 
 			MigrationTools.InputTable(this, "Abilities", abilities);
 			MigrationTools.InputTable(this, "AbilitySets", abilitysets);
 			MigrationTools.InputTable(this, "AbilityEntries", entries);
-		}
-
-		[FluentMigrator.Migration(201509021756)]
-		public class M0004_AddAbilitySave : FluentMigrator.Migration
-		{
-			public override void Up()
-			{
-				byte[] row = new byte[80];
-				Alter.Table("Saves")
-					.AddColumn("AbilityData").AsBinary(80)
-					.SetExistingRowsTo(row)
-					.Nullable();
-			}
-
-			public override void Down()
-			{
-				throw new NotImplementedException();
-			}
 		}
 
 		[FluentMigrator.Migration(201509030734)]
@@ -290,20 +227,22 @@ namespace DexMigrator.Migrations
 					.Nullable();
 
 				Create.Table("EggGroups")
-					.WithColumn("Id").AsInt32().PrimaryKey()
+					.WithColumn("EggGroupId").AsString().PrimaryKey()
 					.WithColumn("Name").AsString()
 					.WithColumn("Index").AsInt32();
 
 				Create.Table("Berries")
-					.WithColumn("Id").AsInt32().PrimaryKey()
+					.WithColumn("Index").AsInt32()
+					.WithColumn("BerryId").AsString().PrimaryKey()
 					.WithColumn("Name").AsString();
 
 				Create.Table("BerryMaps")
-					.WithColumn("Id").AsInt32().PrimaryKey().Identity()
-					.WithColumn("BerryId").AsInt32()
+					.WithColumn("BerryId").AsString()
 					.WithColumn("Index").AsInt32()
-					.WithColumn("GenerationId").AsInt32().ForeignKey("Generations", "Id");
+					.WithColumn("GenerationId").AsString().ForeignKey("Generations", "GenerationId");
 
+				Create.PrimaryKey("PK_BerryMaps")
+					.OnTable("BerryMaps").Columns(new string[] { "BerryId", "GenerationId" });
 			}
 
 			public override void Down()
@@ -337,22 +276,17 @@ namespace DexMigrator.Migrations
 			public override void Up()
 			{
 				Create.Table("Collections")
-					.WithColumn("Id").AsInt32().PrimaryKey()
 					.WithColumn("Title").AsString()
-					.WithColumn("Identifier").AsString()
+					.WithColumn("CollectionId").AsString().PrimaryKey()
 					.WithColumn("Type").AsInt32();
 
 				Create.Table("GameCollectionMap")
 					.WithColumn("Id").AsInt32().PrimaryKey().Identity()
-					.WithColumn("CollectionId").AsInt32().NotNullable().ForeignKey("Collections", "Id")
-					.WithColumn("GameId").AsInt32().NotNullable().ForeignKey("Games", "Id");
+					.WithColumn("CollectionId").AsString().NotNullable().ForeignKey("Collections", "CollectionId")
+					.WithColumn("GameId").AsString().NotNullable().ForeignKey("Games", "GameId");
 
-				Insert.IntoTable("Collections")
-					.Row(new { Id = 0, Title = "Hidden Abilities", Identifier = "abilities", Type = 0 })
-					.Row(new { Id = 1, Title = "Egg Groups", Identifier = "eggGroups", Type = 0 })
-					.Row(new { Id = 2, Title = "Berries", Identifier = "berries", Type = 0 })
-					.Row(new { Id = 3, Title = "Dittos", Identifier = "dittos", Type = 0 })
-					.Row(new { Id = 4, Title = "TMs", Identifier = "tms", Type = 0 });
+				var collectionTypes = Utilities.GetEntries("DexMigrator.Data.S016_GameCollections.txt");
+				MigrationTools.InputTable(this, "Collections", collectionTypes);
 
 				var collectionMap = Utilities.GetEntries("DexMigrator.Data.S013_GameCollectionMap.txt");
 				MigrationTools.InputTable(this, "GameCollectionMap", collectionMap);
@@ -374,48 +308,19 @@ namespace DexMigrator.Migrations
 					.AddColumn("TmData").AsBinary(16).SetExistingRowsTo(row);
 
 				Create.Table("Moves")
-					.WithColumn("Id").AsInt32().PrimaryKey()
+					.WithColumn("MoveId").AsString().PrimaryKey()
 					.WithColumn("Name").AsString().Nullable();
-
-				Create.Table("TmSets")
-					.WithColumn("Id").AsInt32().PrimaryKey()
-					.WithColumn("Identifier").AsString();
 
 				Create.Table("Tms")
 					.WithColumn("Id").AsInt32().PrimaryKey().Identity()
 					.WithColumn("Index").AsInt32()
-					.WithColumn("TMSetId").AsInt32().ForeignKey("TmSets", "Id")
-					.WithColumn("MoveId").AsInt32().ForeignKey("Moves", "Id");
-
-				Alter.Table("Games")
-					.AddColumn("TmSetId").AsInt32().Nullable().ForeignKey("TmSets", "Id");
-
-				Insert.IntoTable("TmSets")
-					.Row(new { Id = 0, Identifier = "genv" })
-					.Row(new { Id = 1, Identifier = "xy" })
-					.Row(new { Id = 2, Identifier = "oras" });
-
+					.WithColumn("TMSetId").AsString()
+					.WithColumn("MoveId").AsString().ForeignKey("Moves", "MoveId");
 
 				var pokemonMoves = Utilities.GetEntries("DexMigrator.Data.S014_PokemonMoves.txt");
 				MigrationTools.InputTable(this, "Moves", pokemonMoves);
 				var tms = Utilities.GetEntries("DexMigrator.Data.S015_Tms.txt");
 				MigrationTools.InputTable(this, "Tms", tms);
-
-				Update.Table("Games")
-					.Set(new { TMSetId = 0 })
-					.Where(new { GenerationId = 5 });
-				Update.Table("Games")
-					.Set(new { TMSetId = 1 })
-					.Where(new { Id = 24 });
-				Update.Table("Games")
-					.Set(new { TMSetId = 1 })
-					.Where(new { Id = 25 });
-				Update.Table("Games")
-					.Set(new { TMSetId = 2 })
-					.Where(new { Id = 26 });
-				Update.Table("Games")
-					.Set(new { TMSetId = 2 })
-					.Where(new { Id = 27 });
 
 			}
 

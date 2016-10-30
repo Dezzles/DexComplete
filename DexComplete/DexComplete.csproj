@@ -318,7 +318,7 @@
     <Compile Include="Data\ComingSoon.cs" />
     <Compile Include="Data\DatabaseTypes.cs" />
     <Compile Include="Data\EggGroups.cs" />
-    <Compile Include="Data\Entry.cs" />
+    <Compile Include="Data\PokedexEntry.cs" />
     <Compile Include="Data\Game.cs" />
     <Compile Include="Data\Generation.cs" />
     <Compile Include="Data\Move.cs" />
@@ -328,7 +328,6 @@
     <Compile Include="Data\Save.cs" />
     <Compile Include="Data\ServerSetting.cs" />
     <Compile Include="Data\TM.cs" />
-    <Compile Include="Data\TMSet.cs" />
     <Compile Include="Data\Token.cs" />
     <Compile Include="Data\Update.cs" />
     <Compile Include="Data\User.cs" />

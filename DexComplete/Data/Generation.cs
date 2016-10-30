@@ -13,16 +13,11 @@ namespace DexComplete.Data
             Games = new HashSet<Game>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public string GenerationId { get; set; }
 
         [Required]
         [StringLength(255)]
         public string Title { get; set; }
-
-        [Required]
-        [StringLength(255)]
-        public string Identifier { get; set; }
 
         public virtual ICollection<Game> Games { get; set; }
 

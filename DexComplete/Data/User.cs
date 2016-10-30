@@ -15,7 +15,7 @@ namespace DexComplete.Data
         }
 
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public long Id { get; set; }
+		public long UserId { get; set; }
 
         [Required]
         [StringLength(255)]

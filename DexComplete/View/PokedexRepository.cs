@@ -8,11 +8,11 @@ namespace DexComplete.View
 {
 	static class PokedexRepository
 	{
-		public static IEnumerable<Models.PokedexModel> ListPokedexes(int GameId)
+		public static IEnumerable<Models.PokedexModel> ListPokedexes(string GameId)
 		{
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
-				var query = ctr.Games.Where(e => e.Id == GameId);
+				var query = ctr.Games.Where(e => e.GameId == GameId);
 				if (query.Count() == 0)
 					throw new Code.ExceptionResponse("Invalid game");
 				List<Models.PokedexModel> dexes = new List<Models.PokedexModel>();
@@ -21,7 +21,7 @@ namespace DexComplete.View
 				{
 					dexes.Add(new Models.PokedexModel()
 						{
-							Id = q.Id,
+							PokedexId = q.PokedexId,
 							Title = q.Title
 						});
 				}
@@ -31,16 +31,16 @@ namespace DexComplete.View
 
 		public static Models.PokedexModel GetPokedexByName(string Game, string Pokedex)
 		{
-			int pokedexId = -1;
+			string pokedexId = "";
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
-				var query = ctr.Games.Where(e => e.Identifier.ToLower() == Game.ToLower());
+				var query = ctr.Games.Where(e => e.GameId.ToLower() == Game.ToLower());
 				if (query.Count() == 0)
 					throw new Code.ExceptionResponse("Invalid game");
 				var dex = query.First().Pokedexes.Where(e => e.Title.ToLower() == Pokedex.ToLower());
 				if (dex.Count() == 0)
 					throw new Code.ExceptionResponse("Invalid pokedex");
-				pokedexId = dex.First().Id;
+				pokedexId = dex.First().PokedexId;
 			}
 			return GetPokedex(pokedexId);
 		}
@@ -50,7 +50,7 @@ namespace DexComplete.View
 			List<Models.PokedexModel> ret = new List<Models.PokedexModel>();
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
-				var game = ctr.Games.SingleOrDefault(e => e.Identifier == GameId);
+				var game = ctr.Games.SingleOrDefault(e => e.GameId == GameId);
 				if (game == null)
 					throw new Code.ExceptionResponse("Invalid game");
 
@@ -58,25 +58,24 @@ namespace DexComplete.View
 				{
 					ret.Add(new Models.PokedexModel()
 						{
-							Id = q.Id,
 							Title = q.Title,
-							Identifier = q.Identifier
+							PokedexId = q.PokedexId
 						});
 				}
 			}
 			return ret;
 		}
 
-		public static Models.PokedexModel GetPokedex(int PokedexId)
+		public static Models.PokedexModel GetPokedex(string PokedexId)
 		{
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
-				var dex = ctr.Pokedexes.SingleOrDefault(e => e.Id == PokedexId);
+				var dex = ctr.Pokedexes.SingleOrDefault(e => e.PokedexId == PokedexId);
 				if (dex == null)
 					throw new Code.ExceptionResponse("Invalid pokedex");
 				var ret = new Models.PokedexModel()
 				{
-					Id = dex.Id,
+					PokedexId = dex.PokedexId,
 					Title = dex.Title
 				};
 				var entries = new List<Models.PokemonModel>();
@@ -85,7 +84,7 @@ namespace DexComplete.View
 				{
 					entries.Add(new Models.PokemonModel()
 						{
-							Id = entry.Pokemon.Id,
+							Id = entry.Pokemon.PokemonId,
 							Index = entry.Index,
 							Name = entry.Pokemon.Name
 						});
@@ -99,19 +98,19 @@ namespace DexComplete.View
 		{
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
-				var dex = ctr.Pokedexes.SingleOrDefault(e => (e.Identifier == PokedexId) &&
-					(e.Games.Any(u => u.Identifier == GameId)));
+				var dex = ctr.Pokedexes.SingleOrDefault(e => (e.PokedexId == PokedexId) &&
+					(e.Games.Any(u => u.GameId == GameId)));
 				if (dex == null)
 					throw new Code.ExceptionResponse("Invalid gme or pokedex");
 				Models.PokedexModel ret = new Models.PokedexModel();
-				ret.Identifier = dex.Identifier;
+				ret.PokedexId = dex.PokedexId;
 				ret.Title = dex.Title;
 				var mons = new List<Models.PokemonModel>();
 				foreach (var p in dex.Entries)
 				{
 					mons.Add(new Models.PokemonModel()
 						{
-							Id = p.Pokemon.Id,
+							Id = p.Pokemon.PokemonId,
 							Index = p.Index,
 							Name = p.Pokemon.Name
 						});

@@ -9,7 +9,7 @@ namespace DexComplete.Data
     public partial class Token
     {
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public long Id { get; set; }
+		public long TokenId { get; set; }
 
         [Required]
         [StringLength(255)]

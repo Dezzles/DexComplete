@@ -25,7 +25,7 @@
         </a>
         <ul class="sub-menu" id="dexMenu">
             <li ng-repeat="dex in dexes" style="display: none;">
-                <a class="sidebar-menu" href="#/user/{{ User }}/game/{{ GameName }}/pokedex/{{ dex.Identifier }}" onclick="hideAll()">{{ dex.Title }}</a>
+                <a class="sidebar-menu" href="#/user/{{ User }}/game/{{ GameName }}/pokedex/{{ dex.PokedexId }}" onclick="hideAll()">{{ dex.Title }}</a>
             </li>
         </ul>
     </li>

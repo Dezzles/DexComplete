@@ -11,17 +11,18 @@ namespace DexComplete.Data
     {
         public Pokemon()
         {
-            Entries = new HashSet<Entry>();
+            Entries = new HashSet<PokedexEntry>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+		public string PokemonId { get; set; }
+
+        public int Index { get; set; }
 
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
 
-        public virtual ICollection<Entry> Entries { get; set; }
+        public virtual ICollection<PokedexEntry> Entries { get; set; }
 		public virtual ICollection<AbilityEntry> AbilityEntries { get; set; }
     }
 }

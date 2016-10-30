@@ -88,6 +88,9 @@
     <EmbeddedResource Include="Data\S014_PokemonMoves.txt" />
     <EmbeddedResource Include="Data\S015_Tms.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\S016_GameCollections.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

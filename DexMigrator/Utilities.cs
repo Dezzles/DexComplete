@@ -59,7 +59,7 @@ namespace DexMigrator
 
 		public static List<Dictionary<string, object>> GetEntries(string name)
 		{
-			System.Console.WriteLine("Loading: " + name);
+			System.Console.WriteLine(name + ": Loading");
 			char[] spl = new char[] { '\t' };
 			string data = GetResource(name);
 			List<Dictionary<string, object>> results = new List<Dictionary<string, object>>();
@@ -80,7 +80,7 @@ namespace DexMigrator
 				}
 				results.Add(o);
 			}
-
+			Console.WriteLine(name + ": Complete");
 			return results;
 		}
 	}

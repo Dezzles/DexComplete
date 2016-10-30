@@ -9,7 +9,7 @@ namespace DexComplete.Data
     public partial class Save
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public long SaveId { get; set; }
 
         [Required]
         public byte[] Code { get; set; }
@@ -22,7 +22,7 @@ namespace DexComplete.Data
 
         public long UserId { get; set; }
 
-        public int GameId { get; set; }
+        public string GameId { get; set; }
 
         public virtual Game Game { get; set; }
 

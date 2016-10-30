@@ -1,556 +1,556 @@
-﻿Id|i	GenerationId|i	Index|i
-1	5	1
-2	5	2
-3	5	3
-4	5	4
-5	5	5
-6	5	6
-7	5	7
-8	5	8
-9	5	9
-10	5	10
-11	5	11
-12	5	12
-13	5	13
-14	5	14
-15	5	15
-16	5	16
-17	5	17
-18	5	18
-19	5	19
-20	5	20
-21	5	21
-22	5	22
-23	5	23
-24	5	24
-25	5	25
-26	5	26
-27	5	27
-28	5	28
-29	5	29
-30	5	30
-31	5	31
-32	5	32
-33	5	33
-34	5	34
-35	5	35
-36	5	36
-37	5	37
-38	5	38
-39	5	39
-40	5	40
-41	5	41
-42	5	42
-43	5	43
-44	5	44
-45	5	45
-46	5	46
-47	5	47
-48	5	48
-49	5	49
-50	5	50
-51	5	51
-52	5	52
-53	5	53
-54	5	54
-55	5	55
-56	5	56
-57	5	57
-58	5	58
-59	5	59
-60	5	60
-61	5	61
-62	5	62
-63	5	63
-64	5	64
-65	5	65
-66	5	66
-67	5	67
-68	5	68
-69	5	69
-70	5	70
-71	5	71
-72	5	72
-73	5	73
-74	5	74
-75	5	75
-76	5	76
-77	5	77
-78	5	78
-79	5	79
-80	5	80
-81	5	81
-82	5	82
-83	5	83
-84	5	84
-85	5	85
-86	5	86
-87	5	87
-88	5	88
-89	5	89
-90	5	90
-91	5	91
-92	5	92
-93	5	93
-94	5	94
-95	5	95
-96	5	96
-97	5	97
-98	5	98
-99	5	99
-100	5	100
-101	5	101
-102	5	102
-103	5	103
-104	5	104
-105	5	105
-106	5	106
-107	5	107
-108	5	108
-109	5	109
-110	5	110
-111	5	111
-112	5	112
-113	5	113
-114	5	114
-115	5	115
-116	5	116
-117	5	117
-118	5	118
-119	5	119
-120	5	120
-121	5	121
-122	5	122
-123	5	123
-124	5	124
-125	5	125
-126	5	126
-127	5	127
-128	5	128
-129	5	129
-130	5	130
-131	5	131
-132	5	132
-133	5	133
-134	5	134
-135	5	135
-136	5	136
-137	5	137
-138	5	138
-139	5	139
-140	5	140
-141	5	141
-142	5	142
-143	5	143
-144	5	144
-145	5	145
-146	5	146
-147	5	147
-148	5	148
-149	5	149
-150	5	150
-151	5	151
-152	5	152
-153	5	153
-154	5	154
-155	5	155
-156	5	156
-157	5	157
-158	5	158
-159	5	159
-160	5	160
-161	5	161
-162	5	162
-163	5	163
-164	5	164
-165	5	165
-166	5	166
-167	5	167
-168	5	168
-169	5	169
-170	5	170
-171	5	171
-172	5	172
-173	5	173
-174	5	174
-175	5	175
-176	5	176
-177	5	177
-178	5	178
-179	5	179
-180	5	180
-181	5	181
-182	5	182
-183	5	183
-184	5	184
-185	5	185
-186	5	186
-187	5	187
-188	5	188
-189	5	189
-190	5	190
-191	5	191
-192	5	192
-193	5	193
-194	5	194
-195	5	195
-196	5	196
-197	5	197
-198	5	198
-199	5	199
-200	5	200
-201	5	201
-202	5	202
-203	5	203
-204	5	204
-205	5	205
-206	5	206
-207	5	207
-208	5	208
-209	5	209
-210	5	210
-211	5	211
-212	5	212
-213	5	213
-214	5	214
-215	5	215
-216	5	216
-217	5	217
-218	5	218
-219	5	219
-220	5	220
-221	5	221
-222	5	222
-223	5	223
-224	5	224
-225	5	225
-226	5	226
-227	5	227
-228	5	228
-229	5	229
-230	5	230
-231	5	231
-232	5	232
-233	5	233
-234	5	234
-235	5	235
-236	5	236
-237	5	237
-238	5	238
-239	5	239
-240	5	240
-241	5	241
-242	5	242
-243	5	243
-244	5	244
-245	5	245
-246	5	246
-247	5	247
-248	5	248
-249	5	249
-250	5	250
-251	5	251
-252	5	252
-253	5	253
-254	5	254
-255	5	255
-256	5	256
-257	5	257
-258	6	1
-259	6	2
-260	6	3
-261	6	4
-262	6	5
-263	6	6
-264	6	7
-265	6	8
-266	6	9
-267	6	10
-268	6	11
-269	6	12
-270	6	13
-271	6	14
-272	6	15
-273	6	16
-274	6	17
-275	6	18
-276	6	19
-277	6	20
-278	6	21
-279	6	22
-280	6	23
-281	6	24
-282	6	25
-283	6	26
-284	6	27
-285	6	28
-286	6	29
-287	6	30
-288	6	31
-289	6	32
-290	6	33
-291	6	34
-292	6	35
-293	6	36
-294	6	37
-295	6	38
-296	6	39
-297	6	40
-298	6	41
-299	6	42
-300	6	43
-301	6	44
-302	6	45
-303	6	46
-304	6	47
-305	6	48
-306	6	49
-307	6	50
-308	6	51
-309	6	52
-310	6	53
-311	6	54
-312	6	55
-313	6	56
-314	6	57
-315	6	58
-316	6	59
-317	6	60
-318	6	61
-319	6	62
-320	6	63
-321	6	64
-322	6	65
-323	6	66
-324	6	67
-325	6	68
-326	6	69
-327	6	70
-328	6	71
-329	6	72
-330	6	73
-331	6	74
-332	6	75
-333	6	76
-334	6	77
-335	6	78
-336	6	79
-337	6	80
-338	6	81
-339	6	82
-340	6	83
-341	6	84
-342	6	85
-343	6	86
-344	6	87
-345	6	88
-346	6	89
-347	6	90
-348	6	91
-349	6	92
-350	6	93
-351	6	94
-352	6	95
-353	6	96
-354	6	97
-355	6	98
-356	6	99
-357	6	100
-358	6	101
-359	6	102
-360	6	103
-361	6	104
-362	6	105
-363	6	106
-364	6	107
-365	6	108
-366	6	109
-367	6	110
-368	6	111
-369	6	112
-370	6	113
-371	6	114
-372	6	115
-373	6	116
-374	6	117
-375	6	118
-376	6	119
-377	6	120
-378	6	121
-379	6	122
-380	6	123
-381	6	124
-382	6	125
-383	6	126
-384	6	127
-385	6	128
-386	6	129
-387	6	130
-388	6	131
-389	6	132
-390	6	133
-391	6	134
-392	6	135
-393	6	136
-394	6	137
-395	6	138
-396	6	139
-397	6	140
-398	6	141
-399	6	142
-400	6	143
-401	6	144
-402	6	145
-403	6	146
-404	6	147
-405	6	148
-406	6	149
-407	6	150
-408	6	151
-409	6	152
-410	6	153
-411	6	154
-412	6	155
-413	6	156
-414	6	157
-415	6	158
-416	6	159
-417	6	160
-418	6	161
-419	6	162
-420	6	163
-421	6	164
-422	6	165
-423	6	166
-424	6	167
-425	6	168
-426	6	169
-427	6	170
-428	6	171
-429	6	172
-430	6	173
-431	6	174
-432	6	175
-433	6	176
-434	6	177
-435	6	178
-436	6	179
-437	6	180
-438	6	181
-439	6	182
-440	6	183
-441	6	184
-442	6	185
-443	6	186
-444	6	187
-445	6	188
-446	6	189
-447	6	190
-448	6	191
-449	6	192
-450	6	193
-451	6	194
-452	6	195
-453	6	196
-454	6	197
-455	6	198
-456	6	199
-457	6	200
-458	6	201
-459	6	202
-460	6	203
-461	6	204
-462	6	205
-463	6	206
-464	6	207
-465	6	208
-466	6	209
-467	6	210
-468	6	211
-469	6	212
-470	6	213
-471	6	214
-472	6	215
-473	6	216
-474	6	217
-475	6	218
-476	6	219
-477	6	220
-478	6	221
-479	6	222
-480	6	223
-481	6	224
-482	6	225
-483	6	226
-484	6	227
-485	6	228
-486	6	229
-487	6	230
-488	6	231
-489	6	232
-490	6	233
-491	6	234
-492	6	235
-493	6	236
-494	6	237
-495	6	238
-496	6	239
-497	6	240
-498	6	241
-499	6	242
-500	6	243
-501	6	244
-502	6	245
-503	6	246
-504	6	247
-505	6	248
-506	6	249
-507	6	250
-508	6	251
-509	6	252
-510	6	253
-511	6	254
-512	6	255
-513	6	256
-514	6	257
-515	6	258
-516	6	259
-517	6	260
-518	6	261
-519	6	262
-520	6	263
-521	6	264
-522	6	265
-523	6	266
-524	6	267
-525	6	268
-526	6	269
-527	6	270
-528	6	271
-529	6	272
-530	6	273
-531	6	274
-532	6	275
-533	6	276
-534	6	277
-535	6	278
-536	6	279
-537	6	280
-538	6	281
-539	6	282
-540	6	283
-541	6	284
-542	6	285
-543	6	286
-544	6	287
-545	6	288
-546	6	289
-547	6	290
-548	6	291
-549	6	292
-550	6	293
-551	6	294
-552	6	295
-553	6	296
-554	6	297
-555	6	298
+﻿GenerationId|s	PokemonId|s
+gen5	bulbasaur
+gen5	charmander
+gen5	squirtle
+gen5	caterpie
+gen5	weedle
+gen5	pidgey
+gen5	rattata
+gen5	spearow
+gen5	ekans
+gen5	pichu
+gen5	sandshrew
+gen5	nidoran_f
+gen5	cleffa
+gen5	vulpix
+gen5	igglybuff
+gen5	zubat
+gen5	oddish
+gen5	paras
+gen5	venonat
+gen5	diglett
+gen5	meowth
+gen5	psyduck
+gen5	mankey
+gen5	growlithe
+gen5	poliwag
+gen5	abra
+gen5	machop
+gen5	bellsprout
+gen5	tentacool
+gen5	geodude
+gen5	ponyta
+gen5	slowpoke
+gen5	magnemite
+gen5	farfetch'd
+gen5	doduo
+gen5	seel
+gen5	grimer
+gen5	shellder
+gen5	onix
+gen5	drowzee
+gen5	krabby
+gen5	voltorb
+gen5	exeggcute
+gen5	cubone
+gen5	tyrogue
+gen5	lickitung
+gen5	rhyhorn
+gen5	happiny
+gen5	tangela
+gen5	kangaskhan
+gen5	horsea
+gen5	goldeen
+gen5	staryu
+gen5	mime jr.
+gen5	scyther
+gen5	smoochum
+gen5	elekid
+gen5	magby
+gen5	pinsir
+gen5	tauros
+gen5	magikarp
+gen5	lapras
+gen5	ditto
+gen5	eevee
+gen5	porygon
+gen5	omanyte
+gen5	kabuto
+gen5	aerodactyl
+gen5	munchlax
+gen5	dratini
+gen5	mewtwo
+gen5	sentret
+gen5	hoothoot
+gen5	ledyba
+gen5	spinarak
+gen5	chinchou
+gen5	togepi
+gen5	natu
+gen5	mareep
+gen5	azurill
+gen5	bonsly
+gen5	hoppip
+gen5	aipom
+gen5	sunkern
+gen5	yanma
+gen5	wooper
+gen5	murkrow
+gen5	wynaut
+gen5	girafarig
+gen5	pineco
+gen5	dunsparce
+gen5	gligar
+gen5	snubbull
+gen5	qwilfish
+gen5	shuckle
+gen5	heracross
+gen5	sneasel
+gen5	teddiursa
+gen5	slugma
+gen5	swinub
+gen5	corsola
+gen5	remoraid
+gen5	delibird
+gen5	mantyke
+gen5	skarmory
+gen5	houndour
+gen5	phanpy
+gen5	stantler
+gen5	smeargle
+gen5	miltank
+gen5	larvitar
+gen5	lugia
+gen5	ho-oh
+gen5	treecko
+gen5	torchic
+gen5	mudkip
+gen5	poochyena
+gen5	zigzagoon
+gen5	wurmple
+gen5	lotad
+gen5	seedot
+gen5	taillow
+gen5	wingull
+gen5	ralts
+gen5	surskit
+gen5	shroomish
+gen5	nincada
+gen5	whismur
+gen5	makuhita
+gen5	nosepass
+gen5	skitty
+gen5	sableye
+gen5	mawile
+gen5	aron
+gen5	meditite
+gen5	electrike
+gen5	volbeat
+gen5	illumise
+gen5	budew
+gen5	gulpin
+gen5	carvanha
+gen5	wailmer
+gen5	numel
+gen5	torkoal
+gen5	spoink
+gen5	spinda
+gen5	trapinch
+gen5	cacnea
+gen5	swablu
+gen5	zangoose
+gen5	seviper
+gen5	barboach
+gen5	corphish
+gen5	lileep
+gen5	anorith
+gen5	feebas
+gen5	shuppet
+gen5	tropius
+gen5	absol
+gen5	snorunt
+gen5	spheal
+gen5	clamperl
+gen5	relicanth
+gen5	luvdisc
+gen5	bagon
+gen5	beldum
+gen5	turtwig
+gen5	chimchar
+gen5	piplup
+gen5	staravia
+gen5	bidoof
+gen5	kricketot
+gen5	shinx
+gen5	cranidos
+gen5	shieldon
+gen5	burmy
+gen5	combee
+gen5	pachirisu
+gen5	buizel
+gen5	shellos
+gen5	drifloon
+gen5	buneary
+gen5	glameow
+gen5	stunky
+gen5	bronzor
+gen5	chatot
+gen5	spiritomb
+gen5	gible
+gen5	riolu
+gen5	hippopotas
+gen5	skorupi
+gen5	croagunk
+gen5	finneon
+gen5	snover
+gen5	dialga
+gen5	palkia
+gen5	giratina
+gen5	patrat
+gen5	lillipup
+gen5	purrloin
+gen5	pansage
+gen5	pansear
+gen5	panpour
+gen5	munna
+gen5	pidove
+gen5	blitzle
+gen5	roggenrola
+gen5	woobat
+gen5	drilbur
+gen5	audino
+gen5	timburr
+gen5	tympole
+gen5	throh
+gen5	sawk
+gen5	sewaddle
+gen5	venipede
+gen5	cottonee
+gen5	petilil
+gen5	basculin
+gen5	sandile
+gen5	darumaka
+gen5	maractus
+gen5	dwebble
+gen5	scraggy
+gen5	sigilyph
+gen5	tirtouga
+gen5	trubbish
+gen5	minccino
+gen5	gothorita
+gen5	solosis
+gen5	ducklett
+gen5	vanillite
+gen5	deerling
+gen5	emolga
+gen5	karrablast
+gen5	foongus
+gen5	frillish
+gen5	alomomola
+gen5	joltik
+gen5	klang
+gen5	elgyem
+gen5	axew
+gen5	cubchoo
+gen5	shelmet
+gen5	stunfisk
+gen5	mienfoo
+gen5	druddigon
+gen5	golett
+gen5	pawniard
+gen5	bouffalant
+gen5	braviary
+gen5	vullaby
+gen5	heatmor
+gen5	durant
+gen5	tornadus
+gen5	thundurus
+gen5	landorus
+gen6	bulbasaur
+gen6	charmander
+gen6	squirtle
+gen6	caterpie
+gen6	weedle
+gen6	pidgey
+gen6	rattata
+gen6	spearow
+gen6	ekans
+gen6	pichu
+gen6	sandshrew
+gen6	nidoran_f
+gen6	cleffa
+gen6	vulpix
+gen6	igglybuff
+gen6	zubat
+gen6	oddish
+gen6	paras
+gen6	venonat
+gen6	diglett
+gen6	meowth
+gen6	psyduck
+gen6	mankey
+gen6	growlithe
+gen6	poliwag
+gen6	abra
+gen6	machop
+gen6	bellsprout
+gen6	tentacool
+gen6	geodude
+gen6	ponyta
+gen6	slowpoke
+gen6	magnemite
+gen6	farfetch'd
+gen6	doduo
+gen6	seel
+gen6	grimer
+gen6	shellder
+gen6	onix
+gen6	drowzee
+gen6	krabby
+gen6	voltorb
+gen6	exeggcute
+gen6	cubone
+gen6	tyrogue
+gen6	lickitung
+gen6	rhyhorn
+gen6	happiny
+gen6	tangela
+gen6	kangaskhan
+gen6	horsea
+gen6	goldeen
+gen6	staryu
+gen6	mime jr.
+gen6	scyther
+gen6	smoochum
+gen6	elekid
+gen6	magby
+gen6	pinsir
+gen6	tauros
+gen6	magikarp
+gen6	lapras
+gen6	ditto
+gen6	eevee
+gen6	porygon
+gen6	omanyte
+gen6	kabuto
+gen6	aerodactyl
+gen6	munchlax
+gen6	dratini
+gen6	mewtwo
+gen6	chikorita
+gen6	cyndaquil
+gen6	totodile
+gen6	sentret
+gen6	hoothoot
+gen6	ledyba
+gen6	spinarak
+gen6	chinchou
+gen6	togepi
+gen6	natu
+gen6	mareep
+gen6	azurill
+gen6	bonsly
+gen6	hoppip
+gen6	aipom
+gen6	sunkern
+gen6	yanma
+gen6	wooper
+gen6	murkrow
+gen6	wynaut
+gen6	girafarig
+gen6	pineco
+gen6	dunsparce
+gen6	gligar
+gen6	snubbull
+gen6	qwilfish
+gen6	shuckle
+gen6	heracross
+gen6	sneasel
+gen6	teddiursa
+gen6	slugma
+gen6	swinub
+gen6	corsola
+gen6	remoraid
+gen6	delibird
+gen6	mantyke
+gen6	skarmory
+gen6	houndour
+gen6	phanpy
+gen6	stantler
+gen6	smeargle
+gen6	miltank
+gen6	larvitar
+gen6	lugia
+gen6	ho-oh
+gen6	treecko
+gen6	torchic
+gen6	mudkip
+gen6	poochyena
+gen6	zigzagoon
+gen6	wurmple
+gen6	lotad
+gen6	seedot
+gen6	taillow
+gen6	wingull
+gen6	ralts
+gen6	surskit
+gen6	shroomish
+gen6	nincada
+gen6	whismur
+gen6	makuhita
+gen6	nosepass
+gen6	skitty
+gen6	sableye
+gen6	mawile
+gen6	aron
+gen6	meditite
+gen6	electrike
+gen6	plusle
+gen6	minun
+gen6	volbeat
+gen6	illumise
+gen6	budew
+gen6	gulpin
+gen6	carvanha
+gen6	wailmer
+gen6	numel
+gen6	torkoal
+gen6	spoink
+gen6	spinda
+gen6	trapinch
+gen6	cacnea
+gen6	swablu
+gen6	zangoose
+gen6	seviper
+gen6	barboach
+gen6	corphish
+gen6	lileep
+gen6	anorith
+gen6	feebas
+gen6	kecleon
+gen6	shuppet
+gen6	duskull
+gen6	tropius
+gen6	absol
+gen6	snorunt
+gen6	spheal
+gen6	clamperl
+gen6	relicanth
+gen6	luvdisc
+gen6	bagon
+gen6	beldum
+gen6	turtwig
+gen6	chimchar
+gen6	piplup
+gen6	starly
+gen6	bidoof
+gen6	kricketot
+gen6	shinx
+gen6	cranidos
+gen6	shieldon
+gen6	burmy
+gen6	combee
+gen6	pachirisu
+gen6	buizel
+gen6	shellos
+gen6	drifloon
+gen6	buneary
+gen6	glameow
+gen6	stunky
+gen6	bronzor
+gen6	chatot
+gen6	spiritomb
+gen6	gible
+gen6	riolu
+gen6	hippopotas
+gen6	skorupi
+gen6	croagunk
+gen6	finneon
+gen6	snover
+gen6	dialga
+gen6	palkia
+gen6	giratina
+gen6	snivy
+gen6	tepig
+gen6	oshawott
+gen6	patrat
+gen6	lillipup
+gen6	purrloin
+gen6	pansage
+gen6	pansear
+gen6	panpour
+gen6	munna
+gen6	pidove
+gen6	blitzle
+gen6	roggenrola
+gen6	woobat
+gen6	drilbur
+gen6	audino
+gen6	timburr
+gen6	tympole
+gen6	throh
+gen6	sawk
+gen6	sewaddle
+gen6	venipede
+gen6	cottonee
+gen6	petilil
+gen6	basculin
+gen6	sandile
+gen6	darumaka
+gen6	maractus
+gen6	dwebble
+gen6	scraggy
+gen6	sigilyph
+gen6	tirtouga
+gen6	trubbish
+gen6	minccino
+gen6	gothita
+gen6	solosis
+gen6	ducklett
+gen6	vanillite
+gen6	deerling
+gen6	emolga
+gen6	karrablast
+gen6	foongus
+gen6	frillish
+gen6	alomomola
+gen6	joltik
+gen6	ferrothorn
+gen6	klink
+gen6	elgyem
+gen6	litwick
+gen6	axew
+gen6	cubchoo
+gen6	shelmet
+gen6	stunfisk
+gen6	mienfoo
+gen6	druddigon
+gen6	golett
+gen6	pawniard
+gen6	bouffalant
+gen6	rufflet
+gen6	vullaby
+gen6	heatmor
+gen6	durant
+gen6	larvesta
+gen6	tornadus
+gen6	thundurus
+gen6	landorus
+gen6	chespin
+gen6	fennekin
+gen6	froakie
+gen6	bunnelby
+gen6	fletchling
+gen6	scatterbug
+gen6	litleo
+gen6	flabebe
+gen6	skiddo
+gen6	pancham
+gen6	espurr
+gen6	spritzee
+gen6	swirlix
+gen6	inkay
+gen6	binacle
+gen6	skrelp
+gen6	helioptile
+gen6	tyrunt
+gen6	amaura
+gen6	hawlucha
+gen6	dedenne
+gen6	carbink
+gen6	goomy
+gen6	klefki
+gen6	phantump
+gen6	pumpkaboo
+gen6	bergmite
+gen6	noibat

@@ -17,9 +17,8 @@ namespace DexComplete.View
 				{
 					result.Add(new Models.GameModel()
 						{
-							Id = game.Id,
 							Title = game.Title,
-							Identifier = game.Identifier
+							Identifier = game.GameId
 						});
 				}
 				return result;
@@ -35,14 +34,14 @@ namespace DexComplete.View
 			ret.Tools = Tools;
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
-				var game = ctr.Games.SingleOrDefault(e => e.Identifier == gameId);
+				var game = ctr.Games.SingleOrDefault(e => e.GameId == gameId);
 				if (game == null)
 					throw new Code.ExceptionResponse("Invalid game");
 				foreach (var u in game.Collections)
 				{
 					Transfer.GameToolItems item = new Transfer.GameToolItems()
 					{
-						Identifier = u.Identifier,
+						Identifier = u.CollectionId,
 						Title = u.Title
 					};
 					if ( u.Type == Data.CollectionType.Collection)
@@ -64,14 +63,13 @@ namespace DexComplete.View
 		{
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
-				var query = ctr.Games.Where(e => e.Identifier.ToLower() == gameId.ToLower());
+				var query = ctr.Games.Where(e => e.GameId.ToLower() == gameId.ToLower());
 				if (query.Count() == 0)
 					throw new Code.ExceptionResponse("Invalid game");
 				return new Models.GameModel()
 				{
-					Id = query.First().Id,
 					Title = query.First().Title,
-					Identifier = query.First().Identifier
+					Identifier = query.First().GameId
 				};
 			}
 		}

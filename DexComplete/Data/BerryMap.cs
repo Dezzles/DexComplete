@@ -9,9 +9,8 @@ namespace DexComplete.Data
 {
 	public partial class BerryMap
 	{
-		public int Id { get; set; }
-		public int BerryId { get; set; }
-		public int GenerationId { get; set; }
+		public string BerryId { get; set; }
+		public string GenerationId { get; set; }
 		public int Index { get; set; }
 
 		public virtual Berry Berry { get; set; }

@@ -27,13 +27,13 @@ namespace DexComplete.View
 					throw new Code.ExceptionResponse("Save name can only contain alphanumeric characters and spaces");
 
 				Data.User user = mdl.Users.Where(e => e.Username == Username).First();
-				var saves = mdl.Saves.Where(e => (e.UserId == user.Id) && (e.SaveName.ToLower() == addGame.SaveName.ToLower()));
+				var saves = mdl.Saves.Where(e => (e.UserId == user.UserId) && (e.SaveName.ToLower() == addGame.SaveName.ToLower()));
 				if (saves.Count() > 0)
 					throw new Code.ExceptionResponse("Save name already exists");
 
 				var result = mdl.Saves.Create();
 				result.Code = new byte[256];
-				result.AbilityData = new byte[80];
+				result.AbilityData = new byte[256];
 				result.BerryData = new byte[16];
 				result.EggGroupData = new byte[16];
 				result.DittoData = new byte[16];
@@ -41,7 +41,7 @@ namespace DexComplete.View
 
 				result.User = user;
 				result.SaveName = addGame.SaveName;
-				result.Game = mdl.Games.Where(e => e.Identifier == addGame.Identifier).First();
+				result.Game = mdl.Games.Where(e => e.GameId == addGame.Identifier).First();
 				mdl.Saves.Add(result);
 				mdl.SaveChanges();
 			}
@@ -60,7 +60,7 @@ namespace DexComplete.View
 				{
 					results.Add(new Transfer.Saves()
 						{
-							GameIdentifier = save.Game.Identifier,
+							GameIdentifier = save.Game.GameId,
 							SaveName = save.SaveName,
 							GameTitle = save.Game.Title
 						}
@@ -82,7 +82,7 @@ namespace DexComplete.View
 				var save = user.Saves.Single(e => e.SaveName.ToLower() == saveName.ToLower());
 				if (save == null)
 					throw new Code.ExceptionResponse("No game found");
-				result.GameIdentifier = save.Game.Identifier;
+				result.GameIdentifier = save.Game.GameId;
 				result.GameTitle = save.Game.Title;
 				result.SaveName = save.SaveName;
 				result.SaveData = Convert.ToBase64String(save.Code);
@@ -262,7 +262,7 @@ namespace DexComplete.View
 				string seed = Utilities.Encryption.GenerateText(16);
 				theUser.Password = Utilities.Encryption.GetMd5Hash(password + seed);
 				theUser.Salt = seed;
-				var allTokens = model.Tokens.Where(u => u.User.Id == theUser.Id);
+				var allTokens = model.Tokens.Where(u => u.User.UserId == theUser.UserId);
 				model.Tokens.RemoveRange(allTokens);
 				model.SaveChanges();
 				return true;
@@ -277,8 +277,8 @@ namespace DexComplete.View
 			using (Data.PokedexModel model = new Data.PokedexModel())
 			{
 				var saveData = model.Saves.Single(u => (u.User.Username.ToLower() == user.ToLower()) && (u.SaveName.ToLower() == save.ToLower()));
-				var gameTools = GameRepository.GetGameTools(saveData.Game.Identifier);
-				var dexes = PokedexRepository.GetPokedexesByGame(saveData.Game.Identifier);
+				var gameTools = GameRepository.GetGameTools(saveData.Game.GameId);
+				var dexes = PokedexRepository.GetPokedexesByGame(saveData.Game.GameId);
 				int[] dex = ConvertData(saveData.Code, 2);
 				int[] tm = ConvertData(saveData.TMData);
 				int[] abilities = ConvertData(saveData.AbilityData, 2);
@@ -289,13 +289,13 @@ namespace DexComplete.View
 				foreach (var d in dexes)
 				{
 					var item = new Transfer.ItemProgress();
-					var entries = PokedexRepository.GetPokedex(d.Id);
+					var entries = PokedexRepository.GetPokedex(d.PokedexId);
 					item.Title = entries.Title;
-					item.Identifier = d.Identifier;
+					item.Identifier = d.PokedexId;
 					item.Total = entries.Pokemon.Count();
 					foreach (var entry in entries.Pokemon)
 					{
-						if (dex[entry.Id] > 0)
+						if (dex[entry.Index] > 0)
 							item.Completion++;
 					}
 					progress.Pokedexes.Add(item);
@@ -304,7 +304,7 @@ namespace DexComplete.View
 				if (gameTools.Collections.Any(u => u.Identifier == "abilities"))
 				{
 					var item = new Transfer.ItemProgress();
-					var entries = AbilityRepository.GetAbilitiesByGame(saveData.Game.Identifier);
+					var entries = AbilityRepository.GetAbilitiesByGame(saveData.Game.GameId);
 					item.Title = "Hidden Abilities";
 					item.Total = entries.Count();
 					item.Identifier = "abilities";
@@ -319,13 +319,13 @@ namespace DexComplete.View
 				if (gameTools.Collections.Any(u => u.Identifier == "eggGroups"))
 				{
 					var item = new Transfer.ItemProgress();
-					var entries = EggGroupRepository.GetEggGroupsByGame(saveData.Game.Identifier);
+					var entries = EggGroupRepository.GetEggGroupsByGame(saveData.Game.GameId);
 					item.Title = "Egg Groups";
 					item.Total = entries.Count();
 					item.Identifier = "egggroups";
 					foreach (var entry in entries)
 					{
-						if (eggGroup[entry.Id] > 0)
+						if (eggGroup[entry.Index] > 0)
 							item.Completion++;
 					}
 					progress.Collections.Add(item);
@@ -334,13 +334,13 @@ namespace DexComplete.View
 				if (gameTools.Collections.Any(u => u.Identifier == "berries"))
 				{
 					var item = new Transfer.ItemProgress();
-					var entries = BerryRepository.GetBerriesByGame(saveData.Game.Identifier);
+					var entries = BerryRepository.GetBerriesByGame(saveData.Game.GameId);
 					item.Title = "Berries";
 					item.Identifier = "berries";
 					item.Total = entries.Count();
 					foreach (var entry in entries)
 					{
-						if (berries[entry.Id] > 0)
+						if (berries[entry.Index] > 0)
 							item.Completion++;
 					}
 					progress.Collections.Add(item);
@@ -363,13 +363,13 @@ namespace DexComplete.View
 				if (gameTools.Collections.Any(u => u.Identifier == "tms"))
 				{
 					var item = new Transfer.ItemProgress();
-					var entries = TmRepository.GetTmsByGame(saveData.Game.Identifier);
+					var entries = TmRepository.GetTmsByGame(saveData.Game.GameId);
 					item.Title = "Technical Machines";
 					item.Identifier = "tms";
 					item.Total = entries.Count();
 					foreach (var entry in entries)
 					{
-						if (tm[entry.Id] > 0)
+						if (tm[entry.Index] > 0)
 							item.Completion++;
 					}
 					progress.Collections.Add(item);

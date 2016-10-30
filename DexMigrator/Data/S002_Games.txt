@@ -1,26 +1,28 @@
-﻿Id|i	Title|s	GenerationId|i	Identifier|s
-1	Green	1	green
-2	Red	1	red
-3	Blue	1	blue
-4	Yellow	1	yellow
-5	Gold	2	gold
-6	Silver	2	silver
-7	Crystal	2	crystal
-8	Ruby	3	ruby
-9	Sapphire	3	sapphire
-10	Emerald	3	emerald
-11	Fire Red	3	firered
-12	Leaf Green	3	leafgreen
-15	Diamond	4	diamond
-16	Pearl	4	pearl
-17	Platinum	4	platinum
-18	Heart Gold	4	heartgold
-19	Soul Silver	4	soulsilver
-20	Black	5	black
-21	White	5	white
-22	Black 2	5	black2
-23	White 2	5	white2
-24	Pokemon X	6	pkmnx
-25	Pokemon Y	6	pkmny
-26	Omega Ruby	6	omegaruby
-27	Alpha Sapphire	6	alphasapphire
+﻿Title|s	GenerationId|s	GameId|s	TmSetId|s
+Green	gen1	green	 
+Red	gen1	red	 
+Blue	gen1	blue	 
+Yellow	gen1	yellow	 
+Gold	gen2	gold	 
+Silver	gen2	silver	 
+Crystal	gen2	crystal	 
+Ruby	gen3	ruby	 
+Sapphire	gen3	sapphire	 
+Emerald	gen3	emerald	 
+Fire Red	gen3	firered	 
+Leaf Green	gen3	leafgreen	 
+Diamond	gen4	diamond	 
+Pearl	gen4	pearl	 
+Platinum	gen4	platinum	 
+Heart Gold	gen4	heartgold	 
+Soul Silver	gen4	soulsilver	 
+Black	gen5	black	genv
+White	gen5	white	genv
+Black 2	gen5	black2	genv
+White 2	gen5	white2	genv
+Pokemon X	gen6	pkmnx	xy
+Pokemon Y	gen6	pkmny	xy
+Omega Ruby	gen6	omegaruby	oras
+Alpha Sapphire	gen6	alphasapphire	oras
+Sun	gen7	sun	
+Moon	gen7	moon	

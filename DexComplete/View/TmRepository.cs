@@ -14,8 +14,8 @@ namespace DexComplete.View
 
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
-				var game = ctr.Games.Single(e => e.Identifier == GameId);
-				if (game == null || game.TMSet == null)
+				var game = ctr.Games.Single(e => e.GameId == GameId);
+				/*if (game == null || game.TMSet == null)
 					throw new Code.ExceptionResponse("Invalid game");
 				var tmList = game.TMSet.TMs.OrderBy(e => e.Index);
 				foreach (var tm in tmList)
@@ -25,7 +25,7 @@ namespace DexComplete.View
 							 Id = tm.Index,
 							 Name = tm.Move.Name
 						});
-				}
+				}/**/
 			}
 			return ret;
 		}

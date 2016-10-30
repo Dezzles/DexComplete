@@ -18,8 +18,9 @@ namespace DexComplete.View
 				{
 					ret.Add(new Transfer.IdNameTransfer()
 						{
-							Id = egg.Id,
-							Name = egg.Name
+							Id = egg.EggGroupId,
+							Name = egg.Name,
+							Index = egg.Index
 						});
 				}
 				return ret;
