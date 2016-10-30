@@ -14,15 +14,19 @@ namespace DexComplete.View
 
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
-				var game = ctr.Games.Single(e => e.GameId == GameId);
+				var game = ctr.Games.SingleOrDefault(e => e.GameId == GameId);
+				if (game == null) 
+					throw new Code.ExceptionResponse("INVALID_GAME");
+
+				var tmList = ctr.TMs.Where(u => u.TmSetId == game.TMSetId).OrderBy(e => e.Index);
 				/*if (game == null || game.TMSet == null)
 					throw new Code.ExceptionResponse("Invalid game");
-				var tmList = game.TMSet.TMs.OrderBy(e => e.Index);
+				var tmList = game.TMSet.TMs.OrderBy(e => e.Index);/**/
 				foreach (var tm in tmList)
 				{
 					ret.Add(new Transfer.IdNameTransfer()
 						{
-							 Id = tm.Index,
+							 Index = tm.Index,
 							 Name = tm.Move.Name
 						});
 				}/**/
