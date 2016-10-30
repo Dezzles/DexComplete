@@ -21,7 +21,7 @@ namespace DexComplete.View
 				List<Transfer.AbilitySetTfr> ret = new List<Transfer.AbilitySetTfr>();
 				foreach (var set in sets)
 				{
-					var entries = ctr.AbilityEntries.Where(e => e.AbilitySetId == set.PokemonId);
+					var entries = set.Entries;
 					Transfer.AbilitySetTfr tfr = new Transfer.AbilitySetTfr();
 					tfr.SetId = set.PokemonId;
 					tfr.AbilityId = set.AbilityId;
