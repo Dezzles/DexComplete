@@ -79,7 +79,7 @@ namespace DexComplete.View
 					throw new Code.ExceptionResponse("No such user exists");
 				var user = query.First();
 				Transfer.Saves result = new Transfer.Saves();
-				var save = user.Saves.Single(e => e.SaveName.ToLower() == saveName.ToLower());
+				var save = user.Saves.SingleOrDefault(e => e.SaveName.ToLower() == saveName.ToLower());
 				if (save == null)
 					throw new Code.ExceptionResponse("No game found");
 				result.GameIdentifier = save.Game.GameId;
@@ -271,7 +271,11 @@ namespace DexComplete.View
 			progress.Collections = new List<Transfer.ItemProgress>();
 			using (Data.PokedexModel model = new Data.PokedexModel())
 			{
-				var saveData = model.Saves.Single(u => (u.User.Username.ToLower() == user.ToLower()) && (u.SaveName.ToLower() == save.ToLower()));
+				var saveData = model.Saves.SingleOrDefault(u => (u.User.Username.ToLower() == user.ToLower()) && (u.SaveName.ToLower() == save.ToLower()));
+				if (saveData == null)
+				{
+					throw new Code.Exception404();
+				}
 				var gameTools = GameRepository.GetGameTools(saveData.Game.GameId);
 				var dexes = PokedexRepository.GetPokedexesByGame(saveData.Game.GameId);
 				int[] dex = ConvertData(saveData.Code, 2);

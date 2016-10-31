@@ -49,6 +49,8 @@ mountainkalos6	pkmnx
 mountainkalos6	pkmny
 hoenn6	omegaruby
 hoenn6	alphasapphire
+national7	sun
+national7	moon
 gen1	gold
 gen1	silver
 gen1	crystal
@@ -70,6 +72,8 @@ gen1	pkmnx
 gen1	pkmny
 gen1	omegaruby
 gen1	alphasapphire
+gen1	sun
+gen1	moon
 gen2	gold
 gen2	silver
 gen2	crystal
@@ -91,6 +95,8 @@ gen2	pkmnx
 gen2	pkmny
 gen2	omegaruby
 gen2	alphasapphire
+gen2	sun
+gen2	moon
 gen3	ruby
 gen3	sapphire
 gen3	emerald
@@ -109,6 +115,8 @@ gen3	pkmnx
 gen3	pkmny
 gen3	omegaruby
 gen3	alphasapphire
+gen3	sun
+gen3	moon
 gen4	diamond
 gen4	pearl
 gen4	platinum
@@ -122,6 +130,8 @@ gen4	pkmnx
 gen4	pkmny
 gen4	omegaruby
 gen4	alphasapphire
+gen4	sun
+gen4	moon
 gen5	black
 gen5	white
 gen5	black2
@@ -130,11 +140,13 @@ gen5	pkmnx
 gen5	pkmny
 gen5	omegaruby
 gen5	alphasapphire
+gen5	sun
+gen5	moon
 gen6	pkmnx
 gen6	pkmny
 gen6	omegaruby
 gen6	alphasapphire
+gen6	sun
+gen6	moon
 gen7	sun
 gen7	moon
-national7	sun
-national7	moon
