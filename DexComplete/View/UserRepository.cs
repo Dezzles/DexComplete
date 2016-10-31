@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using BCrypt.Net;
 namespace DexComplete.View
 {
 	static class UserRepository
@@ -151,8 +151,8 @@ namespace DexComplete.View
 			Data.User newuser = ctr.Users.Create();
 			newuser.Email = user.Email;
 			newuser.Username = user.Username.ToLower();
-			string seed = Utilities.Encryption.GenerateText(16);
-			newuser.Password = Utilities.Encryption.GetMd5Hash(user.Password + seed);
+			var seed = BCrypt.Net.BCrypt.GenerateSalt(16);
+			newuser.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, seed);
 			newuser.Salt = seed;
 			ctr.Users.Add(newuser);
 			ctr.SaveChanges();
@@ -172,13 +172,8 @@ namespace DexComplete.View
 					throw new Code.ExceptionResponse("Incorrect username or password");
 				}
 				Data.User user = query.First();
-				string password = Utilities.Encryption.GetMd5Hash(User.Password + user.Salt);
-				string brokenPassword = Utilities.Encryption.GetMd5Hash(user.Salt);
-				if (user.Password.Equals(brokenPassword))
-				{
-					throw new Code.ExceptionResponse("Password reset required");
-				}
-				if (user.Password.Equals(password))
+				var success = BCrypt.Net.BCrypt.Verify(User.Password, user.Password);
+				if (success)
 				{
 					string token = GetToken(User.Username, Data.TokenType.LoginToken);
 					return new Models.UserModel() { Username = user.Username, Token = token };
@@ -259,8 +254,8 @@ namespace DexComplete.View
 					return false;
 				if (theUser == null)
 					return false;
-				string seed = Utilities.Encryption.GenerateText(16);
-				theUser.Password = Utilities.Encryption.GetMd5Hash(password + seed);
+				var seed = BCrypt.Net.BCrypt.GenerateSalt(16);
+				theUser.Password = BCrypt.Net.BCrypt.HashPassword(password, seed);
 				theUser.Salt = seed;
 				var allTokens = model.Tokens.Where(u => u.User.UserId == theUser.UserId);
 				model.Tokens.RemoveRange(allTokens);
