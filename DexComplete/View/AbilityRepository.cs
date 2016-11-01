@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DexComplete.Utilities;
+using SharpLogging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,16 +10,24 @@ namespace DexComplete.View
 {
 	public class AbilityRepository
 	{
-		public static IEnumerable<Transfer.AbilitySetTfr> GetAbilitiesByGame(string gameId)
+		public static IEnumerable<Transfer.AbilitySetTfr> GetAbilitiesByGame(string gameId, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
+			Log.Info("GetAbilitiesByGame", new { gameId = gameId });
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				var game = ctr.Games.SingleOrDefault(e => e.GameId == gameId);
 				if (game == null)
+				{
+					Log.Error("GetAbilitesByGame", new { gameId = gameId, error = "Invalid game" });
 					throw new Code.ExceptionResponse("Invalid game");
-				if (game.Generation.AbilitySets.Count == 0)
+				}
+				if (game.Generation.AbilitySets.Count == 0) {
+					Log.Error("GetAbilitesByGame", new { gameId = gameId, error = "No abilities found" });
 					throw new Code.Exception404();
+				}
 				var sets = game.Generation.AbilitySets.OrderBy(e => e.AbilityId);
+				Log.Info("GetAbilitiesByGame", new { setsFound = sets.Count() });
 				List<Transfer.AbilitySetTfr> ret = new List<Transfer.AbilitySetTfr>();
 				foreach (var set in sets)
 				{
@@ -42,6 +52,7 @@ namespace DexComplete.View
 					tfr.AbilityId = lowest;
 					ret.Add(tfr);
 				}
+				Log.Info("GetAbilitiesByGame", new { message = "Successfully found games"});
 				return ret;
 			}
 		}

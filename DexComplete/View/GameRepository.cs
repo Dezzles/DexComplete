@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DexComplete.Utilities;
+using SharpLogging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +10,9 @@ namespace DexComplete.View
 {
 	static class GameRepository
 	{
-		public static IEnumerable<Models.GameModel> GetGames()
+		public static IEnumerable<Models.GameModel> GetGames(SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				List<Models.GameModel> result = new List<Models.GameModel>();
@@ -25,8 +28,9 @@ namespace DexComplete.View
 			}
 		}
 
-		public static Transfer.GameTools GetGameTools(string gameId)
+		public static Transfer.GameTools GetGameTools(string gameId, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			List<Transfer.GameToolItems> Collections = new List<Transfer.GameToolItems>();
 			List<Transfer.GameToolItems> Tools = new List<Transfer.GameToolItems>();
 			Transfer.GameTools ret = new Transfer.GameTools();
@@ -54,13 +58,14 @@ namespace DexComplete.View
 					}
 				}
 			}
-			ret.Pokedex = PokedexRepository.GetPokedexesByGame(gameId);
+			ret.Pokedex = PokedexRepository.GetPokedexesByGame(gameId, Log);
 			return ret;
 			
 		}
 
-		public static Models.GameModel GetGameByName(string gameId)
+		public static Models.GameModel GetGameByName(string gameId, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				var query = ctr.Games.Where(e => e.GameId.ToLower() == gameId.ToLower());

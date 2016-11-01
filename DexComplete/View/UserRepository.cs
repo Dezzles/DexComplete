@@ -4,12 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BCrypt.Net;
+using DexComplete.Utilities;
+using SharpLogging;
+
 namespace DexComplete.View
 {
 	static class UserRepository
 	{
-		public static bool Validate(string Username, string Token)
+		public static bool Validate(string Username, string Token, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			Data.PokedexModel ctr = new Data.PokedexModel();
 			var query = ctr.Tokens.Where(e => e.Value == Token && e.User.Username == Username.ToLower() && (DateTime.Now < e.ExpiryDate) && (e.TokenType == Data.TokenType.LoginToken));
 			if (query.Count() == 0)
@@ -19,8 +23,9 @@ namespace DexComplete.View
 
 		}
 
-		public static bool CreateGame(string Username, Transfer.AddGame addGame)
+		public static bool CreateGame(string Username, Transfer.AddGame addGame, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel mdl = new Data.PokedexModel())
 			{
 				if (!Utilities.Encryption.isAlphaNumeric(addGame.SaveName))
@@ -48,8 +53,9 @@ namespace DexComplete.View
 			return true;
 		}
 
-		public static IEnumerable<Transfer.Saves> GetAllGames(string Username)
+		public static IEnumerable<Transfer.Saves> GetAllGames(string Username, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel mdl = new Data.PokedexModel())
 			{
 				var user = mdl.Users.SingleOrDefault(e => e.Username == Username);
@@ -70,8 +76,9 @@ namespace DexComplete.View
 			}
 		}
 
-		public static Transfer.Saves GetSaveData(string Username, string saveName)
+		public static Transfer.Saves GetSaveData(string Username, string saveName, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel mdl = new Data.PokedexModel())
 			{
 				var query = mdl.Users.Where(e => e.Username == Username);
@@ -95,8 +102,9 @@ namespace DexComplete.View
 			}
 		}
 
-		public static bool SetSaveData(string username, Transfer.Saves data)
+		public static bool SetSaveData(string username, Transfer.Saves data, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel mdl = new Data.PokedexModel())
 			{
 				var user = mdl.Users.SingleOrDefault(e => e.Username == username);
@@ -123,9 +131,9 @@ namespace DexComplete.View
 			}
 		}
 
-		public static Models.UserModel Register(Models.UserModel user)
+		public static Models.UserModel Register(Models.UserModel user, SLLog Log)
 		{
-
+			Log = Logging.GetLog(Log);
 			user.Username = user.Username.Trim();
 			user.Email = user.Email.Trim();
 			if (string.IsNullOrWhiteSpace(user.Username))
@@ -158,12 +166,13 @@ namespace DexComplete.View
 			ctr.SaveChanges();
 			return new Models.UserModel()
 			{
-				Token = GetToken(newuser.Username, Data.TokenType.LoginToken)
+				Token = GetToken(newuser.Username, Data.TokenType.LoginToken, Log)
 			};
 		}
 
-		public static Models.UserModel Login(Models.UserModel User)
+		public static Models.UserModel Login(Models.UserModel User, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				var query = ctr.Users.Where(e => User.Username.ToLower() == e.Username);
@@ -175,15 +184,16 @@ namespace DexComplete.View
 				var success = BCrypt.Net.BCrypt.Verify(User.Password, user.Password);
 				if (success)
 				{
-					string token = GetToken(User.Username, Data.TokenType.LoginToken);
+					string token = GetToken(User.Username, Data.TokenType.LoginToken, Log);
 					return new Models.UserModel() { Username = user.Username, Token = token };
 				}
 				throw new Code.ExceptionResponse("Invalid username or password");
 			}
 		}
 
-		private static string GetToken(string Username, Data.TokenType Type)
+		private static string GetToken(string Username, Data.TokenType Type, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 
@@ -202,8 +212,9 @@ namespace DexComplete.View
 			}
 		}
 
-		public static bool Logout(string Username, string Token)
+		public static bool Logout(string Username, string Token, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				var tkn = ctr.Tokens.SingleOrDefault(e => (e.User.Username == Username) && (e.Value == Token));
@@ -216,37 +227,36 @@ namespace DexComplete.View
 			}
 		}
 
-		public static string GetResetContents(string Username, string Token)
+		public static string GetResetContents(string Username, string Token, SLLog Log)
 		{
-			string contents = Utilities.Templates.GetTemplate("passwordReset.html");
-			contents = contents.Replace("{URL}", View.ServerRepository.GetServerAddress());
+			Log = Logging.GetLog(Log);
+			string contents = Utilities.Templates.GetTemplate("passwordReset.html", Log);
+			contents = contents.Replace("{URL}", View.ServerRepository.GetServerAddress(Log));
 			contents = contents.Replace("{TOKEN}", Token);
 
 			return contents;
 		}
 
-		public static void RequestPasswordReset(string username)
+		public static void RequestPasswordReset(string username, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel model = new Data.PokedexModel())
 			{
 				{
 					var theUser = model.Users.FirstOrDefault(u => u.Username == username.ToLower());
 					if (theUser == null)
 						return;
-					var token = GetToken(username, Data.TokenType.PasswordReset);
-					string Contents = GetResetContents(theUser.Username, token);
-					Utilities.Email.SendEmail(theUser.Email, "DexComplete Password Reset", Contents);
-				}
-				
-				{
-
+					var token = GetToken(username, Data.TokenType.PasswordReset, Log);
+					string Contents = GetResetContents(theUser.Username, token, Log);
+					Utilities.Email.SendEmail(theUser.Email, "DexComplete Password Reset", Contents, Log);
 				}
 
 			}
 		}
 
-		public static bool ResetPassword(string user, string password, string token)
+		public static bool ResetPassword(string user, string password, string token, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel model = new Data.PokedexModel())
 			{
 				var theUser = model.Users.FirstOrDefault(u => u.Username == user.ToLower());
@@ -264,9 +274,10 @@ namespace DexComplete.View
 			}
 		}
 
-		public static Transfer.GameProgress GetGameProgress(string user, string save)
+		public static Transfer.GameProgress GetGameProgress(string user, string save, SLLog Log)
 		{
 			var progress = new Transfer.GameProgress();
+			Log = Logging.GetLog(Log);
 			progress.Pokedexes = new List<Transfer.ItemProgress>();
 			progress.Collections = new List<Transfer.ItemProgress>();
 			using (Data.PokedexModel model = new Data.PokedexModel())
@@ -276,8 +287,8 @@ namespace DexComplete.View
 				{
 					throw new Code.Exception404();
 				}
-				var gameTools = GameRepository.GetGameTools(saveData.Game.GameId);
-				var dexes = PokedexRepository.GetPokedexesByGame(saveData.Game.GameId);
+				var gameTools = GameRepository.GetGameTools(saveData.Game.GameId, Log);
+				var dexes = PokedexRepository.GetPokedexesByGame(saveData.Game.GameId, Log);
 				int[] dex = ConvertData(saveData.Code, 2);
 				int[] tm = ConvertData(saveData.TMData);
 				int[] abilities = ConvertData(saveData.AbilityData, 2);
@@ -288,7 +299,7 @@ namespace DexComplete.View
 				foreach (var d in dexes)
 				{
 					var item = new Transfer.ItemProgress();
-					var entries = PokedexRepository.GetPokedex(d.PokedexId);
+					var entries = PokedexRepository.GetPokedex(d.PokedexId, Log);
 					item.Title = entries.Title;
 					item.Identifier = d.PokedexId;
 					item.Total = entries.Pokemon.Count();
@@ -303,7 +314,7 @@ namespace DexComplete.View
 				if (gameTools.Collections.Any(u => u.Identifier == "abilities"))
 				{
 					var item = new Transfer.ItemProgress();
-					var entries = AbilityRepository.GetAbilitiesByGame(saveData.Game.GameId);
+					var entries = AbilityRepository.GetAbilitiesByGame(saveData.Game.GameId, Log);
 					item.Title = "Hidden Abilities";
 					item.Total = entries.Count();
 					item.Identifier = "abilities";
@@ -318,7 +329,7 @@ namespace DexComplete.View
 				if (gameTools.Collections.Any(u => u.Identifier == "eggGroups"))
 				{
 					var item = new Transfer.ItemProgress();
-					var entries = EggGroupRepository.GetEggGroupsByGame(saveData.Game.GameId);
+					var entries = EggGroupRepository.GetEggGroupsByGame(saveData.Game.GameId, Log);
 					item.Title = "Egg Groups";
 					item.Total = entries.Count();
 					item.Identifier = "egggroups";
@@ -333,7 +344,7 @@ namespace DexComplete.View
 				if (gameTools.Collections.Any(u => u.Identifier == "berries"))
 				{
 					var item = new Transfer.ItemProgress();
-					var entries = BerryRepository.GetBerriesByGame(saveData.Game.GameId);
+					var entries = BerryRepository.GetBerriesByGame(saveData.Game.GameId, Log);
 					item.Title = "Berries";
 					item.Identifier = "berries";
 					item.Total = entries.Count();
@@ -362,7 +373,7 @@ namespace DexComplete.View
 				if (gameTools.Collections.Any(u => u.Identifier == "tms"))
 				{
 					var item = new Transfer.ItemProgress();
-					var entries = TmRepository.GetTmsByGame(saveData.Game.GameId);
+					var entries = TmRepository.GetTmsByGame(saveData.Game.GameId, Log);
 					item.Title = "Technical Machines";
 					item.Identifier = "tms";
 					item.Total = entries.Count();
@@ -377,8 +388,9 @@ namespace DexComplete.View
 			return progress;
 		}
 
-		public static int[] ConvertData(byte[] data, int bitCount = 1)
+		public static int[] ConvertData(byte[] data, int bitCount = 1, SLLog Log = null)
 		{
+			Log = Logging.GetLog(Log);
 			int mod = 0;
 			int pow = 1;
 			for (int i = 0; i < bitCount; ++i)

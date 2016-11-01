@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DexComplete.Utilities;
+using SharpLogging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +10,9 @@ namespace DexComplete.View
 {
 	public static class UpdatesRepository
 	{
-		public static Dictionary<DateTime, List<string>> GetRecentUpdates()
+		public static Dictionary<DateTime, List<string>> GetRecentUpdates(SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			Dictionary<DateTime, List<String>> results = new Dictionary<DateTime, List<string>>();
 			using (Data.PokedexModel model = new Data.PokedexModel())
 			{
@@ -30,8 +33,9 @@ namespace DexComplete.View
 			return results;
 		}
 
-		public static IEnumerable<string> GetComingSoon()
+		public static IEnumerable<string> GetComingSoon(SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			List<string> results = new List<string>();
 
 			using (Data.PokedexModel model = new Data.PokedexModel())

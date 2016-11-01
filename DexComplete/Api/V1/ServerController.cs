@@ -1,4 +1,5 @@
 ﻿using DexComplete.Transfer;
+using DexComplete.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +15,18 @@ namespace DexComplete.Api.V1
 		[HttpGet, Route("server/ping")]
 		public Response Ping()
 		{
-			View.ServerRepository.ThrowMaintenance();
+			var Log = Logging.GetLog(null);
+			View.ServerRepository.ThrowMaintenance(Log);
 			return Response.Succeed(true);
 		}
 
 		[HttpGet, Route("server/updates")]
 		public Response Updates()
 		{
-			View.ServerRepository.ThrowMaintenance();
-			var comingSoon = View.UpdatesRepository.GetComingSoon();
-			var updates = View.UpdatesRepository.GetRecentUpdates();
+			var Log = Logging.GetLog(null);
+			View.ServerRepository.ThrowMaintenance(Log);
+			var comingSoon = View.UpdatesRepository.GetComingSoon(Log);
+			var updates = View.UpdatesRepository.GetRecentUpdates(Log);
 
 			return Response.Succeed(new SiteUpdates() { ComingSoon = comingSoon, Updates = updates });
 		}

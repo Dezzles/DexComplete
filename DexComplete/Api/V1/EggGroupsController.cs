@@ -1,4 +1,6 @@
 ﻿using DexComplete.Transfer;
+using DexComplete.Utilities;
+using SharpLogging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,11 @@ namespace DexComplete.Api.V1
 	public class EggGroupsController : ApiController
 	{
 		[HttpGet, Route("eggGroups/{gameId}")]
-		public Response GetEggGroups(string gameId)
+		public Response GetEggGroups(string gameId, SLLog Log = null)
 		{
-			View.ServerRepository.ThrowMaintenance();
-			var result = View.EggGroupRepository.GetEggGroupsByGame(gameId);
+			Log = Logging.GetLog(Log);
+			View.ServerRepository.ThrowMaintenance(Log);
+			var result = View.EggGroupRepository.GetEggGroupsByGame(gameId, Log);
 			return Response.Succeed(result);
 		}
 

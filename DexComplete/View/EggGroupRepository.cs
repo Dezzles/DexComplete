@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DexComplete.Utilities;
+using SharpLogging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +10,9 @@ namespace DexComplete.View
 {
 	public static class EggGroupRepository
 	{
-		public static IEnumerable<Transfer.IdNameTransfer> GetEggGroupsByGame(string gameId)
+		public static IEnumerable<Transfer.IdNameTransfer> GetEggGroupsByGame(string gameId, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				var eggGroups = ctr.EggGroups.OrderBy( e =>e.Index);

@@ -14,8 +14,9 @@ namespace DexComplete.Api.V1
 		[HttpGet, Route("ability/{gameId}")]
 		public Response GetAbilitiesList(string gameId)
 		{
-			View.ServerRepository.ThrowMaintenance();
-			var result = View.AbilityRepository.GetAbilitiesByGame(gameId);
+			var log = Utilities.Logging.GetLog();
+			View.ServerRepository.ThrowMaintenance(log);
+			var result = View.AbilityRepository.GetAbilitiesByGame(gameId, log);
 			return Response.Succeed(result);
 		}
 

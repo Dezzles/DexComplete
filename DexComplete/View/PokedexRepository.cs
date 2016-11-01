@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DexComplete.Utilities;
+using SharpLogging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +10,9 @@ namespace DexComplete.View
 {
 	static class PokedexRepository
 	{
-		public static IEnumerable<Models.PokedexModel> ListPokedexes(string GameId)
+		public static IEnumerable<Models.PokedexModel> ListPokedexes(string GameId, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				var query = ctr.Games.Where(e => e.GameId == GameId);
@@ -29,8 +32,9 @@ namespace DexComplete.View
 			}
 		}
 
-		public static Models.PokedexModel GetPokedexByName(string Game, string Pokedex)
+		public static Models.PokedexModel GetPokedexByName(string Game, string Pokedex, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			string pokedexId = "";
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
@@ -42,11 +46,12 @@ namespace DexComplete.View
 					throw new Code.ExceptionResponse("Invalid pokedex");
 				pokedexId = dex.First().PokedexId;
 			}
-			return GetPokedex(pokedexId);
+			return GetPokedex(pokedexId, Log);
 		}
 
-		public static IEnumerable<Models.PokedexModel> GetPokedexesByGame(string GameId)
+		public static IEnumerable<Models.PokedexModel> GetPokedexesByGame(string GameId, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			List<Models.PokedexModel> ret = new List<Models.PokedexModel>();
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
@@ -66,8 +71,9 @@ namespace DexComplete.View
 			return ret;
 		}
 
-		public static Models.PokedexModel GetPokedex(string PokedexId)
+		public static Models.PokedexModel GetPokedex(string PokedexId, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				var dex = ctr.Pokedexes.SingleOrDefault(e => e.PokedexId == PokedexId);
@@ -94,8 +100,9 @@ namespace DexComplete.View
 			}
 		}
 
-		public static Models.PokedexModel GetPokedex(string GameId, string PokedexId)
+		public static Models.PokedexModel GetPokedex(string GameId, string PokedexId, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				var dex = ctr.Pokedexes.SingleOrDefault(e => (e.PokedexId == PokedexId) &&

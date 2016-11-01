@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpLogging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -15,14 +16,16 @@ namespace DexComplete.Utilities
 
 		static Email()
 		{
-			EmailAddress = View.ServerRepository.GetEmailAddress();
-			EmailPassword = View.ServerRepository.GetEmailPassword();
-			SMTPAddress = View.ServerRepository.GetSMTPSettings();
-			SMTPPort = View.ServerRepository.GetSMTPPort();
+			SLLog Log = Logging.GetLog(null);
+			EmailAddress = View.ServerRepository.GetEmailAddress(Log);
+			EmailPassword = View.ServerRepository.GetEmailPassword(Log);
+			SMTPAddress = View.ServerRepository.GetSMTPSettings(Log);
+			SMTPPort = View.ServerRepository.GetSMTPPort(Log);
 		}
 
-		public static void SendEmail(string Email, string Subject, String Contents)
+		public static void SendEmail(string Email, string Subject, String Contents, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			MailMessage message = new MailMessage();
 			message.From = new MailAddress(EmailAddress);
 

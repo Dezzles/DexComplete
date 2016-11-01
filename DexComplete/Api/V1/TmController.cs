@@ -1,4 +1,6 @@
 ﻿using DexComplete.Transfer;
+using DexComplete.Utilities;
+using SharpLogging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,11 @@ namespace DexComplete.Api.V1
 	public class TmController : ApiController
 	{
 		[HttpGet, Route("tms/{gameId}")]
-		public Response GetTmList(string gameId)
+		public Response GetTmList(string gameId, SLLog Log)
 		{
-			View.ServerRepository.ThrowMaintenance();
-			var result = View.TmRepository.GetTmsByGame(gameId);
+			Log = Logging.GetLog(Log);
+			View.ServerRepository.ThrowMaintenance(Log);
+			var result = View.TmRepository.GetTmsByGame(gameId, Log);
 			return Response.Succeed(result);
 		}
 

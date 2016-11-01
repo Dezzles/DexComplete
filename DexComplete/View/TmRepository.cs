@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DexComplete.Utilities;
+using SharpLogging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +10,9 @@ namespace DexComplete.View
 {
 	public static class TmRepository
 	{
-		public static IEnumerable<Transfer.IdNameTransfer> GetTmsByGame(string GameId)
+		public static IEnumerable<Transfer.IdNameTransfer> GetTmsByGame(string GameId, SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			List<Transfer.IdNameTransfer> ret = new List<Transfer.IdNameTransfer>();
 
 			using (Data.PokedexModel ctr = new Data.PokedexModel())

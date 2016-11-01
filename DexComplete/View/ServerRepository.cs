@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DexComplete.Utilities;
+using SharpLogging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,62 +10,51 @@ namespace DexComplete.View
 {
 	public static class ServerRepository
 	{
-		public static void ThrowMaintenance()
+		public static void ThrowMaintenance(SLLog Log)
 		{
-			if (InMaintenance())
+			Log = Logging.GetLog(Log);
+			if (InMaintenance(Log))
 				throw new Code.ExceptionMaintenance();
 		}
-		public static bool InMaintenance()
+		public static bool InMaintenance(SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				return ctr.ServerSettings.Single(e => e.Config == "Maintenance").Boolean.Value;
 			}
 		}
 
-		public static bool RequiresAbilityUpdate()
+		public static string GetEmailAddress(SLLog Log)
 		{
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
-			{
-				return ctr.ServerSettings.Single(e => e.Config == "AbilityUpdateRequired").Boolean.Value;
-			}
-		}
-
-		public static void AbilityUpdatePerformed()
-		{
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
-			{
-				ctr.ServerSettings.Single(e => e.Config == "AbilityUpdateRequired").Boolean = false;
-				ctr.SaveChanges();
-			}
-		}
-
-		public static string GetEmailAddress()
-		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				return ctr.ServerSettings.Single(e => e.Config == "EmailAddress").String;
 			}
 
 		}
-		public static string GetSMTPSettings()
+		public static string GetSMTPSettings(SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				return ctr.ServerSettings.Single(e => e.Config == "SMTPDetails").String;
 			}
 
 		}
-		public static string GetEmailPassword()
+		public static string GetEmailPassword(SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				return ctr.ServerSettings.Single(e => e.Config == "EmailPassword").String;
 			}
 
 		}
-		public static int GetSMTPPort()
+		public static int GetSMTPPort(SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				return ctr.ServerSettings.Single(e => e.Config == "SMTPPort").Integer.Value;
@@ -71,8 +62,9 @@ namespace DexComplete.View
 
 		}
 
-		public static string GetServerAddress()
+		public static string GetServerAddress(SLLog Log)
 		{
+			Log = Logging.GetLog(Log);
 			using (Data.PokedexModel ctr = new Data.PokedexModel())
 			{
 				return ctr.ServerSettings.Single(e => e.Config == "ServerAddress").String;

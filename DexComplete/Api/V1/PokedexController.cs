@@ -1,4 +1,6 @@
 ﻿using DexComplete.Transfer;
+using DexComplete.Utilities;
+using SharpLogging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,10 @@ namespace DexComplete.Api.V1
 	public class PokedexController : ApiController
 	{
 		[HttpGet, Route("pokedex/all")]
-		public Response GetAllPokedexes()
+		public Response GetAllPokedexes(SLLog Log)
 		{
-			View.ServerRepository.ThrowMaintenance();
+			Log = Logging.GetLog(Log);
+			View.ServerRepository.ThrowMaintenance(Log);
 			Data.PokedexModel ctr = new Data.PokedexModel();
 			StringBuilder sb = new StringBuilder();
 			foreach (var game in ctr.Games)
@@ -32,10 +35,11 @@ namespace DexComplete.Api.V1
 		}
 
 		[HttpGet, Route("pokedex/{gameId}/{pokedexId}")]
-		public Response GetPokedexByGameAndId(string gameId, string pokedexId)
+		public Response GetPokedexByGameAndId(string gameId, string pokedexId, SLLog Log)
 		{
-			View.ServerRepository.ThrowMaintenance();
-			return Response.Succeed(View.PokedexRepository.GetPokedex(gameId, pokedexId));
+			Log = Logging.GetLog(Log);
+			View.ServerRepository.ThrowMaintenance(Log);
+			return Response.Succeed(View.PokedexRepository.GetPokedex(gameId, pokedexId, Log));
 		}
 	}
 }
