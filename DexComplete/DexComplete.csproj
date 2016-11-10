@@ -323,6 +323,7 @@
     <Compile Include="Data\ComingSoon.cs" />
     <Compile Include="Data\DatabaseTypes.cs" />
     <Compile Include="Data\EggGroups.cs" />
+    <Compile Include="Data\NamedIndex.cs" />
     <Compile Include="Data\PokedexEntry.cs" />
     <Compile Include="Data\Game.cs" />
     <Compile Include="Data\Generation.cs" />
@@ -336,12 +337,34 @@
     <Compile Include="Data\Token.cs" />
     <Compile Include="Data\Update.cs" />
     <Compile Include="Data\User.cs" />
+    <Compile Include="Dto\AbilityEntry.cs" />
+    <Compile Include="Dto\AbilitySet.cs" />
+    <Compile Include="Dto\Berry.cs" />
+    <Compile Include="Dto\Collection.cs" />
+    <Compile Include="Dto\Game.cs" />
+    <Compile Include="Dto\Generation.cs" />
+    <Compile Include="Dto\IndexedItem.cs" />
+    <Compile Include="Dto\Pokedex.cs" />
+    <Compile Include="Dto\PokedexEntry.cs" />
+    <Compile Include="Dto\Save.cs" />
+    <Compile Include="Dto\TM.cs" />
+    <Compile Include="Dto\Token.cs" />
+    <Compile Include="Dto\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Pokedex.cs" />
     <Compile Include="Models\Pokemon.cs" />
+    <Compile Include="Repository\Abilities.cs" />
+    <Compile Include="Repository\Berries.cs" />
+    <Compile Include="Repository\EggGroups.cs" />
+    <Compile Include="Repository\Games.cs" />
+    <Compile Include="Repository\Generations.cs" />
+    <Compile Include="Repository\Pokedexes.cs" />
+    <Compile Include="Repository\TMs.cs" />
+    <Compile Include="Repository\Updates.cs" />
+    <Compile Include="Repository\Users.cs" />
     <Compile Include="Transfer\Request.cs" />
     <Compile Include="Transfer\Response.cs" />
     <Compile Include="Models\User.cs" />
@@ -351,15 +374,15 @@
     <Compile Include="Utilities\Encryption.cs" />
     <Compile Include="Utilities\Logging.cs" />
     <Compile Include="Utilities\Templates.cs" />
-    <Compile Include="View\AbilityRepository.cs" />
-    <Compile Include="View\BerryRepository.cs" />
-    <Compile Include="View\EggGroupRepository.cs" />
-    <Compile Include="View\GameRepository.cs" />
-    <Compile Include="View\PokedexRepository.cs" />
-    <Compile Include="View\ServerRepository.cs" />
-    <Compile Include="View\TmRepository.cs" />
-    <Compile Include="View\UpdatesRepository.cs" />
-    <Compile Include="View\UserRepository.cs" />
+    <Compile Include="Services\AbilityService.cs" />
+    <Compile Include="Services\BerryService.cs" />
+    <Compile Include="Services\EggGroupService.cs" />
+    <Compile Include="Services\GameService.cs" />
+    <Compile Include="Services\PokedexService.cs" />
+    <Compile Include="Services\ServerService.cs" />
+    <Compile Include="Services\TmService.cs" />
+    <Compile Include="Services\UpdatesService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

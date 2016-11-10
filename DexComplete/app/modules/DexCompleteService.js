@@ -301,7 +301,7 @@
                 GetPokedexEntries: function (params, onComplete) {
                     var req = {
                         method: 'GET',
-                        url: address + '/api/v1/pokedex/' + params.GameId + '/' + params.DexId
+                        url: address + '/api/v1/pokedex/' + params.DexId
                     };
 
                     $http(req).then(function (summary) {

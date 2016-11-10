@@ -1,5 +1,6 @@
 ﻿using DexComplete.Transfer;
 using DexComplete.Utilities;
+using SharpLogging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +16,18 @@ namespace DexComplete.Api.V1
 		[HttpGet, Route("server/ping")]
 		public Response Ping()
 		{
-			var Log = Logging.GetLog(null);
-			View.ServerRepository.ThrowMaintenance(Log);
+			var Log = Logging.GetLog();
+			Services.ServerService.ThrowMaintenance(Log);
 			return Response.Succeed(true);
 		}
 
 		[HttpGet, Route("server/updates")]
 		public Response Updates()
 		{
-			var Log = Logging.GetLog(null);
-			View.ServerRepository.ThrowMaintenance(Log);
-			var comingSoon = View.UpdatesRepository.GetComingSoon(Log);
-			var updates = View.UpdatesRepository.GetRecentUpdates(Log);
+			var Log = Logging.GetLog();
+			Services.ServerService.ThrowMaintenance(Log);
+			var comingSoon = Services.UpdatesService.GetComingSoon(Log);
+			var updates = Services.UpdatesService.GetRecentUpdates(Log);
 
 			return Response.Succeed(new SiteUpdates() { ComingSoon = comingSoon, Updates = updates });
 		}

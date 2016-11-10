@@ -16,38 +16,38 @@ namespace DexComplete.Api.V1
 	public class GameController : ApiController
 	{
 		[HttpGet, Route("games/list")]
-		public Response GetAllGames(SLLog Log = null)
+		public Response GetAllGames()
 		{
-			Log = Logging.GetLog(Log);
-			View.ServerRepository.ThrowMaintenance(Log);
-			var games = View.GameRepository.GetGames(Log);
+			var Log = Logging.GetLog();
+			Services.ServerService.ThrowMaintenance(Log);
+			var games = Services.GameService.GetGames(Log);
 			return Response.Succeed(games);
 		}
 
 		[HttpGet, Route("game/{gameName}/dex")]
-		public Response GetGameDexList(string gameName, SLLog Log = null)
+		public Response GetGameDexList(string gameName )
 		{
-			Log = Logging.GetLog(Log);
-			View.ServerRepository.ThrowMaintenance(Log);
-			var dexList = View.PokedexRepository.GetPokedexesByGame(gameName, Log);
+			var Log = Logging.GetLog();
+			Services.ServerService.ThrowMaintenance(Log);
+			var dexList = Services.PokedexService.GetPokedexesByGame(gameName, Log);
 			return Response.Succeed(dexList);
 		}
 
 		[HttpGet, Route("game/{gameName}/dex/{dexName}")]
-		public Response GetGamePokedex(string gameName, string dexName, SLLog Log = null)
+		public Response GetGamePokedex(string gameName, string dexName)
 		{
-			Log = Logging.GetLog(Log);
-			View.ServerRepository.ThrowMaintenance(Log);
-			var games = View.PokedexRepository.GetPokedexByName(gameName, dexName, Log);
+			var Log = Logging.GetLog();
+			Services.ServerService.ThrowMaintenance(Log);
+			var games = Services.PokedexService.GetPokedex(dexName, Log);
 			return Response.Succeed(games);
 		}
 
 		[HttpGet, Route("game/{gameName}/allTools")]
-		public Response GetGameTools(string gameName, SLLog Log = null)
+		public Response GetGameTools(string gameName)
 		{
-			Log = Logging.GetLog(Log);
-			View.ServerRepository.ThrowMaintenance(Log);
-			var result = View.GameRepository.GetGameTools(gameName, Log);
+			var Log = Logging.GetLog();
+			Services.ServerService.ThrowMaintenance(Log);
+			var result = Services.GameService.GetGameTools(gameName, Log);
 			return Response.Succeed(result);
 		}
 

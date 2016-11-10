@@ -15,8 +15,8 @@ namespace DexComplete.Api.V1
 		public Response GetAbilitiesList(string gameId)
 		{
 			var log = Utilities.Logging.GetLog();
-			View.ServerRepository.ThrowMaintenance(log);
-			var result = View.AbilityRepository.GetAbilitiesByGame(gameId, log);
+			Services.ServerService.ThrowMaintenance(log);
+			var result = Services.AbilityService.GetAbilitiesByGame(gameId, log);
 			return Response.Succeed(result);
 		}
 

@@ -15,11 +15,11 @@ namespace DexComplete.Api.V1
 	[RoutePrefix("api/v1")]
 	public class PokedexController : ApiController
 	{
-		[HttpGet, Route("pokedex/all")]
-		public Response GetAllPokedexes(SLLog Log)
+		[HttpGet, Route("pokedexes")]
+		public Response GetAllPokedexes()
 		{
-			Log = Logging.GetLog(Log);
-			View.ServerRepository.ThrowMaintenance(Log);
+			var Log = Logging.GetLog();
+			Services.ServerService.ThrowMaintenance(Log);
 			Data.PokedexModel ctr = new Data.PokedexModel();
 			StringBuilder sb = new StringBuilder();
 			foreach (var game in ctr.Games)
@@ -34,12 +34,12 @@ namespace DexComplete.Api.V1
 			return Response.Succeed(sb.ToString());
 		}
 
-		[HttpGet, Route("pokedex/{gameId}/{pokedexId}")]
-		public Response GetPokedexByGameAndId(string gameId, string pokedexId, SLLog Log)
+		[HttpGet, Route("pokedex/{pokedexId}")]
+		public Response GetPokedexByGameAndId(string pokedexId)
 		{
-			Log = Logging.GetLog(Log);
-			View.ServerRepository.ThrowMaintenance(Log);
-			return Response.Succeed(View.PokedexRepository.GetPokedex(gameId, pokedexId, Log));
+			var Log = Logging.GetLog();
+			Services.ServerService.ThrowMaintenance(Log);
+			return Response.Succeed(Services.PokedexService.GetPokedex(pokedexId, Log));
 		}
 	}
 }

@@ -14,11 +14,11 @@ namespace DexComplete.Api.V1
 	public class BerryController : ApiController
 	{
 		[HttpGet, Route("berries/{gameId}")]
-		public Response GetBerryList(string gameId, SLLog Log = null)
+		public Response GetBerryList(string gameId)
 		{
-			Log = Logging.GetLog(Log);
-			View.ServerRepository.ThrowMaintenance(Log);
-			var result = View.BerryRepository.GetBerriesByGame(gameId, Log);
+			var Log = Logging.GetLog();
+			Services.ServerService.ThrowMaintenance(Log);
+			var result = Services.BerryService.GetBerriesByGame(gameId, Log);
 			return Response.Succeed(result);
 		}
 

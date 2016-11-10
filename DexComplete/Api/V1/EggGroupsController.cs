@@ -14,11 +14,11 @@ namespace DexComplete.Api.V1
 	public class EggGroupsController : ApiController
 	{
 		[HttpGet, Route("eggGroups/{gameId}")]
-		public Response GetEggGroups(string gameId, SLLog Log = null)
+		public Response GetEggGroups(string gameId)
 		{
-			Log = Logging.GetLog(Log);
-			View.ServerRepository.ThrowMaintenance(Log);
-			var result = View.EggGroupRepository.GetEggGroupsByGame(gameId, Log);
+			var Log = Logging.GetLog();
+			Services.ServerService.ThrowMaintenance(Log);
+			var result = Services.EggGroupService.GetEggGroupsByGame(gameId, Log);
 			return Response.Succeed(result);
 		}
 

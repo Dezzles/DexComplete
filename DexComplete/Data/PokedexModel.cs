@@ -39,6 +39,7 @@ namespace DexComplete.Data
 		public virtual DbSet<Update> Updates { get; set; }
 		public virtual DbSet<ComingSoon> ComingSoon { get; set; }
 
+		public virtual DbSet<Collection> Collections { get; set; }
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<ComingSoon>()
@@ -134,8 +135,7 @@ namespace DexComplete.Data
 				.HasRequired<Move>(e => e.Move)
 				.WithMany(u => u.Tms)
 				.HasForeignKey(e => e.MoveId);
-
-			
+				
 		}
 	}
 }

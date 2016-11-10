@@ -17,10 +17,10 @@ namespace DexComplete.Utilities
 		static Email()
 		{
 			SLLog Log = Logging.GetLog(null);
-			EmailAddress = View.ServerRepository.GetEmailAddress(Log);
-			EmailPassword = View.ServerRepository.GetEmailPassword(Log);
-			SMTPAddress = View.ServerRepository.GetSMTPSettings(Log);
-			SMTPPort = View.ServerRepository.GetSMTPPort(Log);
+			EmailAddress = Services.ServerService.GetEmailAddress(Log);
+			EmailPassword = Services.ServerService.GetEmailPassword(Log);
+			SMTPAddress = Services.ServerService.GetSMTPSettings(Log);
+			SMTPPort = Services.ServerService.GetSMTPPort(Log);
 		}
 
 		public static void SendEmail(string Email, string Subject, String Contents, SLLog Log)
