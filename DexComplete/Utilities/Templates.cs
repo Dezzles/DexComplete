@@ -10,9 +10,9 @@ namespace DexComplete.Utilities
 {
 	public class Templates
 	{
-		public static string GetTemplate(string templateName, SLLog Log)
+		public static string GetTemplate(string templateName)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var assembly = Assembly.GetExecutingAssembly();
 			var textStreamReader = new StreamReader(assembly.GetManifestResourceStream("DexComplete.Templates." + templateName));
 			return textStreamReader.ReadToEnd();

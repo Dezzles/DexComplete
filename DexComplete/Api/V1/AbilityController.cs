@@ -23,9 +23,8 @@ namespace DexComplete.Api.V1
 		[HttpGet, Route("ability/{gameId}")]
 		public Response GetAbilitiesList(string gameId)
 		{
-			var log = Utilities.Logging.GetLog();
-			ServerService_.ThrowMaintenance(log);
-			var result = AbilityService_.GetAbilitiesByGame(gameId, log);
+			ServerService_.ThrowMaintenance();
+			var result = AbilityService_.GetAbilitiesByGame(gameId);
 			return Response.Succeed(result);
 		}
 

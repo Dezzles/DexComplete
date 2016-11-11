@@ -16,10 +16,9 @@ namespace DexComplete.Repository
 			this.Games_ = Games;
 			this.Model_ = Model;
 		}
-		public IEnumerable<Dto.TM> GetTMs(string GameId, SLLog Log)
+		public IEnumerable<Dto.TM> GetTMs(string GameId)
 		{
-			Log = Utilities.Logging.GetLog(Log);
-			var game = Games_.GetGameById(GameId, Log);
+			var game = Games_.GetGameById(GameId);
 			if (game == null)
 				return null;
 

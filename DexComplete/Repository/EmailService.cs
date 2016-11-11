@@ -17,16 +17,15 @@ namespace DexComplete.Services
 
 		public EmailService(Services.ServerService ServerService)
 		{
-			SLLog Log = Logging.GetLog(null);
-			EmailAddress = ServerService.GetEmailAddress(Log);
-			EmailPassword = ServerService.GetEmailPassword(Log);
-			SMTPAddress = ServerService.GetSMTPSettings(Log);
-			SMTPPort = ServerService.GetSMTPPort(Log);
+			EmailAddress = ServerService.GetEmailAddress();
+			EmailPassword = ServerService.GetEmailPassword();
+			SMTPAddress = ServerService.GetSMTPSettings();
+			SMTPPort = ServerService.GetSMTPPort();
 		}
 
-		public void SendEmail(string Email, string Subject, String Contents, SLLog Log)
+		public void SendEmail(string Email, string Subject, String Contents)
 		{
-			Log = Logging.GetLog(Log);
+			
 			MailMessage message = new MailMessage();
 			message.From = new MailAddress(EmailAddress);
 

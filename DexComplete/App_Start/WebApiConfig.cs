@@ -11,6 +11,8 @@ namespace DexComplete
     {
         public static void Register(HttpConfiguration config)
         {
+			SharpLogging.SLLogInstance.InstancedLog = Utilities.Logging.Logger;
+
 			var container = new UnityContainer();
 			container.RegisterType<Repository.Abilities, Repository.Abilities>(new HierarchicalLifetimeManager());
 			container.RegisterType<Repository.Berries, Repository.Berries>(new HierarchicalLifetimeManager());
@@ -33,6 +35,7 @@ namespace DexComplete
 			container.RegisterType<Services.UpdatesService, Services.UpdatesService>(new HierarchicalLifetimeManager());
 			container.RegisterType<Services.UserService, Services.UserService>(new HierarchicalLifetimeManager());
 
+			container.RegisterType<SharpLogging.SLLog, SharpLogging.SLLogInstance>(new HierarchicalLifetimeManager());
 
 			container.RegisterType<Data.PokedexModel, Data.PokedexModel>(new HierarchicalLifetimeManager());
 

@@ -26,7 +26,7 @@ namespace DexComplete.Utilities
 			{
 				return container.Resolve(serviceType);
 			}
-			catch (ResolutionFailedException e)
+			catch (ResolutionFailedException)
 			{
 				return null;
 			}
@@ -38,7 +38,7 @@ namespace DexComplete.Utilities
 			{
 				return container.ResolveAll(serviceType);
 			}
-			catch (ResolutionFailedException e)
+			catch (ResolutionFailedException)
 			{
 				return new List<object>();
 			}

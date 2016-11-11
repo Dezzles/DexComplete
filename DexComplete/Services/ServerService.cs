@@ -15,44 +15,44 @@ namespace DexComplete.Services
 		{
 			Model_ = Model;
 		}
-		public void ThrowMaintenance(SLLog Log)
+		public void ThrowMaintenance()
 		{
-			Log = Logging.GetLog(Log);
-			if (InMaintenance(Log))
+			
+			if (InMaintenance())
 				throw new Code.ExceptionMaintenance();
 		}
-		public bool InMaintenance(SLLog Log)
+		public bool InMaintenance()
 		{
-			Log = Logging.GetLog(Log);
+			
 			return Model_.ServerSettings.Single(e => e.Config == "Maintenance").Boolean.Value;
 		}
 
-		public string GetEmailAddress(SLLog Log)
+		public string GetEmailAddress()
 		{
-			Log = Logging.GetLog(Log);
+			
 			return Model_.ServerSettings.Single(e => e.Config == "EmailAddress").String;
 
 		}
-		public string GetSMTPSettings(SLLog Log)
+		public string GetSMTPSettings()
 		{
-			Log = Logging.GetLog(Log);
+			
 			return Model_.ServerSettings.Single(e => e.Config == "SMTPDetails").String;
 		}
-		public string GetEmailPassword(SLLog Log)
+		public string GetEmailPassword()
 		{
-			Log = Logging.GetLog(Log);
+			
 			return Model_.ServerSettings.Single(e => e.Config == "EmailPassword").String;
 
 		}
-		public int GetSMTPPort(SLLog Log)
+		public int GetSMTPPort()
 		{
-			Log = Logging.GetLog(Log);
+			
 			return Model_.ServerSettings.Single(e => e.Config == "SMTPPort").Integer.Value;
 		}
 
-		public string GetServerAddress(SLLog Log)
+		public string GetServerAddress()
 		{
-			Log = Logging.GetLog(Log);
+			
 			return Model_.ServerSettings.Single(e => e.Config == "ServerAddress").String;
 		}
 	}

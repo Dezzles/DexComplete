@@ -25,9 +25,8 @@ namespace DexComplete.Api.V1
 		[HttpGet, Route("tms/{gameId}")]
 		public Response GetTmList(string gameId)
 		{
-			var Log = Logging.GetLog();
-			ServerService_.ThrowMaintenance(Log);
-			var result = TmService_.GetTmsByGame(gameId, Log);
+			ServerService_.ThrowMaintenance();
+			var result = TmService_.GetTmsByGame(gameId);
 			return Response.Succeed(result);
 		}
 

@@ -14,10 +14,10 @@ namespace DexComplete.Repository
 		{
 			Games_ = Games;
 		}
-		public IEnumerable<Dto.Berry> GetBerries(string GameId, SLLog Log)
+		public IEnumerable<Dto.Berry> GetBerries(string GameId)
 		{
-			Log = Logging.GetLog(Log);
-			var game = Games_.GetGameById(GameId, Log);
+			
+			var game = Games_.GetGameById(GameId);
 			if (game == null)
 				return null;
 			return game.Generation.Berries;

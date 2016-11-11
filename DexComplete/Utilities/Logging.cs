@@ -7,24 +7,25 @@ using System.Web;
 
 namespace DexComplete.Utilities
 {
+	public class SLLogInstance
+	{
+		SLLogInstance()
+		{
+
+		}
+	}
+
 	public static class Logging
 	{
-		private static SharpLogging.SharpLogging Logger;
+		public static SharpLogging.SharpLogging Logger { get; private set; }
 
 		static Logging()
 		{
 			var str = /*HttpContext.Current.Server.MapPath/**/("D:/logs/dexcomplete.log");
 			Logger = new SharpLogging.SharpLogging(new List<SLConfiguration>() {
-				/*new SharpLogging.Outputs.SLDebug(),/**/
+				new SharpLogging.Outputs.SLDebug(),
 				new SharpLogging.Outputs.SLFile(str) { LogLevel = SharpLogging.LoggingLevel.SILLY } });
 			Logger.Log(LoggingLevel.ERROR, "Test", Guid.NewGuid(), new { test = "test" });
-		}
-
-		public static SLLog GetLog(SLLog Log = null)
-		{
-			if (Log == null)
-				Log = Logger.Instance();
-			return Log;
 		}
 
 		public static SLLog Instance()

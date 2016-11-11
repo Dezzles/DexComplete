@@ -15,10 +15,10 @@ namespace DexComplete.Services
 		{
 			this.Tms_ = Tms;
 		}
-		public IEnumerable<Dto.TM> GetTmsByGame(string GameId, SLLog Log)
+		public IEnumerable<Dto.TM> GetTmsByGame(string GameId)
 		{
-			Log = Logging.GetLog(Log);
-			var ret = Tms_.GetTMs(GameId, Log);
+			
+			var ret = Tms_.GetTMs(GameId);
 			return ret;
 		}
 	}

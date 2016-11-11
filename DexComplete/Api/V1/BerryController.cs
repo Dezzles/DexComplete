@@ -25,9 +25,8 @@ namespace DexComplete.Api.V1
 		[HttpGet, Route("berries/{gameId}")]
 		public Response GetBerryList(string gameId)
 		{
-			var Log = Logging.GetLog();
-			ServerService_.ThrowMaintenance(Log);
-			var result = BerryService_.GetBerriesByGame(gameId, Log);
+			ServerService_.ThrowMaintenance();
+			var result = BerryService_.GetBerriesByGame(gameId);
 			return Response.Succeed(result);
 		}
 

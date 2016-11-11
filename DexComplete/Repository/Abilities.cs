@@ -13,10 +13,9 @@ namespace DexComplete.Repository
 		{
 			this.Games_ = Games;
 		}
-		public IEnumerable<Dto.AbilitySet> GetAbilitiesByGame(string GameId, SLLog Log)
+		public IEnumerable<Dto.AbilitySet> GetAbilitiesByGame(string GameId)
 		{
-			Log = Utilities.Logging.GetLog(Log);
-			var res = Games_.GetGameById(GameId, Log).Generation.AbilitySets;
+			var res = Games_.GetGameById(GameId).Generation.AbilitySets;
 			return res;
 		}
 

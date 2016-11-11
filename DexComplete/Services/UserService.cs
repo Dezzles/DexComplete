@@ -35,9 +35,9 @@ namespace DexComplete.Services
 			this.TmService_ = TmService;
 			this.EmailService_ = EmailService;
 		}
-		public bool Validate(string Username, string Token, SLLog Log)
+		public bool Validate(string Username, string Token)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var query = Model_.Tokens.Where(e => e.Value == Token && e.User.Username == Username.ToLower() && (DateTime.Now < e.ExpiryDate) && (e.TokenType == Data.TokenType.LoginToken));
 			if (query.Count() == 0)
 				return false;
@@ -46,9 +46,9 @@ namespace DexComplete.Services
 
 		}
 
-		public bool CreateGame(string Username, Transfer.AddGame addGame, SLLog Log)
+		public bool CreateGame(string Username, Transfer.AddGame addGame)
 		{
-			Log = Logging.GetLog(Log);
+			
 			if (!Utilities.Encryption.isAlphaNumeric(addGame.SaveName))
 				throw new Code.ExceptionResponse("Save name can only contain alphanumeric characters and spaces");
 
@@ -73,9 +73,9 @@ namespace DexComplete.Services
 			return true;
 		}
 
-		public IEnumerable<Transfer.Saves> GetAllGames(string Username, SLLog Log)
+		public IEnumerable<Transfer.Saves> GetAllGames(string Username)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var user = Model_.Users.SingleOrDefault(e => e.Username == Username);
 			if (user == null)
 				throw new Code.ExceptionResponse("Invalide username");
@@ -93,9 +93,9 @@ namespace DexComplete.Services
 			return results;
 		}
 
-		public Transfer.Saves GetSaveData(string Username, string saveName, SLLog Log)
+		public Transfer.Saves GetSaveData(string Username, string saveName)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var query = Model_.Users.Where(e => e.Username == Username);
 			if (query.Count() == 0)
 				throw new Code.ExceptionResponse("No such user exists");
@@ -116,9 +116,9 @@ namespace DexComplete.Services
 			return result;
 		}
 
-		public bool SetSaveData(string username, Transfer.Saves data, SLLog Log)
+		public bool SetSaveData(string username, Transfer.Saves data)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var user = Model_.Users.SingleOrDefault(e => e.Username == username);
 			if (user == null)
 				throw new Code.ExceptionResponse("Invalid user");
@@ -142,9 +142,9 @@ namespace DexComplete.Services
 			return true;
 		}
 
-		public Models.UserModel Register(Models.UserModel user, SLLog Log)
+		public Models.UserModel Register(Models.UserModel user)
 		{
-			Log = Logging.GetLog(Log);
+			
 			user.Username = user.Username.Trim();
 			user.Email = user.Email.Trim();
 			if (string.IsNullOrWhiteSpace(user.Username))
@@ -176,13 +176,13 @@ namespace DexComplete.Services
 			Model_.SaveChanges();
 			return new Models.UserModel()
 			{
-				Token = GetToken(newuser.Username, Data.TokenType.LoginToken, Log)
+				Token = GetToken(newuser.Username, Data.TokenType.LoginToken)
 			};
 		}
 
-		public Models.UserModel Login(Models.UserModel User, SLLog Log)
+		public Models.UserModel Login(Models.UserModel User)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var query = Model_.Users.Where(e => User.Username.ToLower() == e.Username);
 			if (query.Count() == 0)
 			{
@@ -192,15 +192,15 @@ namespace DexComplete.Services
 			var success = BCrypt.Net.BCrypt.Verify(User.Password, user.Password);
 			if (success)
 			{
-				string token = GetToken(User.Username, Data.TokenType.LoginToken, Log);
+				string token = GetToken(User.Username, Data.TokenType.LoginToken);
 				return new Models.UserModel() { Username = user.Username, Token = token };
 			}
 			throw new Code.ExceptionResponse("Invalid username or password");
 		}
 
-		private string GetToken(string Username, Data.TokenType Type, SLLog Log)
+		private string GetToken(string Username, Data.TokenType Type)
 		{
-			Log = Logging.GetLog(Log);
+			
 
 			DateTime expiry = DateTime.Now.AddMonths(1);
 			string token = Utilities.Encryption.GetMd5Hash(Utilities.Encryption.GenerateText(16) + expiry.ToLongDateString());
@@ -216,9 +216,9 @@ namespace DexComplete.Services
 			return token;
 		}
 
-		public bool Logout(string Username, string Token, SLLog Log)
+		public bool Logout(string Username, string Token)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var tkn = Model_.Tokens.SingleOrDefault(e => (e.User.Username == Username) && (e.Value == Token));
 			if (tkn != null)
 			{
@@ -228,30 +228,30 @@ namespace DexComplete.Services
 			return true;
 		}
 
-		public string GetResetContents(string Username, string Token, SLLog Log)
+		public string GetResetContents(string Username, string Token)
 		{
-			Log = Logging.GetLog(Log);
-			string contents = Utilities.Templates.GetTemplate("passwordReset.html", Log);
-			contents = contents.Replace("{URL}", ServerService_.GetServerAddress(Log));
+			
+			string contents = Utilities.Templates.GetTemplate("passwordReset.html");
+			contents = contents.Replace("{URL}", ServerService_.GetServerAddress());
 			contents = contents.Replace("{TOKEN}", Token);
 
 			return contents;
 		}
 
-		public void RequestPasswordReset(string username, SLLog Log)
+		public void RequestPasswordReset(string username)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var theUser = Model_.Users.FirstOrDefault(u => u.Username == username.ToLower());
 			if (theUser == null)
 				return;
-			var token = GetToken(username, Data.TokenType.PasswordReset, Log);
-			string Contents = GetResetContents(theUser.Username, token, Log);
-			EmailService_.SendEmail(theUser.Email, "DexComplete Password Reset", Contents, Log);
+			var token = GetToken(username, Data.TokenType.PasswordReset);
+			string Contents = GetResetContents(theUser.Username, token);
+			EmailService_.SendEmail(theUser.Email, "DexComplete Password Reset", Contents);
 		}
 
-		public bool ResetPassword(string user, string password, string token, SLLog Log)
+		public bool ResetPassword(string user, string password, string token)
 		{
-			Log = Logging.GetLog(Log);
+			
 
 			var theUser = Model_.Users.FirstOrDefault(u => u.Username == user.ToLower());
 			if (!theUser.Tokens.Any(v => v.TokenType == Data.TokenType.PasswordReset && v.Value == token))
@@ -267,10 +267,10 @@ namespace DexComplete.Services
 			return true;
 		}
 
-		public Transfer.GameProgress GetGameProgress(string user, string save, SLLog Log)
+		public Transfer.GameProgress GetGameProgress(string user, string save)
 		{
 			var progress = new Transfer.GameProgress();
-			Log = Logging.GetLog(Log);
+			
 			progress.Pokedexes = new List<Transfer.ItemProgress>();
 			progress.Collections = new List<Transfer.ItemProgress>();
 			var saveData = Model_.Saves.SingleOrDefault(u => (u.User.Username.ToLower() == user.ToLower()) && (u.SaveName.ToLower() == save.ToLower()));
@@ -278,8 +278,8 @@ namespace DexComplete.Services
 			{
 				throw new Code.Exception404();
 			}
-			var gameTools = GameService_.GetGameTools(saveData.Game.GameId, Log);
-			var dexes = PokedexService_.GetPokedexesByGame(saveData.Game.GameId, Log);
+			var gameTools = GameService_.GetGameTools(saveData.Game.GameId);
+			var dexes = PokedexService_.GetPokedexesByGame(saveData.Game.GameId);
 			int[] dex = ConvertData(saveData.Code, 2);
 			int[] tm = ConvertData(saveData.TMData);
 			int[] abilities = ConvertData(saveData.AbilityData, 2);
@@ -290,7 +290,7 @@ namespace DexComplete.Services
 			foreach (var d in dexes)
 			{
 				var item = new Transfer.ItemProgress();
-				var entries = PokedexService_.GetPokedex(d.PokedexId, Log);
+				var entries = PokedexService_.GetPokedex(d.PokedexId);
 				item.Title = entries.Title;
 				item.Identifier = d.PokedexId;
 				item.Total = entries.Pokemon.Count();
@@ -305,7 +305,7 @@ namespace DexComplete.Services
 			if (gameTools.Collections.Any(u => u.Identifier == "abilities"))
 			{
 				var item = new Transfer.ItemProgress();
-				var entries = AbilityService_.GetAbilitiesByGame(saveData.Game.GameId, Log);
+				var entries = AbilityService_.GetAbilitiesByGame(saveData.Game.GameId);
 				item.Title = "Hidden Abilities";
 				item.Total = entries.Count();
 				item.Identifier = "abilities";
@@ -320,7 +320,7 @@ namespace DexComplete.Services
 			if (gameTools.Collections.Any(u => u.Identifier == "eggGroups"))
 			{
 				var item = new Transfer.ItemProgress();
-				var entries = EggGroupService_.GetEggGroupsByGame(saveData.Game.GameId, Log);
+				var entries = EggGroupService_.GetEggGroupsByGame(saveData.Game.GameId);
 				item.Title = "Egg Groups";
 				item.Total = entries.Count();
 				item.Identifier = "egggroups";
@@ -335,7 +335,7 @@ namespace DexComplete.Services
 			if (gameTools.Collections.Any(u => u.Identifier == "berries"))
 			{
 				var item = new Transfer.ItemProgress();
-				var entries = BerryService_.GetBerriesByGame(saveData.Game.GameId, Log);
+				var entries = BerryService_.GetBerriesByGame(saveData.Game.GameId);
 				item.Title = "Berries";
 				item.Identifier = "berries";
 				item.Total = entries.Count();
@@ -364,7 +364,7 @@ namespace DexComplete.Services
 			if (gameTools.Collections.Any(u => u.Identifier == "tms"))
 			{
 				var item = new Transfer.ItemProgress();
-				var entries = TmService_.GetTmsByGame(saveData.Game.GameId, Log);
+				var entries = TmService_.GetTmsByGame(saveData.Game.GameId);
 				item.Title = "Technical Machines";
 				item.Identifier = "tms";
 				item.Total = entries.Count();
@@ -378,9 +378,9 @@ namespace DexComplete.Services
 			return progress;
 		}
 
-		public static int[] ConvertData(byte[] data, int bitCount = 1, SLLog Log = null)
+		public static int[] ConvertData(byte[] data, int bitCount = 1)
 		{
-			Log = Logging.GetLog(Log);
+			
 			int mod = 0;
 			int pow = 1;
 			for (int i = 0; i < bitCount; ++i)

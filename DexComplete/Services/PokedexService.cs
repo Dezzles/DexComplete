@@ -15,10 +15,10 @@ namespace DexComplete.Services
 		{
 			Pokedexes_ = Pokedexes;
 		}
-		public IEnumerable<Models.PokedexModel> GetPokedexesByGame(string GameId, SLLog Log)
+		public IEnumerable<Models.PokedexModel> GetPokedexesByGame(string GameId)
 		{
-			Log = Logging.GetLog(Log);
-			var result = Pokedexes_.GetPokedexesByGame(GameId, Log);
+			
+			var result = Pokedexes_.GetPokedexesByGame(GameId);
 			if (result == null)
 				throw new Code.ExceptionResponse("Invalid game");
 			List<Models.PokedexModel> dexes = new List<Models.PokedexModel>();
@@ -33,10 +33,10 @@ namespace DexComplete.Services
 			return dexes;
 		}
 
-		public Models.PokedexModel GetPokedex(string PokedexId, SLLog Log)
+		public Models.PokedexModel GetPokedex(string PokedexId)
 		{
-			Log = Logging.GetLog(Log);
-			var dex = Pokedexes_.GetPokedex(PokedexId, Log);
+			
+			var dex = Pokedexes_.GetPokedex(PokedexId);
 			if (dex == null)
 				throw new Code.ExceptionResponse("Invalid pokedex");
 			var ret = new Models.PokedexModel()

@@ -27,9 +27,8 @@ namespace DexComplete.Api.V1
 		[HttpGet, Route("pokedex/{pokedexId}")]
 		public Response GetPokedexByGameAndId(string pokedexId)
 		{
-			var Log = Logging.GetLog();
-			ServerService_.ThrowMaintenance(Log);
-			return Response.Succeed(PokedexService_.GetPokedex(pokedexId, Log));
+			ServerService_.ThrowMaintenance();
+			return Response.Succeed(PokedexService_.GetPokedex(pokedexId));
 		}
 	}
 }

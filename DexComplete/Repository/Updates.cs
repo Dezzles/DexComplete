@@ -15,16 +15,16 @@ namespace DexComplete.Repository
 		{
 			this.Model_ = Model;
 		}
-		public IEnumerable<Data.Update> GetUpdates(SLLog Log)
+		public IEnumerable<Data.Update> GetUpdates()
 		{
-			Log = Logging.GetLog(Log);
+			
 
 			return Model_.Updates.OrderByDescending(v => v.Date).ToList();
 		}
 
-		public IEnumerable<Data.ComingSoon> GetComingSoon(SLLog Log)
+		public IEnumerable<Data.ComingSoon> GetComingSoon()
 		{
-			Log = Logging.GetLog(Log);
+			
 			var result = Model_.ComingSoon;
 			return result.ToList();
 

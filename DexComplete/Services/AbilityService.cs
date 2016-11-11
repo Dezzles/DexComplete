@@ -11,15 +11,17 @@ namespace DexComplete.Services
 	public class AbilityService
 	{
 		private readonly Repository.Abilities Abilities_;
-		public AbilityService(Repository.Abilities Abilities)
+		private readonly SLLog Log_;
+		public AbilityService(Repository.Abilities Abilities, SLLog Log)
 		{
 			Abilities_ = Abilities;
+			Log_ = Log;
 		}
-		public IEnumerable<Dto.AbilitySet> GetAbilitiesByGame(string gameId, SLLog Log)
+		public IEnumerable<Dto.AbilitySet> GetAbilitiesByGame(string gameId)
 		{
-			Log = Logging.GetLog(Log);
-			Log.Info("GetAbilitiesByGame", new { gameId = gameId });
-			return Abilities_.GetAbilitiesByGame(gameId, Log);
+			
+			Log_.Info("GetAbilitiesByGame", new { gameId = gameId });
+			return Abilities_.GetAbilitiesByGame(gameId);
 		}
 	}
 }

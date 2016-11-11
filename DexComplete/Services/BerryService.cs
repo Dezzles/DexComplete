@@ -15,10 +15,10 @@ namespace DexComplete.Services
 		{
 			this.Berries_ = Berries;
 		}
-		public IEnumerable<Dto.Berry> GetBerriesByGame(string GameId, SLLog Log)
+		public IEnumerable<Dto.Berry> GetBerriesByGame(string GameId)
 		{
-			Log = Logging.GetLog(Log);
-			var ret = Berries_.GetBerries(GameId, Log);
+			
+			var ret = Berries_.GetBerries(GameId);
 			return ret;
 		}
 	}

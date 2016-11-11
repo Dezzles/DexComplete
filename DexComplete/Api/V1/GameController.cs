@@ -29,36 +29,32 @@ namespace DexComplete.Api.V1
 		[HttpGet, Route("games/list")]
 		public Response GetAllGames()
 		{
-			var Log = Logging.GetLog();
-			ServerService_.ThrowMaintenance(Log);
-			var games = GameService_.GetGames(Log);
+			ServerService_.ThrowMaintenance();
+			var games = GameService_.GetGames();
 			return Response.Succeed(games);
 		}
 
 		[HttpGet, Route("game/{gameName}/dex")]
 		public Response GetGameDexList(string gameName )
 		{
-			var Log = Logging.GetLog();
-			ServerService_.ThrowMaintenance(Log);
-			var dexList = PokedexService_.GetPokedexesByGame(gameName, Log);
+			ServerService_.ThrowMaintenance();
+			var dexList = PokedexService_.GetPokedexesByGame(gameName);
 			return Response.Succeed(dexList);
 		}
 
 		[HttpGet, Route("game/{gameName}/dex/{dexName}")]
 		public Response GetGamePokedex(string gameName, string dexName)
 		{
-			var Log = Logging.GetLog();
-			ServerService_.ThrowMaintenance(Log);
-			var games = PokedexService_.GetPokedex(dexName, Log);
+			ServerService_.ThrowMaintenance();
+			var games = PokedexService_.GetPokedex(dexName);
 			return Response.Succeed(games);
 		}
 
 		[HttpGet, Route("game/{gameName}/allTools")]
 		public Response GetGameTools(string gameName)
 		{
-			var Log = Logging.GetLog();
-			ServerService_.ThrowMaintenance(Log);
-			var result = GameService_.GetGameTools(gameName, Log);
+			ServerService_.ThrowMaintenance();
+			var result = GameService_.GetGameTools(gameName);
 			return Response.Succeed(result);
 		}
 

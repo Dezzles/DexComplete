@@ -25,18 +25,16 @@ namespace DexComplete.Api.V1
 		[HttpGet, Route("server/ping")]
 		public Response Ping()
 		{
-			var Log = Logging.GetLog();
-			ServerService_.ThrowMaintenance(Log);
+			ServerService_.ThrowMaintenance();
 			return Response.Succeed(true);
 		}
 
 		[HttpGet, Route("server/updates")]
 		public Response Updates()
 		{
-			var Log = Logging.GetLog();
-			ServerService_.ThrowMaintenance(Log);
-			var comingSoon = UpdatesService_.GetComingSoon(Log);
-			var updates = UpdatesService_.GetRecentUpdates(Log);
+			ServerService_.ThrowMaintenance();
+			var comingSoon = UpdatesService_.GetComingSoon();
+			var updates = UpdatesService_.GetRecentUpdates();
 
 			return Response.Succeed(new SiteUpdates() { ComingSoon = comingSoon, Updates = updates });
 		}

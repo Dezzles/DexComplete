@@ -11,30 +11,32 @@ namespace DexComplete.Repository
 	{
 		private readonly Repository.Games Games_;
 		private readonly Data.PokedexModel Model_;
-		public Pokedexes(Repository.Games Games, Data.PokedexModel Model)
+		private readonly SLLog Log_;
+		public Pokedexes(Repository.Games Games, Data.PokedexModel Model, SLLog Log)
 		{
 			this.Games_ = Games;
 			this.Model_ = Model;
+			this.Log_ = Log;
 		}
-		public IEnumerable<Dto.Pokedex> GetPokedexesByGame(string GameId, SLLog Log)
+		public IEnumerable<Dto.Pokedex> GetPokedexesByGame(string GameId)
 		{
-			Log = Logging.GetLog(Log);
-			var game = Games_.GetGameById(GameId, Log);
+			
+			var game = Games_.GetGameById(GameId);
 			if (game == null)
 			{
-				Log.Error("GetPokedexesByGame", new { message = "Game not found", GameId = GameId });
+				Log_.Error("GetPokedexesByGame", new { message = "Game not found", GameId = GameId });
 				return null;
 			}
 			return game.Pokedexes;
 		}
 
-		public Dto.Pokedex GetPokedex(String PokedexId, SLLog Log)
+		public Dto.Pokedex GetPokedex(String PokedexId)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var dex = Model_.Pokedexes.SingleOrDefault(u => u.PokedexId == PokedexId);
 			if (dex == null)
 			{
-				Log.Error("GetPokedex", new { message = "Pokedex not found", PokedexId = PokedexId });
+				Log_.Error("GetPokedex", new { message = "Pokedex not found", PokedexId = PokedexId });
 				return null;
 			}
 			return new Dto.Pokedex(dex, true);

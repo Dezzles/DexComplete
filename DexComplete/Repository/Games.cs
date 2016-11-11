@@ -14,9 +14,9 @@ namespace DexComplete.Repository
 		{
 			Model_ = Model;
 		}
-		public IEnumerable<Dto.Game> GetGames(SLLog Log)
+		public IEnumerable<Dto.Game> GetGames()
 		{
-			Log = Logging.GetLog(Log);
+			
 			var res = new List<Dto.Game>();
 			var games = Model_.Games;
 			foreach (var v in games)
@@ -26,9 +26,9 @@ namespace DexComplete.Repository
 			return res;
 		}
 
-		public IEnumerable<Dto.Collection> GetCollectionsByGame(string GameId, SLLog Log)
+		public IEnumerable<Dto.Collection> GetCollectionsByGame(string GameId)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var result = Model_.Games.SingleOrDefault(u => u.GameId == GameId);
 			if (result == null)
 			{
@@ -43,9 +43,9 @@ namespace DexComplete.Repository
 			return coll;
 		}
 
-		public Dto.Game GetGameById(string GameId, SLLog Log)
+		public Dto.Game GetGameById(string GameId)
 		{
-			Log = Logging.GetLog(Log);
+			
 			var result = Model_.Games.SingleOrDefault(e => e.GameId == GameId.ToLower());
 			if (result == null)
 				return null;

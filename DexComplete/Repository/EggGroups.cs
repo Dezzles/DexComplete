@@ -14,9 +14,9 @@ namespace DexComplete.Repository
 		{
 			Model_ = Model;
 		}
-		public IEnumerable<Dto.IndexedItem> GetEggGroups(SLLog Log)
+		public IEnumerable<Dto.IndexedItem> GetEggGroups()
 		{
-			Log = Logging.GetLog(Log);
+			
 			var res = new List<Dto.IndexedItem>();
 			var groups = Model_.EggGroups.OrderBy(e => e.Index);
 			foreach (var v in groups)

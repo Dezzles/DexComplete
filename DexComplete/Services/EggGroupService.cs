@@ -11,14 +11,16 @@ namespace DexComplete.Services
 	public class EggGroupService
 	{
 		private readonly Repository.EggGroups EggGroups_;
-		public EggGroupService(Repository.EggGroups EggGroups)
+		private readonly SLLog Log_;
+		public EggGroupService(Repository.EggGroups EggGroups, SLLog Log)
 		{
 			this.EggGroups_ = EggGroups;
+			this.Log_ = Log;
 		}
-		public IEnumerable<Dto.IndexedItem> GetEggGroupsByGame(string gameId, SLLog Log)
+		public IEnumerable<Dto.IndexedItem> GetEggGroupsByGame(string gameId)
 		{
-			Log = Logging.GetLog(Log);
-			return EggGroups_.GetEggGroups(Log);
+			Log_.Info("GetEggGroupsByGame", new { gameId });
+			return EggGroups_.GetEggGroups();
 		}
 	}
 }

@@ -15,10 +15,10 @@ namespace DexComplete.Services
 		{
 			Updates_ = Updates;
 		}
-		public Dictionary<DateTime, List<string>> GetRecentUpdates(SLLog Log)
+		public Dictionary<DateTime, List<string>> GetRecentUpdates()
 		{
-			Log = Logging.GetLog(Log);
-			var items = Updates_.GetUpdates(Log);
+			
+			var items = Updates_.GetUpdates();
 			Dictionary<DateTime, List<String>> results = new Dictionary<DateTime, List<string>>();
 			foreach (var item in items)
 			{
@@ -34,11 +34,11 @@ namespace DexComplete.Services
 			return results;
 		}
 
-		public IEnumerable<string> GetComingSoon(SLLog Log)
+		public IEnumerable<string> GetComingSoon()
 		{
-			Log = Logging.GetLog(Log);
+			
 			List<string> results = new List<string>();
-			var items = Updates_.GetComingSoon(Log);
+			var items = Updates_.GetComingSoon();
 			foreach (var item in items)
 			{
 				results.Add(item.Text);
