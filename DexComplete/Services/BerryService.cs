@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 
 namespace DexComplete.Services
 {
-	public static class BerryService
+	public class BerryService
 	{
-		public static IEnumerable<Dto.Berry> GetBerriesByGame(string GameId, SLLog Log)
+		private readonly Repository.Berries Berries_;
+		public BerryService(Repository.Berries Berries)
+		{
+			this.Berries_ = Berries;
+		}
+		public IEnumerable<Dto.Berry> GetBerriesByGame(string GameId, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			var ret = Repository.Berries.GetBerries(GameId, Log);
+			var ret = Berries_.GetBerries(GameId, Log);
 			return ret;
 		}
 	}

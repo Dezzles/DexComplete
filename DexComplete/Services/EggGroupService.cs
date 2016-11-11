@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 
 namespace DexComplete.Services
 {
-	public static class EggGroupService
+	public class EggGroupService
 	{
-		public static IEnumerable<Dto.IndexedItem> GetEggGroupsByGame(string gameId, SLLog Log)
+		private readonly Repository.EggGroups EggGroups_;
+		public EggGroupService(Repository.EggGroups EggGroups)
+		{
+			this.EggGroups_ = EggGroups;
+		}
+		public IEnumerable<Dto.IndexedItem> GetEggGroupsByGame(string gameId, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			return Repository.EggGroups.GetEggGroups(Log);
+			return EggGroups_.GetEggGroups(Log);
 		}
 	}
 }

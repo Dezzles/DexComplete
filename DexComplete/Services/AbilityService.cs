@@ -10,11 +10,16 @@ namespace DexComplete.Services
 {
 	public class AbilityService
 	{
-		public static IEnumerable<Dto.AbilitySet> GetAbilitiesByGame(string gameId, SLLog Log)
+		private readonly Repository.Abilities Abilities_;
+		public AbilityService(Repository.Abilities Abilities)
+		{
+			Abilities_ = Abilities;
+		}
+		public IEnumerable<Dto.AbilitySet> GetAbilitiesByGame(string gameId, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
 			Log.Info("GetAbilitiesByGame", new { gameId = gameId });
-			return Repository.Abilities.GetAbilitiesByGame(gameId, Log);
+			return Abilities_.GetAbilitiesByGame(gameId, Log);
 		}
 	}
 }

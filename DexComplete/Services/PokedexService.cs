@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 
 namespace DexComplete.Services
 {
-	static class PokedexService
+	public class PokedexService
 	{
-		public static IEnumerable<Models.PokedexModel> GetPokedexesByGame(string GameId, SLLog Log)
+		private readonly Repository.Pokedexes Pokedexes_;
+		public PokedexService(Repository.Pokedexes Pokedexes)
+		{
+			Pokedexes_ = Pokedexes;
+		}
+		public IEnumerable<Models.PokedexModel> GetPokedexesByGame(string GameId, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			var result = Repository.Pokedexes.GetPokedexesByGame(GameId, Log);
+			var result = Pokedexes_.GetPokedexesByGame(GameId, Log);
 			if (result == null)
 				throw new Code.ExceptionResponse("Invalid game");
 			List<Models.PokedexModel> dexes = new List<Models.PokedexModel>();
@@ -28,10 +33,10 @@ namespace DexComplete.Services
 			return dexes;
 		}
 
-		public static Models.PokedexModel GetPokedex(string PokedexId, SLLog Log)
+		public Models.PokedexModel GetPokedex(string PokedexId, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			var dex = Repository.Pokedexes.GetPokedex(PokedexId, Log);
+			var dex = Pokedexes_.GetPokedex(PokedexId, Log);
 			if (dex == null)
 				throw new Code.ExceptionResponse("Invalid pokedex");
 			var ret = new Models.PokedexModel()

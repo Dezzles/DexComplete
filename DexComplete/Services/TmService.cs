@@ -8,22 +8,17 @@ using System.Threading.Tasks;
 
 namespace DexComplete.Services
 {
-	public static class TmService
+	public class TmService
 	{
-		public static IEnumerable<Dto.TM> GetTmsByGame(string GameId, SLLog Log)
+		private readonly Repository.TMs Tms_;
+		public TmService(Repository.TMs Tms)
+		{
+			this.Tms_ = Tms;
+		}
+		public IEnumerable<Dto.TM> GetTmsByGame(string GameId, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			var ret = Repository.TMs.GetTMs(GameId, Log);
-			/*List<Transfer.IdNameTransfer> ret = new List<Transfer.IdNameTransfer>();
-			var tmList = Repository.TMs.GetTMs(GameId, Log);
-			foreach (var tm in tmList)
-			{
-				ret.Add(new Transfer.IdNameTransfer()
-					{
-							Index = tm.Index,
-							Name = tm.Move.Name
-					});
-			}/**/
+			var ret = Tms_.GetTMs(GameId, Log);
 			return ret;
 		}
 	}

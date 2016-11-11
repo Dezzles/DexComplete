@@ -15,31 +15,21 @@ namespace DexComplete.Api.V1
 	[RoutePrefix("api/v1")]
 	public class PokedexController : ApiController
 	{
-		[HttpGet, Route("pokedexes")]
-		public Response GetAllPokedexes()
+		private readonly Services.ServerService ServerService_;
+		private readonly Services.PokedexService PokedexService_;
+		public PokedexController(Services.ServerService ServerService,
+			Services.PokedexService PokedexService)
 		{
-			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			Data.PokedexModel ctr = new Data.PokedexModel();
-			StringBuilder sb = new StringBuilder();
-			foreach (var game in ctr.Games)
-			{
-				sb.AppendLine(game.Title);
-				foreach (var dex in game.Pokedexes)
-				{
-					sb.AppendFormat("\t- {0}\n", dex.Title);
-				}
-				sb.AppendLine();
-			}
-			return Response.Succeed(sb.ToString());
+			this.ServerService_ = ServerService;
+			this.PokedexService_ = PokedexService;
 		}
 
 		[HttpGet, Route("pokedex/{pokedexId}")]
 		public Response GetPokedexByGameAndId(string pokedexId)
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			return Response.Succeed(Services.PokedexService.GetPokedex(pokedexId, Log));
+			ServerService_.ThrowMaintenance(Log);
+			return Response.Succeed(PokedexService_.GetPokedex(pokedexId, Log));
 		}
 	}
 }

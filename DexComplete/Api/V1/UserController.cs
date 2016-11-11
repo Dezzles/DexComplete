@@ -15,30 +15,39 @@ namespace DexComplete.Api.V1
 	[RoutePrefix("api/v1")]
 	public class UserController : ApiController
 	{
+		private readonly Services.ServerService ServerService_;
+		private readonly Services.UserService UserService_;
+		public UserController(Services.ServerService ServerService,
+			Services.UserService UserService)
+		{
+			this.ServerService_ = ServerService;
+			this.UserService_ = UserService;
+		}
+
 		[HttpPost, Route("users/login")]
 		public Response PostLogin([FromBody]Models.UserModel User)
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			return Response.Succeed(Services.UserService.Login(User, Log));
+			ServerService_.ThrowMaintenance(Log);
+			return Response.Succeed(UserService_.Login(User, Log));
 		}
 
 		[HttpPost, Route("users/register")]
 		public Response PostRegister([FromBody]Models.UserModel User)
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			return Response.Succeed(Services.UserService.Register(User, Log));
+			ServerService_.ThrowMaintenance(Log);
+			return Response.Succeed(UserService_.Register(User, Log));
 		}
 
 		[HttpPost, Route("users/logout")]
 		public Response Logout()
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			if (!Services.UserService.Validate(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First(), Log))
+			ServerService_.ThrowMaintenance(Log);
+			if (!UserService_.Validate(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First(), Log))
 				return Response.NotLoggedIn();
-			return Response.Succeed(Services.UserService.Logout(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First(), Log));
+			return Response.Succeed(UserService_.Logout(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First(), Log));
 		}
 
 
@@ -46,10 +55,9 @@ namespace DexComplete.Api.V1
 		public Response PostValidate([FromBody]Models.UserModel user)
 		{
 			var Log = Logging.GetLog(null);
-			Services.ServerService.ThrowMaintenance(Log);
-			Data.PokedexModel ctr = new Data.PokedexModel();
-			var query = ctr.Tokens.Where(e => e.Value == user.Token && e.User.Username.ToLower() == user.Username.ToLower() && (DateTime.Now < e.ExpiryDate));
-			if (query.Count() == 0)
+			ServerService_.ThrowMaintenance(Log);
+			var result = UserService_.Validate(user.Username, user.Token, Log);
+			if (!result)
 				throw new Code.ExceptionResponse("Invalid token");
 			else
 				return Response.Succeed("Success");
@@ -59,55 +67,55 @@ namespace DexComplete.Api.V1
 		public Response CreateGame([FromBody]Transfer.AddGame request)
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			if (!Services.UserService.Validate(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First(), Log))
+			ServerService_.ThrowMaintenance(Log);
+			if (!UserService_.Validate(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First(), Log))
 				return Response.NotLoggedIn();
 			if (string.IsNullOrWhiteSpace(request.SaveName))
 				return Response.Error("Save name cannot be empty");
-			return Response.Succeed(Services.UserService.CreateGame(Request.Headers.GetValues("username").First(), request, Log));
+			return Response.Succeed(UserService_.CreateGame(Request.Headers.GetValues("username").First(), request, Log));
 		}
 
 		[HttpGet, Route("user/{user}/games/list")]
 		public Response GetAllGames(string user)
 		{
 			var Log = Logging.GetLog(null);
-			Services.ServerService.ThrowMaintenance(Log);
-			return Response.Succeed(Services.UserService.GetAllGames(user, Log));
+			ServerService_.ThrowMaintenance(Log);
+			return Response.Succeed(UserService_.GetAllGames(user, Log));
 		}
 
 		[HttpGet, Route("user/{user}/game/{save}")]
 		public Response GetGame(string user, string save)
 		{
 			var Log = Logging.GetLog(null);
-			Services.ServerService.ThrowMaintenance(Log);
-			return Response.Succeed(Services.UserService.GetSaveData(user, save, Log));
+			ServerService_.ThrowMaintenance(Log);
+			return Response.Succeed(UserService_.GetSaveData(user, save, Log));
 		}
 
 		[HttpPost, Route("user/{user}/game/{save}")]
 		public Response SaveGame(string user, string save, [FromBody]Transfer.Saves data)
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			if (!Services.UserService.Validate(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First(), Log))
+			ServerService_.ThrowMaintenance(Log);
+			if (!UserService_.Validate(Request.Headers.GetValues("username").First(), Request.Headers.GetValues("token").First(), Log))
 				return Response.NotLoggedIn();
 			data.SaveName = save;
-			return Response.Succeed(Services.UserService.SetSaveData(user, data, Log));
+			return Response.Succeed(UserService_.SetSaveData(user, data, Log));
 		}
 
 		[HttpGet, Route("user/{user}/game/{save}/progress")]
 		public Response GetGameProgress(string user, string save)
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			return Response.Succeed(Services.UserService.GetGameProgress(user, save, Log));
+			ServerService_.ThrowMaintenance(Log);
+			return Response.Succeed(UserService_.GetGameProgress(user, save, Log));
 		}
 
 		[HttpGet, Route("user/{user}/game/{save}/identifier")]
 		public Response GetGameIdentifier(string user, string save)
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			var games = Services.UserService.GetAllGames(user, Log);
+			ServerService_.ThrowMaintenance(Log);
+			var games = UserService_.GetAllGames(user, Log);
 			var single = games.SingleOrDefault(u => u.SaveName.ToLower() == save.ToLower());
 			if (single != null)
 				return Response.Succeed(single.GameIdentifier);
@@ -119,9 +127,9 @@ namespace DexComplete.Api.V1
 		public Response ResetPassword([FromBody]Models.UserModel user)
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
+			ServerService_.ThrowMaintenance(Log);
 
-			var result = Services.UserService.ResetPassword(user.Username, user.Password, user.Token, Log);
+			var result = UserService_.ResetPassword(user.Username, user.Password, user.Token, Log);
 			if (result)
 				return Response.Succeed();
 			return Response.Error("Could not reset password");
@@ -131,8 +139,8 @@ namespace DexComplete.Api.V1
 		public Response RequestPasswordReset(string username)
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			Services.UserService.RequestPasswordReset(username, Log);
+			ServerService_.ThrowMaintenance(Log);
+			UserService_.RequestPasswordReset(username, Log);
 			return Response.Succeed();
 		}
 	}

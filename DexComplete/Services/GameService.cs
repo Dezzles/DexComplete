@@ -8,12 +8,19 @@ using System.Threading.Tasks;
 
 namespace DexComplete.Services
 {
-	static class GameService
+	public class GameService
 	{
-		public static IEnumerable<Models.GameModel> GetGames(SLLog Log)
+		private readonly Repository.Games Games_;
+		private readonly PokedexService PokedexService_;
+		public GameService(Repository.Games Games, PokedexService PokedexService)
+		{
+			this.Games_ = Games;
+			this.PokedexService_ = PokedexService;
+		}
+		public IEnumerable<Models.GameModel> GetGames(SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			var games = Repository.Games.GetGames(Log);
+			var games = Games_.GetGames(Log);
 			List<Models.GameModel> result = new List<Models.GameModel>();
 			foreach(var game in games)
 			{
@@ -26,7 +33,7 @@ namespace DexComplete.Services
 			return result;
 		}
 
-		public static Transfer.GameTools GetGameTools(string gameId, SLLog Log)
+		public Transfer.GameTools GetGameTools(string gameId, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
 			List<Transfer.GameToolItems> Collections = new List<Transfer.GameToolItems>();
@@ -34,7 +41,7 @@ namespace DexComplete.Services
 			Transfer.GameTools ret = new Transfer.GameTools();
 			ret.Collections = Collections;
 			ret.Tools = Tools;
-			var collections = Repository.Games.GetCollectionsByGame(gameId, Log);
+			var collections = Games_.GetCollectionsByGame(gameId, Log);
 			if (collections == null)
 				throw new Code.ExceptionResponse("Invalid game");
 			foreach (var u in collections)
@@ -53,15 +60,15 @@ namespace DexComplete.Services
 					Tools.Add(item);
 				}
 			}
-			ret.Pokedex = PokedexService.GetPokedexesByGame(gameId, Log);
+			ret.Pokedex = PokedexService_.GetPokedexesByGame(gameId, Log);
 			return ret;
 			
 		}
 
-		public static Models.GameModel GetGameByName(string gameId, SLLog Log)
+		public Models.GameModel GetGameByName(string gameId, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			var query = Repository.Games.GetGameById(gameId, Log);
+			var query = Games_.GetGameById(gameId, Log);
 			if (query == null)
 				throw new Code.ExceptionResponse("Invalid game");
 			return new Models.GameModel()

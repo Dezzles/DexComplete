@@ -13,12 +13,21 @@ namespace DexComplete.Api.V1
 	[RoutePrefix("api/v1")]
 	public class TmController : ApiController
 	{
+		private readonly Services.ServerService ServerService_;
+		private readonly Services.TmService TmService_;
+		public TmController(Services.ServerService ServerService,
+			Services.TmService TmService)
+		{
+			this.TmService_ = TmService;
+			this.ServerService_ = ServerService;
+		}
+
 		[HttpGet, Route("tms/{gameId}")]
 		public Response GetTmList(string gameId)
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			var result = Services.TmService.GetTmsByGame(gameId, Log);
+			ServerService_.ThrowMaintenance(Log);
+			var result = TmService_.GetTmsByGame(gameId, Log);
 			return Response.Succeed(result);
 		}
 

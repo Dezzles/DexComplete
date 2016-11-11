@@ -8,67 +8,52 @@ using System.Threading.Tasks;
 
 namespace DexComplete.Services
 {
-	public static class ServerService
+	public class ServerService
 	{
-		public static void ThrowMaintenance(SLLog Log)
+		private readonly Data.PokedexModel Model_;
+		public ServerService(Data.PokedexModel Model)
+		{
+			Model_ = Model;
+		}
+		public void ThrowMaintenance(SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
 			if (InMaintenance(Log))
 				throw new Code.ExceptionMaintenance();
 		}
-		public static bool InMaintenance(SLLog Log)
+		public bool InMaintenance(SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
-			{
-				return ctr.ServerSettings.Single(e => e.Config == "Maintenance").Boolean.Value;
-			}
+			return Model_.ServerSettings.Single(e => e.Config == "Maintenance").Boolean.Value;
 		}
 
-		public static string GetEmailAddress(SLLog Log)
+		public string GetEmailAddress(SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
-			{
-				return ctr.ServerSettings.Single(e => e.Config == "EmailAddress").String;
-			}
+			return Model_.ServerSettings.Single(e => e.Config == "EmailAddress").String;
 
 		}
-		public static string GetSMTPSettings(SLLog Log)
+		public string GetSMTPSettings(SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
-			{
-				return ctr.ServerSettings.Single(e => e.Config == "SMTPDetails").String;
-			}
+			return Model_.ServerSettings.Single(e => e.Config == "SMTPDetails").String;
+		}
+		public string GetEmailPassword(SLLog Log)
+		{
+			Log = Logging.GetLog(Log);
+			return Model_.ServerSettings.Single(e => e.Config == "EmailPassword").String;
 
 		}
-		public static string GetEmailPassword(SLLog Log)
+		public int GetSMTPPort(SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
-			{
-				return ctr.ServerSettings.Single(e => e.Config == "EmailPassword").String;
-			}
-
-		}
-		public static int GetSMTPPort(SLLog Log)
-		{
-			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
-			{
-				return ctr.ServerSettings.Single(e => e.Config == "SMTPPort").Integer.Value;
-			}
-
+			return Model_.ServerSettings.Single(e => e.Config == "SMTPPort").Integer.Value;
 		}
 
-		public static string GetServerAddress(SLLog Log)
+		public string GetServerAddress(SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
-			{
-				return ctr.ServerSettings.Single(e => e.Config == "ServerAddress").String;
-			}
+			return Model_.ServerSettings.Single(e => e.Config == "ServerAddress").String;
 		}
 	}
 }

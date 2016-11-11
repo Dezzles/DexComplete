@@ -9,13 +9,36 @@ using SharpLogging;
 
 namespace DexComplete.Services
 {
-	static class UserService
+	public class UserService
 	{
-		public static bool Validate(string Username, string Token, SLLog Log)
+		private readonly Data.PokedexModel Model_;
+		private readonly Services.ServerService ServerService_;
+		private readonly GameService GameService_;
+		private readonly PokedexService PokedexService_;
+		private readonly AbilityService AbilityService_;
+		private readonly EggGroupService EggGroupService_;
+		private readonly BerryService BerryService_;
+		private readonly TmService TmService_;
+		private readonly EmailService EmailService_;
+		public UserService(Data.PokedexModel Model, Services.ServerService ServerService,
+			GameService GameService, PokedexService PokedexService,
+			AbilityService AbilityService, EggGroupService EggGroupService,
+			BerryService BerryService, TmService TmService, EmailService EmailService)
+		{
+			this.Model_ = Model;
+			this.ServerService_ = ServerService;
+			this.GameService_ = GameService;
+			this.PokedexService_ = PokedexService;
+			this.AbilityService_ = AbilityService;
+			this.EggGroupService_ = EggGroupService;
+			this.BerryService_ = BerryService;
+			this.TmService_ = TmService;
+			this.EmailService_ = EmailService;
+		}
+		public bool Validate(string Username, string Token, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			Data.PokedexModel ctr = new Data.PokedexModel();
-			var query = ctr.Tokens.Where(e => e.Value == Token && e.User.Username == Username.ToLower() && (DateTime.Now < e.ExpiryDate) && (e.TokenType == Data.TokenType.LoginToken));
+			var query = Model_.Tokens.Where(e => e.Value == Token && e.User.Username == Username.ToLower() && (DateTime.Now < e.ExpiryDate) && (e.TokenType == Data.TokenType.LoginToken));
 			if (query.Count() == 0)
 				return false;
 			else
@@ -23,115 +46,103 @@ namespace DexComplete.Services
 
 		}
 
-		public static bool CreateGame(string Username, Transfer.AddGame addGame, SLLog Log)
+		public bool CreateGame(string Username, Transfer.AddGame addGame, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel mdl = new Data.PokedexModel())
-			{
-				if (!Utilities.Encryption.isAlphaNumeric(addGame.SaveName))
-					throw new Code.ExceptionResponse("Save name can only contain alphanumeric characters and spaces");
+			if (!Utilities.Encryption.isAlphaNumeric(addGame.SaveName))
+				throw new Code.ExceptionResponse("Save name can only contain alphanumeric characters and spaces");
 
-				Data.User user = mdl.Users.Where(e => e.Username == Username).First();
-				var saves = mdl.Saves.Where(e => (e.UserId == user.UserId) && (e.SaveName.ToLower() == addGame.SaveName.ToLower()));
-				if (saves.Count() > 0)
-					throw new Code.ExceptionResponse("Save name already exists");
+			Data.User user = Model_.Users.Where(e => e.Username == Username).First();
+			var saves = Model_.Saves.Where(e => (e.UserId == user.UserId) && (e.SaveName.ToLower() == addGame.SaveName.ToLower()));
+			if (saves.Count() > 0)
+				throw new Code.ExceptionResponse("Save name already exists");
 
-				var result = mdl.Saves.Create();
-				result.Code = new byte[256];
-				result.AbilityData = new byte[256];
-				result.BerryData = new byte[16];
-				result.EggGroupData = new byte[16];
-				result.DittoData = new byte[16];
-				result.TMData = new byte[16];
+			var result = Model_.Saves.Create();
+			result.Code = new byte[256];
+			result.AbilityData = new byte[256];
+			result.BerryData = new byte[16];
+			result.EggGroupData = new byte[16];
+			result.DittoData = new byte[16];
+			result.TMData = new byte[16];
 
-				result.User = user;
-				result.SaveName = addGame.SaveName;
-				result.Game = mdl.Games.Where(e => e.GameId == addGame.Identifier).First();
-				mdl.Saves.Add(result);
-				mdl.SaveChanges();
-			}
+			result.User = user;
+			result.SaveName = addGame.SaveName;
+			result.Game = Model_.Games.Where(e => e.GameId == addGame.Identifier).First();
+			Model_.Saves.Add(result);
+			Model_.SaveChanges();
 			return true;
 		}
 
-		public static IEnumerable<Transfer.Saves> GetAllGames(string Username, SLLog Log)
+		public IEnumerable<Transfer.Saves> GetAllGames(string Username, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel mdl = new Data.PokedexModel())
+			var user = Model_.Users.SingleOrDefault(e => e.Username == Username);
+			if (user == null)
+				throw new Code.ExceptionResponse("Invalide username");
+			List<Transfer.Saves> results = new List<Transfer.Saves>();
+			foreach (var save in user.Saves)
 			{
-				var user = mdl.Users.SingleOrDefault(e => e.Username == Username);
-				if (user == null)
-					throw new Code.ExceptionResponse("Invalide username");
-				List<Transfer.Saves> results = new List<Transfer.Saves>();
-				foreach (var save in user.Saves)
-				{
-					results.Add(new Transfer.Saves()
-						{
-							GameIdentifier = save.Game.GameId,
-							SaveName = save.SaveName,
-							GameTitle = save.Game.Title
-						}
-						);
-				}
-				return results;
+				results.Add(new Transfer.Saves()
+					{
+						GameIdentifier = save.Game.GameId,
+						SaveName = save.SaveName,
+						GameTitle = save.Game.Title
+					}
+					);
 			}
+			return results;
 		}
 
-		public static Transfer.Saves GetSaveData(string Username, string saveName, SLLog Log)
+		public Transfer.Saves GetSaveData(string Username, string saveName, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel mdl = new Data.PokedexModel())
-			{
-				var query = mdl.Users.Where(e => e.Username == Username);
-				if (query.Count() == 0)
-					throw new Code.ExceptionResponse("No such user exists");
-				var user = query.First();
-				Transfer.Saves result = new Transfer.Saves();
-				var save = user.Saves.SingleOrDefault(e => e.SaveName.ToLower() == saveName.ToLower());
-				if (save == null)
-					throw new Code.ExceptionResponse("No game found");
-				result.GameIdentifier = save.Game.GameId;
-				result.GameTitle = save.Game.Title;
-				result.SaveName = save.SaveName;
-				result.SaveData = Convert.ToBase64String(save.Code);
-				result.AbilityData = Convert.ToBase64String(save.AbilityData);
-				result.BerryData = Convert.ToBase64String(save.BerryData);
-				result.DittoData = Convert.ToBase64String(save.DittoData);
-				result.EggGroupData = Convert.ToBase64String(save.EggGroupData);
-				result.TMData = Convert.ToBase64String(save.TMData);
-				return result;
-			}
+			var query = Model_.Users.Where(e => e.Username == Username);
+			if (query.Count() == 0)
+				throw new Code.ExceptionResponse("No such user exists");
+			var user = query.First();
+			Transfer.Saves result = new Transfer.Saves();
+			var save = user.Saves.SingleOrDefault(e => e.SaveName.ToLower() == saveName.ToLower());
+			if (save == null)
+				throw new Code.ExceptionResponse("No game found");
+			result.GameIdentifier = save.Game.GameId;
+			result.GameTitle = save.Game.Title;
+			result.SaveName = save.SaveName;
+			result.SaveData = Convert.ToBase64String(save.Code);
+			result.AbilityData = Convert.ToBase64String(save.AbilityData);
+			result.BerryData = Convert.ToBase64String(save.BerryData);
+			result.DittoData = Convert.ToBase64String(save.DittoData);
+			result.EggGroupData = Convert.ToBase64String(save.EggGroupData);
+			result.TMData = Convert.ToBase64String(save.TMData);
+			return result;
 		}
 
-		public static bool SetSaveData(string username, Transfer.Saves data, SLLog Log)
+		public bool SetSaveData(string username, Transfer.Saves data, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel mdl = new Data.PokedexModel())
-			{
-				var user = mdl.Users.SingleOrDefault(e => e.Username == username);
-				if (user == null)
-					throw new Code.ExceptionResponse("Invalid user");
-				var save = user.Saves.SingleOrDefault(e => e.SaveName.ToLower() == data.SaveName.ToLower());
-				if (save == null)
-					throw new Code.ExceptionResponse("No game found");
-				var actual = save;
-				if (data.SaveData != null)
-					actual.Code = Convert.FromBase64String(data.SaveData);
-				if (data.AbilityData != null)
-					actual.AbilityData = Convert.FromBase64String(data.AbilityData);
-				if (data.BerryData != null)
-					actual.BerryData = Convert.FromBase64String(data.BerryData);
-				if (data.DittoData != null)
-					actual.DittoData = Convert.FromBase64String(data.DittoData);
-				if (data.EggGroupData != null)
-					actual.EggGroupData = Convert.FromBase64String(data.EggGroupData);
-				if (data.TMData != null)
-					actual.TMData = Convert.FromBase64String(data.TMData);
-				mdl.SaveChanges();
-				return true;
-			}
+			var user = Model_.Users.SingleOrDefault(e => e.Username == username);
+			if (user == null)
+				throw new Code.ExceptionResponse("Invalid user");
+			var save = user.Saves.SingleOrDefault(e => e.SaveName.ToLower() == data.SaveName.ToLower());
+			if (save == null)
+				throw new Code.ExceptionResponse("No game found");
+			var actual = save;
+			if (data.SaveData != null)
+				actual.Code = Convert.FromBase64String(data.SaveData);
+			if (data.AbilityData != null)
+				actual.AbilityData = Convert.FromBase64String(data.AbilityData);
+			if (data.BerryData != null)
+				actual.BerryData = Convert.FromBase64String(data.BerryData);
+			if (data.DittoData != null)
+				actual.DittoData = Convert.FromBase64String(data.DittoData);
+			if (data.EggGroupData != null)
+				actual.EggGroupData = Convert.FromBase64String(data.EggGroupData);
+			if (data.TMData != null)
+				actual.TMData = Convert.FromBase64String(data.TMData);
+			Model_.SaveChanges();
+			return true;
 		}
 
-		public static Models.UserModel Register(Models.UserModel user, SLLog Log)
+		public Models.UserModel Register(Models.UserModel user, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
 			user.Username = user.Username.Trim();
@@ -144,246 +155,225 @@ namespace DexComplete.Services
 			{
 				throw new Code.ExceptionResponse("Email cannot be empty");
 			}
-			Data.PokedexModel ctr = new Data.PokedexModel();
-			var query = ctr.Users.Where(e => e.Username.ToLower() == user.Username.Trim().ToLower());
+			var query = Model_.Users.Where(e => e.Username.ToLower() == user.Username.Trim().ToLower());
 			if (query.Count() > 0)
 			{
 				throw new Code.ExceptionResponse("Username already in use");
 			}
-			query = ctr.Users.Where(e => e.Email.ToLower() == user.Email.ToLower());
+			query = Model_.Users.Where(e => e.Email.ToLower() == user.Email.ToLower());
 			if (query.Count() > 0)
 			{
 				throw new Code.ExceptionResponse("Email address already in use");
 			}
 
-			Data.User newuser = ctr.Users.Create();
+			Data.User newuser = Model_.Users.Create();
 			newuser.Email = user.Email;
 			newuser.Username = user.Username.ToLower();
 			var seed = BCrypt.Net.BCrypt.GenerateSalt(16);
 			newuser.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, seed);
 			newuser.Salt = seed;
-			ctr.Users.Add(newuser);
-			ctr.SaveChanges();
+			Model_.Users.Add(newuser);
+			Model_.SaveChanges();
 			return new Models.UserModel()
 			{
 				Token = GetToken(newuser.Username, Data.TokenType.LoginToken, Log)
 			};
 		}
 
-		public static Models.UserModel Login(Models.UserModel User, SLLog Log)
+		public Models.UserModel Login(Models.UserModel User, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
+			var query = Model_.Users.Where(e => User.Username.ToLower() == e.Username);
+			if (query.Count() == 0)
 			{
-				var query = ctr.Users.Where(e => User.Username.ToLower() == e.Username);
-				if (query.Count() == 0)
-				{
-					throw new Code.ExceptionResponse("Incorrect username or password");
-				}
-				Data.User user = query.First();
-				var success = BCrypt.Net.BCrypt.Verify(User.Password, user.Password);
-				if (success)
-				{
-					string token = GetToken(User.Username, Data.TokenType.LoginToken, Log);
-					return new Models.UserModel() { Username = user.Username, Token = token };
-				}
-				throw new Code.ExceptionResponse("Invalid username or password");
+				throw new Code.ExceptionResponse("Incorrect username or password");
 			}
+			Data.User user = query.First();
+			var success = BCrypt.Net.BCrypt.Verify(User.Password, user.Password);
+			if (success)
+			{
+				string token = GetToken(User.Username, Data.TokenType.LoginToken, Log);
+				return new Models.UserModel() { Username = user.Username, Token = token };
+			}
+			throw new Code.ExceptionResponse("Invalid username or password");
 		}
 
-		private static string GetToken(string Username, Data.TokenType Type, SLLog Log)
+		private string GetToken(string Username, Data.TokenType Type, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
-			{
 
-				DateTime expiry = DateTime.Now.AddMonths(1);
-				string token = Utilities.Encryption.GetMd5Hash(Utilities.Encryption.GenerateText(16) + expiry.ToLongDateString());
+			DateTime expiry = DateTime.Now.AddMonths(1);
+			string token = Utilities.Encryption.GetMd5Hash(Utilities.Encryption.GenerateText(16) + expiry.ToLongDateString());
 
-				var query = ctr.Users.Where(e => Username.ToLower() == e.Username);
-				Data.User user = query.First();
-				Data.Token tkn = ctr.Tokens.Create();
-				tkn.ExpiryDate = expiry;
-				tkn.Value = token;
-				tkn.TokenType = Type;
-				user.Tokens.Add(tkn);
-				ctr.SaveChanges();
-				return token;
-			}
+			var query = Model_.Users.Where(e => Username.ToLower() == e.Username);
+			Data.User user = query.First();
+			Data.Token tkn = Model_.Tokens.Create();
+			tkn.ExpiryDate = expiry;
+			tkn.Value = token;
+			tkn.TokenType = Type;
+			user.Tokens.Add(tkn);
+			Model_.SaveChanges();
+			return token;
 		}
 
-		public static bool Logout(string Username, string Token, SLLog Log)
+		public bool Logout(string Username, string Token, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
+			var tkn = Model_.Tokens.SingleOrDefault(e => (e.User.Username == Username) && (e.Value == Token));
+			if (tkn != null)
 			{
-				var tkn = ctr.Tokens.SingleOrDefault(e => (e.User.Username == Username) && (e.Value == Token));
-				if (tkn != null)
-				{
-					ctr.Tokens.Remove(tkn);
-					return true;
-				}
+				Model_.Tokens.Remove(tkn);
 				return true;
 			}
+			return true;
 		}
 
-		public static string GetResetContents(string Username, string Token, SLLog Log)
+		public string GetResetContents(string Username, string Token, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
 			string contents = Utilities.Templates.GetTemplate("passwordReset.html", Log);
-			contents = contents.Replace("{URL}", Services.ServerService.GetServerAddress(Log));
+			contents = contents.Replace("{URL}", ServerService_.GetServerAddress(Log));
 			contents = contents.Replace("{TOKEN}", Token);
 
 			return contents;
 		}
 
-		public static void RequestPasswordReset(string username, SLLog Log)
+		public void RequestPasswordReset(string username, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel model = new Data.PokedexModel())
-			{
-				{
-					var theUser = model.Users.FirstOrDefault(u => u.Username == username.ToLower());
-					if (theUser == null)
-						return;
-					var token = GetToken(username, Data.TokenType.PasswordReset, Log);
-					string Contents = GetResetContents(theUser.Username, token, Log);
-					Utilities.Email.SendEmail(theUser.Email, "DexComplete Password Reset", Contents, Log);
-				}
-
-			}
+			var theUser = Model_.Users.FirstOrDefault(u => u.Username == username.ToLower());
+			if (theUser == null)
+				return;
+			var token = GetToken(username, Data.TokenType.PasswordReset, Log);
+			string Contents = GetResetContents(theUser.Username, token, Log);
+			EmailService_.SendEmail(theUser.Email, "DexComplete Password Reset", Contents, Log);
 		}
 
-		public static bool ResetPassword(string user, string password, string token, SLLog Log)
+		public bool ResetPassword(string user, string password, string token, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel model = new Data.PokedexModel())
-			{
-				var theUser = model.Users.FirstOrDefault(u => u.Username == user.ToLower());
-				if (!theUser.Tokens.Any(v => v.TokenType == Data.TokenType.PasswordReset && v.Value == token))
-					return false;
-				if (theUser == null)
-					return false;
-				var seed = BCrypt.Net.BCrypt.GenerateSalt(16);
-				theUser.Password = BCrypt.Net.BCrypt.HashPassword(password, seed);
-				theUser.Salt = seed;
-				var allTokens = model.Tokens.Where(u => u.User.UserId == theUser.UserId);
-				model.Tokens.RemoveRange(allTokens);
-				model.SaveChanges();
-				return true;
-			}
+
+			var theUser = Model_.Users.FirstOrDefault(u => u.Username == user.ToLower());
+			if (!theUser.Tokens.Any(v => v.TokenType == Data.TokenType.PasswordReset && v.Value == token))
+				return false;
+			if (theUser == null)
+				return false;
+			var seed = BCrypt.Net.BCrypt.GenerateSalt(16);
+			theUser.Password = BCrypt.Net.BCrypt.HashPassword(password, seed);
+			theUser.Salt = seed;
+			var allTokens = Model_.Tokens.Where(u => u.User.UserId == theUser.UserId);
+			Model_.Tokens.RemoveRange(allTokens);
+			Model_.SaveChanges();
+			return true;
 		}
 
-		public static Transfer.GameProgress GetGameProgress(string user, string save, SLLog Log)
+		public Transfer.GameProgress GetGameProgress(string user, string save, SLLog Log)
 		{
 			var progress = new Transfer.GameProgress();
 			Log = Logging.GetLog(Log);
 			progress.Pokedexes = new List<Transfer.ItemProgress>();
 			progress.Collections = new List<Transfer.ItemProgress>();
-			using (Data.PokedexModel model = new Data.PokedexModel())
+			var saveData = Model_.Saves.SingleOrDefault(u => (u.User.Username.ToLower() == user.ToLower()) && (u.SaveName.ToLower() == save.ToLower()));
+			if (saveData == null)
 			{
-				var saveData = model.Saves.SingleOrDefault(u => (u.User.Username.ToLower() == user.ToLower()) && (u.SaveName.ToLower() == save.ToLower()));
-				if (saveData == null)
-				{
-					throw new Code.Exception404();
-				}
-				var gameTools = GameService.GetGameTools(saveData.Game.GameId, Log);
-				var dexes = PokedexService.GetPokedexesByGame(saveData.Game.GameId, Log);
-				int[] dex = ConvertData(saveData.Code, 2);
-				int[] tm = ConvertData(saveData.TMData);
-				int[] abilities = ConvertData(saveData.AbilityData, 2);
-				int[] dittos = ConvertData(saveData.DittoData);
-				int[] berries = ConvertData(saveData.BerryData);
-				int[] eggGroup = ConvertData(saveData.EggGroupData);
+				throw new Code.Exception404();
+			}
+			var gameTools = GameService_.GetGameTools(saveData.Game.GameId, Log);
+			var dexes = PokedexService_.GetPokedexesByGame(saveData.Game.GameId, Log);
+			int[] dex = ConvertData(saveData.Code, 2);
+			int[] tm = ConvertData(saveData.TMData);
+			int[] abilities = ConvertData(saveData.AbilityData, 2);
+			int[] dittos = ConvertData(saveData.DittoData);
+			int[] berries = ConvertData(saveData.BerryData);
+			int[] eggGroup = ConvertData(saveData.EggGroupData);
 
-				foreach (var d in dexes)
+			foreach (var d in dexes)
+			{
+				var item = new Transfer.ItemProgress();
+				var entries = PokedexService_.GetPokedex(d.PokedexId, Log);
+				item.Title = entries.Title;
+				item.Identifier = d.PokedexId;
+				item.Total = entries.Pokemon.Count();
+				foreach (var entry in entries.Pokemon)
 				{
-					var item = new Transfer.ItemProgress();
-					var entries = PokedexService.GetPokedex(d.PokedexId, Log);
-					item.Title = entries.Title;
-					item.Identifier = d.PokedexId;
-					item.Total = entries.Pokemon.Count();
-					foreach (var entry in entries.Pokemon)
-					{
-						if (dex[entry.Index] > 0)
-							item.Completion++;
-					}
-					progress.Pokedexes.Add(item);
+					if (dex[entry.Index] > 0)
+						item.Completion++;
+				}
+				progress.Pokedexes.Add(item);
 
-				}
-				if (gameTools.Collections.Any(u => u.Identifier == "abilities"))
+			}
+			if (gameTools.Collections.Any(u => u.Identifier == "abilities"))
+			{
+				var item = new Transfer.ItemProgress();
+				var entries = AbilityService_.GetAbilitiesByGame(saveData.Game.GameId, Log);
+				item.Title = "Hidden Abilities";
+				item.Total = entries.Count();
+				item.Identifier = "abilities";
+				foreach (var entry in entries)
 				{
-					var item = new Transfer.ItemProgress();
-					var entries = AbilityService.GetAbilitiesByGame(saveData.Game.GameId, Log);
-					item.Title = "Hidden Abilities";
-					item.Total = entries.Count();
-					item.Identifier = "abilities";
-					foreach (var entry in entries)
-					{
-						if (abilities[entry.AbilityId] > 0)
-							item.Completion++;
-					}
-					progress.Collections.Add(item);
+					if (abilities[entry.AbilityId] > 0)
+						item.Completion++;
 				}
+				progress.Collections.Add(item);
+			}
 
-				if (gameTools.Collections.Any(u => u.Identifier == "eggGroups"))
+			if (gameTools.Collections.Any(u => u.Identifier == "eggGroups"))
+			{
+				var item = new Transfer.ItemProgress();
+				var entries = EggGroupService_.GetEggGroupsByGame(saveData.Game.GameId, Log);
+				item.Title = "Egg Groups";
+				item.Total = entries.Count();
+				item.Identifier = "egggroups";
+				foreach (var entry in entries)
 				{
-					var item = new Transfer.ItemProgress();
-					var entries = EggGroupService.GetEggGroupsByGame(saveData.Game.GameId, Log);
-					item.Title = "Egg Groups";
-					item.Total = entries.Count();
-					item.Identifier = "egggroups";
-					foreach (var entry in entries)
-					{
-						if (eggGroup[entry.Index] > 0)
-							item.Completion++;
-					}
-					progress.Collections.Add(item);
-				}
+					if (eggGroup[entry.Index] > 0)
+						item.Completion++;
+				}/**/
+				progress.Collections.Add(item);
+			}
 
-				if (gameTools.Collections.Any(u => u.Identifier == "berries"))
+			if (gameTools.Collections.Any(u => u.Identifier == "berries"))
+			{
+				var item = new Transfer.ItemProgress();
+				var entries = BerryService_.GetBerriesByGame(saveData.Game.GameId, Log);
+				item.Title = "Berries";
+				item.Identifier = "berries";
+				item.Total = entries.Count();
+				foreach (var entry in entries)
 				{
-					var item = new Transfer.ItemProgress();
-					var entries = BerryService.GetBerriesByGame(saveData.Game.GameId, Log);
-					item.Title = "Berries";
-					item.Identifier = "berries";
-					item.Total = entries.Count();
-					foreach (var entry in entries)
-					{
-						if (berries[entry.Index] > 0)
-							item.Completion++;
-					}
-					progress.Collections.Add(item);
+					if (berries[entry.Index] > 0)
+						item.Completion++;
 				}
+				progress.Collections.Add(item);
+			}
 
-				if (gameTools.Collections.Any(u => u.Identifier == "dittos"))
+			if (gameTools.Collections.Any(u => u.Identifier == "dittos"))
+			{
+				var item = new Transfer.ItemProgress();
+				item.Title = "Ditto Natures";
+				item.Identifier = "dittos";
+				item.Total = 25;
+				for (int i = 0; i < 25; ++i )
 				{
-					var item = new Transfer.ItemProgress();
-					item.Title = "Ditto Natures";
-					item.Identifier = "dittos";
-					item.Total = 25;
-					for (int i = 0; i < 25; ++i )
-					{
-						if (dittos[i] > 0)
-							item.Completion++;
-					}
-					progress.Collections.Add(item);
+					if (dittos[i] > 0)
+						item.Completion++;
 				}
+				progress.Collections.Add(item);
+			}
 
-				if (gameTools.Collections.Any(u => u.Identifier == "tms"))
+			if (gameTools.Collections.Any(u => u.Identifier == "tms"))
+			{
+				var item = new Transfer.ItemProgress();
+				var entries = TmService_.GetTmsByGame(saveData.Game.GameId, Log);
+				item.Title = "Technical Machines";
+				item.Identifier = "tms";
+				item.Total = entries.Count();
+				foreach (var entry in entries)
 				{
-					var item = new Transfer.ItemProgress();
-					var entries = TmService.GetTmsByGame(saveData.Game.GameId, Log);
-					item.Title = "Technical Machines";
-					item.Identifier = "tms";
-					item.Total = entries.Count();
-					foreach (var entry in entries)
-					{
-						if (tm[entry.Index] > 0)
-							item.Completion++;
-					}
-					progress.Collections.Add(item);
+					if (tm[entry.Index] > 0)
+						item.Completion++;
 				}
+				progress.Collections.Add(item);
 			}
 			return progress;
 		}

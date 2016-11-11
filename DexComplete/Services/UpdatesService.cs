@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 
 namespace DexComplete.Services
 {
-	public static class UpdatesService
+	public class UpdatesService
 	{
-		public static Dictionary<DateTime, List<string>> GetRecentUpdates(SLLog Log)
+		private readonly Repository.Updates Updates_;
+		public UpdatesService(Repository.Updates Updates)
+		{
+			Updates_ = Updates;
+		}
+		public Dictionary<DateTime, List<string>> GetRecentUpdates(SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			var items = Repository.Updates.GetUpdates(Log);
+			var items = Updates_.GetUpdates(Log);
 			Dictionary<DateTime, List<String>> results = new Dictionary<DateTime, List<string>>();
 			foreach (var item in items)
 			{
@@ -29,11 +34,11 @@ namespace DexComplete.Services
 			return results;
 		}
 
-		public static IEnumerable<string> GetComingSoon(SLLog Log)
+		public IEnumerable<string> GetComingSoon(SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
 			List<string> results = new List<string>();
-			var items = Repository.Updates.GetComingSoon(Log);
+			var items = Updates_.GetComingSoon(Log);
 			foreach (var item in items)
 			{
 				results.Add(item.Text);

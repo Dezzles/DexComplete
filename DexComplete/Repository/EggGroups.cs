@@ -9,19 +9,21 @@ namespace DexComplete.Repository
 {
 	public class EggGroups
 	{
-		public static IEnumerable<Dto.IndexedItem> GetEggGroups(SLLog Log)
+		private readonly Data.PokedexModel Model_;
+		public EggGroups(Data.PokedexModel Model)
+		{
+			Model_ = Model;
+		}
+		public IEnumerable<Dto.IndexedItem> GetEggGroups(SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (Data.PokedexModel ctr = new Data.PokedexModel())
+			var res = new List<Dto.IndexedItem>();
+			var groups = Model_.EggGroups.OrderBy(e => e.Index);
+			foreach (var v in groups)
 			{
-				var res = new List<Dto.IndexedItem>();
-				var groups = ctr.EggGroups.OrderBy(e => e.Index);
-				foreach (var v in groups)
-				{
-					res.Add(new Dto.IndexedItem(v));
-				}
-				return res;
+				res.Add(new Dto.IndexedItem(v));
 			}
+			return res;
 		}
 	}
 }

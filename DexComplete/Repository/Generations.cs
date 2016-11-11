@@ -9,19 +9,21 @@ namespace DexComplete.Repository
 {
 	public class Generations
 	{
-		public static Dto.Generation GetGenerationById(string GenId, SLLog Log)
+		private readonly Data.PokedexModel Model_;
+		public Generations(Data.PokedexModel Model)
+		{
+			Model_ = Model;
+		}
+		public Dto.Generation GetGenerationById(string GenId, SLLog Log)
 		{
 			Log = Logging.GetLog(Log);
-			using (var ctr = new Data.PokedexModel())
+			var res = Model_.Generations.SingleOrDefault(u => u.GenerationId == GenId);
+			if (res == null)
 			{
-				var res = ctr.Generations.SingleOrDefault(u => u.GenerationId == GenId);
-				if (res == null)
-				{
-					Log.Error("GetGenerationById", new { GenId = GenId });
-				}
-
-				return new Dto.Generation(res);
+				Log.Error("GetGenerationById", new { GenId = GenId });
 			}
+
+			return new Dto.Generation(res);
 		}
 	}
 }

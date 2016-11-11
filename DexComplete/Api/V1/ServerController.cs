@@ -13,11 +13,20 @@ namespace DexComplete.Api.V1
 	[RoutePrefix("api/v1")]
 	public class ServerController : ApiController
 	{
+		private readonly Services.UpdatesService UpdatesService_;
+		private readonly Services.ServerService ServerService_;
+		public ServerController(Services.ServerService ServerService,
+			Services.UpdatesService UpdatesService)
+		{
+			this.ServerService_ = ServerService;
+			this.UpdatesService_ = UpdatesService;
+		}
+
 		[HttpGet, Route("server/ping")]
 		public Response Ping()
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
+			ServerService_.ThrowMaintenance(Log);
 			return Response.Succeed(true);
 		}
 
@@ -25,9 +34,9 @@ namespace DexComplete.Api.V1
 		public Response Updates()
 		{
 			var Log = Logging.GetLog();
-			Services.ServerService.ThrowMaintenance(Log);
-			var comingSoon = Services.UpdatesService.GetComingSoon(Log);
-			var updates = Services.UpdatesService.GetRecentUpdates(Log);
+			ServerService_.ThrowMaintenance(Log);
+			var comingSoon = UpdatesService_.GetComingSoon(Log);
+			var updates = UpdatesService_.GetRecentUpdates(Log);
 
 			return Response.Succeed(new SiteUpdates() { ComingSoon = comingSoon, Updates = updates });
 		}

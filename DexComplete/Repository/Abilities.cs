@@ -8,10 +8,15 @@ namespace DexComplete.Repository
 {
 	public class Abilities
 	{
-		public static IEnumerable<Dto.AbilitySet> GetAbilitiesByGame(string GameId, SLLog Log)
+		private readonly Games Games_;
+		public Abilities(Games Games)
+		{
+			this.Games_ = Games;
+		}
+		public IEnumerable<Dto.AbilitySet> GetAbilitiesByGame(string GameId, SLLog Log)
 		{
 			Log = Utilities.Logging.GetLog(Log);
-			var res = Games.GetGameById(GameId, Log).Generation.AbilitySets;
+			var res = Games_.GetGameById(GameId, Log).Generation.AbilitySets;
 			return res;
 		}
 
