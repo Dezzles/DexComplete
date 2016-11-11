@@ -13,7 +13,7 @@ namespace DexComplete.Repository
 		{
 			this.Games_ = Games;
 		}
-		public IEnumerable<Dto.AbilitySet> GetAbilitiesByGame(string GameId)
+		public virtual IEnumerable<Dto.AbilitySet> GetAbilitiesByGame(string GameId)
 		{
 			var res = Games_.GetGameById(GameId).Generation.AbilitySets;
 			return res;

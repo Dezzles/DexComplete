@@ -48,6 +48,10 @@
       <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SharpLogging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpLogging.1.0.0-CI00015\lib\net45\SharpLogging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -70,6 +74,7 @@
     <Compile Include="Constructs\Data\AbilitySet.cs" />
     <Compile Include="Constructs\Data\Berry.cs" />
     <Compile Include="Constructs\Data\Pokemon.cs" />
+    <Compile Include="Constructs\Logging.cs" />
     <Compile Include="Dto\AbilityEntry.cs" />
     <Compile Include="Dto\AbilitySet.cs" />
     <Compile Include="Dto\Berry.cs" />

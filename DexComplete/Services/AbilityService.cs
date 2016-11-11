@@ -21,7 +21,8 @@ namespace DexComplete.Services
 		{
 			
 			Log_.Info("GetAbilitiesByGame", new { gameId = gameId });
-			return Abilities_.GetAbilitiesByGame(gameId);
+			var result = Abilities_.GetAbilitiesByGame(gameId);
+			return result;
 		}
 	}
 }
