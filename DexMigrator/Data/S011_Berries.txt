@@ -1,68 +1,68 @@
-﻿Id|i	Name|s
-1	Cheri Berry
-2	Chesto Berry
-3	Pecha Berry
-4	Rawst Berry
-5	Aspear Berry
-6	Leppa Berry
-7	Oran Berry
-8	Persim Berry
-9	Lum Berry
-10	Sitrus Berry
-11	Figy Berry
-12	Wiki Berry
-13	Mago Berry
-14	Aguav Berry
-15	Iapapa Berry
-16	Razz Berry
-17	Bluk Berry
-18	Nanab Berry
-19	Wepear Berry
-20	Pinap Berry
-21	Pomeg Berry
-22	Kelpsy Berry
-23	Qualot Berry
-24	Hondew Berry
-25	Grepa Berry
-26	Tamato Berry
-27	Cornn Berry
-28	Magost Berry
-29	Rabuta Berry
-30	Nomel Berry
-31	Spelon Berry
-32	Pamtre Berry
-33	Watmel Berry
-34	Durin Berry
-35	Belue Berry
-36	Occa Berry
-37	Passho Berry
-38	Wacan Berry
-39	Rindo Berry
-40	Yache Berry
-41	Chople Berry
-42	Kebia Berry
-43	Shuca Berry
-44	Coba Berry
-45	Payapa Berry
-46	Tanga Berry
-47	Charti Berry
-48	Kasib Berry
-49	Haban Berry
-50	Colbur Berry
-51	Babiri Berry
-52	Chilan Berry
-53	Liechi Berry
-54	Ganlon Berry
-55	Salac Berry
-56	Petaya Berry
-57	Apicot Berry
-58	Lansat Berry
-59	Starf Berry
-60	Enigma Berry
-61	Micle Berry
-62	Custap Berry
-63	Jaboca Berry
-64	Rowap Berry
-65	Roseli Berry
-66	Kee Berry
-67	Maranga Berry
+﻿Index|i	Name|s	BerryId|s
+1	Cheri Berry	cheri_berry
+2	Chesto Berry	chesto_berry
+3	Pecha Berry	pecha_berry
+4	Rawst Berry	rawst_berry
+5	Aspear Berry	aspear_berry
+6	Leppa Berry	leppa_berry
+7	Oran Berry	oran_berry
+8	Persim Berry	persim_berry
+9	Lum Berry	lum_berry
+10	Sitrus Berry	sitrus_berry
+11	Figy Berry	figy_berry
+12	Wiki Berry	wiki_berry
+13	Mago Berry	mago_berry
+14	Aguav Berry	aguav_berry
+15	Iapapa Berry	iapapa_berry
+16	Razz Berry	razz_berry
+17	Bluk Berry	bluk_berry
+18	Nanab Berry	nanab_berry
+19	Wepear Berry	wepear_berry
+20	Pinap Berry	pinap_berry
+21	Pomeg Berry	pomeg_berry
+22	Kelpsy Berry	kelpsy_berry
+23	Qualot Berry	qualot_berry
+24	Hondew Berry	hondew_berry
+25	Grepa Berry	grepa_berry
+26	Tamato Berry	tamato_berry
+27	Cornn Berry	cornn_berry
+28	Magost Berry	magost_berry
+29	Rabuta Berry	rabuta_berry
+30	Nomel Berry	nomel_berry
+31	Spelon Berry	spelon_berry
+32	Pamtre Berry	pamtre_berry
+33	Watmel Berry	watmel_berry
+34	Durin Berry	durin_berry
+35	Belue Berry	belue_berry
+36	Occa Berry	occa_berry
+37	Passho Berry	passho_berry
+38	Wacan Berry	wacan_berry
+39	Rindo Berry	rindo_berry
+40	Yache Berry	yache_berry
+41	Chople Berry	chople_berry
+42	Kebia Berry	kebia_berry
+43	Shuca Berry	shuca_berry
+44	Coba Berry	coba_berry
+45	Payapa Berry	payapa_berry
+46	Tanga Berry	tanga_berry
+47	Charti Berry	charti_berry
+48	Kasib Berry	kasib_berry
+49	Haban Berry	haban_berry
+50	Colbur Berry	colbur_berry
+51	Babiri Berry	babiri_berry
+52	Chilan Berry	chilan_berry
+53	Liechi Berry	liechi_berry
+54	Ganlon Berry	ganlon_berry
+55	Salac Berry	salac_berry
+56	Petaya Berry	petaya_berry
+57	Apicot Berry	apicot_berry
+58	Lansat Berry	lansat_berry
+59	Starf Berry	starf_berry
+60	Enigma Berry	enigma_berry
+61	Micle Berry	micle_berry
+62	Custap Berry	custap_berry
+63	Jaboca Berry	jaboca_berry
+64	Rowap Berry	rowap_berry
+65	Roseli Berry	roseli_berry
+66	Kee Berry	kee_berry
+67	Maranga Berry	maranga_berry

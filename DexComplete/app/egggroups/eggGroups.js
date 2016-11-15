@@ -38,7 +38,7 @@ angular.module('dexComplete.eggGroups', ['ngRoute'])
         return $scope.data[v];
     }
     $scope.updateValue = function (v) {
-        if (user.Username != RouteData.currentViewUser())
+        if (user.Username.toLowerCase() != RouteData.currentViewUser().toLowerCase())
             return;
         var val = $scope.getValue(v);
         val++;

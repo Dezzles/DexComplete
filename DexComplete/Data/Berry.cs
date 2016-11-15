@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace DexComplete.Data
 {
-	public class Berry
+	public class Berry : NamedIndex
 	{
-		public int Id { get; set; }
-		public string Name { get; set; }
-
+		public string BerryId { get; set; }
 		public virtual ICollection<BerryMap> BerryMaps { get; set; }
 	}
 }

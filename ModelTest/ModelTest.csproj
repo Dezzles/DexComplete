@@ -66,13 +66,12 @@
     <Compile Include="..\DexComplete\Data\Game.cs" />
     <Compile Include="..\DexComplete\Data\Generation.cs" />
     <Compile Include="..\DexComplete\Data\Move.cs" />
-	<Compile Include="..\DexComplete\Data\Pokedex.cs" />
+    <Compile Include="..\DexComplete\Data\Pokedex.cs" />
     <Compile Include="..\DexComplete\Data\PokedexModel.cs" />
     <Compile Include="..\DexComplete\Data\Pokemon.cs" />
     <Compile Include="..\DexComplete\Data\Save.cs" />
     <Compile Include="..\DexComplete\Data\ServerSetting.cs" />
     <Compile Include="..\DexComplete\Data\TM.cs" />
-    <Compile Include="..\DexComplete\Data\TMSet.cs" />
     <Compile Include="..\DexComplete\Data\Token.cs" />
     <Compile Include="..\DexComplete\Data\Update.cs" />
     <Compile Include="..\DexComplete\Data\User.cs" />

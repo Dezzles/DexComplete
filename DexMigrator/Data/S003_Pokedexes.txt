@@ -1,25 +1,27 @@
-﻿Id|i	Title|s	Identifier|s
-0	National	national1
-1	National	national2
-2	Kanto	kanto
-3	National	national3
-4	Hoenn	hoenn
-5	Kanto	kanto
-6	National	national4
-7	Sinnoh	sinnoh
-8	Johto	johto
-9	National	national5
-10	Unova	unova
-11	New Unova	newunova
-12	National	national6
-13	Central Kalos	centralkalos
-14	Coastal Kalos	coastalkalos
-15	Mountain Kalos	mountainkalos
-16	Hoenn	hoenn
-17	Gen I	gen1
-18	Gen II	gen2
-19	Gen III	gen3
-20	Gen IV	gen4
-21	Gen V	gen5
-22	Gen VI	gen6
-23	Sinnoh	newsinnoh
+﻿Title|s	PokedexId|s
+National	national1
+National	national2
+Kanto	kanto1
+National	national3
+Hoenn	hoenn3
+Kanto	kanto3
+National	national4
+Sinnoh	sinnoh4
+Johto	johto4
+National	national5
+Unova	unova5
+New Unova	newunova5
+National	national6
+Central Kalos	centralkalos6
+Coastal Kalos	coastalkalos6
+Mountain Kalos	mountainkalos6
+Hoenn	hoenn6
+Gen I	gen1
+Gen II	gen2
+Gen III	gen3
+Gen IV	gen4
+Gen V	gen5
+Gen VI	gen6
+Sinnoh	newsinnoh4
+National	national7
+Gen VII	gen7

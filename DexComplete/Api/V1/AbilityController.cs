@@ -11,11 +11,20 @@ namespace DexComplete.Api.V1
 	[RoutePrefix("api/v1")]
 	public class AbilityController : ApiController
 	{
+		private readonly Services.AbilityService AbilityService_;
+		private readonly Services.ServerService ServerService_;
+		public AbilityController(Services.ServerService ServerService,
+			Services.AbilityService AbilityService)
+		{
+			this.ServerService_ = ServerService;
+			this.AbilityService_ = AbilityService;
+		}
+
 		[HttpGet, Route("ability/{gameId}")]
 		public Response GetAbilitiesList(string gameId)
 		{
-			View.ServerRepository.ThrowMaintenance();
-			var result = View.AbilityRepository.GetAbilitiesByGame(gameId);
+			ServerService_.ThrowMaintenance();
+			var result = AbilityService_.GetAbilitiesByGame(gameId);
 			return Response.Succeed(result);
 		}
 

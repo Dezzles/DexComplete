@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DexComplete.Data
 {
-	public partial class EggGroups
+	public partial class EggGroups : NamedIndex
 	{
-		public int Id { get; set; }
-		public int Index { get; set; }
-		public string Name { get; set; }
+		public string EggGroupId { get; set; }
 	}
 }

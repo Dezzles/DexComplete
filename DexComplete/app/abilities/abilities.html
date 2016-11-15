@@ -7,8 +7,8 @@
         <div class="pokeBall{{ getValue(set.AbilityId) }}" ng-click="updateValue(set.AbilityId)"></div>
     </div>
     <div class="abilityBallText">
-        <div ng-repeat="mon in set.Pokemon">
-            #{{ mon.Id }} {{ mon.Name }} - {{ mon.Ability }} {{ mon.Note }}
+        <div ng-repeat="mon in set.Entries">
+            #{{ mon.Index }} {{ mon.Pokemon }} - {{ mon.Ability }} {{ mon.Note }}
         </div>
     </div>
 </div> 

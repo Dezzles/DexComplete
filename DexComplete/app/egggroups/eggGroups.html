@@ -1,5 +1,5 @@
 ﻿<h1>{{ ::GameName }} - Egg Group Collection</h1>
 <div sort-box></div>
-<div ng-repeat="set in Data" class="pokemonWrapper" ng-if="(sortMode() == 0) || ((sortMode() == 1) && (getValue(set.Id) > 0)) || ((sortMode() == 2) &&(getValue(set.Id) == 0))">
-    <div class="pokeBall{{ getValue(set.Id) }}" ng-click="updateValue(set.Id)"></div><div class="pokemonText">{{ ::set.Name }}</div>
+<div ng-repeat="set in Data" class="pokemonWrapper" ng-if="(sortMode() == 0) || ((sortMode() == 1) && (getValue(set.Index) > 0)) || ((sortMode() == 2) &&(getValue(set.Index) == 0))">
+    <div class="pokeBall{{ getValue(set.Index) }}" ng-click="updateValue(set.Index)"></div><div class="pokemonText">{{ ::set.Text }}</div>
 </div>

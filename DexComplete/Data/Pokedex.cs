@@ -10,22 +10,17 @@ namespace DexComplete.Data
     {
         public Pokedex()
         {
-            Entries = new HashSet<Entry>();
+            Entries = new HashSet<PokedexEntry>();
             Games = new HashSet<Game>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public string PokedexId { get; set; }
 
         [Required]
         [StringLength(255)]
         public string Title { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        public string Identifier { get; set; }
-
-        public virtual ICollection<Entry> Entries { get; set; }
+        public virtual ICollection<PokedexEntry> Entries { get; set; }
 
         public virtual ICollection<Game> Games { get; set; }
     }

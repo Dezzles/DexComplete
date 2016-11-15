@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DexMigrator.Migrations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -54,6 +55,20 @@ namespace DexMigrator.UpdateMigrations
 		public override void Down()
 		{
 			throw new NotImplementedException();
+		}
+	}
+
+	[FluentMigrator.Migration(201610301627)]
+	public class Update_SunMoon_0001 : FluentMigrator.Migration
+	{
+		public override void Down()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override void Up()
+		{
+
 		}
 	}
 }

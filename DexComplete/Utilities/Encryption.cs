@@ -30,7 +30,7 @@ namespace DexComplete.Utilities
 
 			// Return the hexadecimal string. 
 			return sBuilder.ToString();
-		}
+		}/**/
 
 		public static string GenerateText(int Length)
 		{

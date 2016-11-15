@@ -8,7 +8,7 @@ namespace DexComplete.Data
 {
 	public partial class Ability
 	{
-		public int Id { get; set; }
+		public string AbilityId { get; set; }
 		public string Name { get; set; }
 
 		public virtual ICollection<AbilityEntry> Entries { get; set; }

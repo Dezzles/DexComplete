@@ -12,9 +12,10 @@ namespace DexComplete.Data
 		public int Index { get; set; }
 		public string Note { get; set; }
 
-		public int PokemonId { get; set; }
-		public int AbilityId { get; set; }
-		public int AbilitySetId { get; set; }
+		public string PokemonId { get; set; }
+		public string AbilityId { get; set; }
+		public string AbilitySetId { get; set; }
+		public string GenerationId { get; internal set; }
 
 		public virtual Pokemon Pokemon { get; set; }
 		public virtual Ability Ability { get; set; }

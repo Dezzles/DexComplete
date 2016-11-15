@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpLogging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace DexComplete.Utilities
 	{
 		public static string GetTemplate(string templateName)
 		{
+			
 			var assembly = Assembly.GetExecutingAssembly();
 			var textStreamReader = new StreamReader(assembly.GetManifestResourceStream("DexComplete.Templates." + templateName));
 			return textStreamReader.ReadToEnd();

@@ -14,19 +14,17 @@ namespace DexComplete.Data
             Pokedexes = new HashSet<Pokedex>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
-
         [Required]
         [StringLength(255)]
         public string Title { get; set; }
 
-        public int GenerationId { get; set; }
-        [Required]
-        [StringLength(255)]
-        public string Identifier { get; set; }
+        public string GenerationId { get; set; }
 
-		public int? TMSetId { get; set; }
+		[Required]
+        [StringLength(255)]
+        public string GameId { get; set; }
+
+		public string TMSetId { get; set; }
 
         public virtual Generation Generation { get; set; }
 
@@ -36,6 +34,6 @@ namespace DexComplete.Data
 
 		public virtual ICollection<Collection> Collections { get; set; }
 
-		public virtual TMSet TMSet { get; set; }
+		//public virtual TMSet TMSet { get; set; }
     }
 }

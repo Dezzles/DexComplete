@@ -1,0 +1,6 @@
+﻿Title|s	CollectionId|s	Type|i
+Hidden Abilities	abilities	0
+Egg Groups	egggroups	0
+Berries	berries	0
+Dittos	dittos	0
+TMs	tms	0

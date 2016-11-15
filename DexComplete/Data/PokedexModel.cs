@@ -13,13 +13,13 @@ namespace DexComplete.Data
 			Database.SetInitializer<PokedexModel>(null);
 		}
 
-		public PokedexModel(string settingName)
+		/*public PokedexModel(string settingName)
 			: base("name=" + settingName)
 		{
 			Database.SetInitializer<PokedexModel>(null);
-		}
+		}/**/
 
-		public virtual DbSet<Entry> Entries { get; set; }
+		public virtual DbSet<PokedexEntry> Entries { get; set; }
 		public virtual DbSet<Game> Games { get; set; }
 		public virtual DbSet<Generation> Generations { get; set; }
 		public virtual DbSet<Pokedex> Pokedexes { get; set; }
@@ -35,11 +35,11 @@ namespace DexComplete.Data
 		public virtual DbSet<EggGroups> EggGroups { get; set; }
 		public virtual DbSet<Move> Moves { get; set; }
 		public virtual DbSet<TM> TMs { get; set; }
-		public virtual DbSet<TMSet> TMSet { get; set; }
 		public virtual DbSet<ServerSetting> ServerSettings { get; set; }
 		public virtual DbSet<Update> Updates { get; set; }
 		public virtual DbSet<ComingSoon> ComingSoon { get; set; }
 
+		public virtual DbSet<Collection> Collections { get; set; }
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<ComingSoon>()
@@ -80,15 +80,22 @@ namespace DexComplete.Data
 				.WithRequired(e => e.User)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<AbilityEntry>()
-				.HasRequired<Ability>(e => e.Ability)
-				.WithMany(f => f.Entries)
-				.HasForeignKey(e => e.AbilityId);
+			modelBuilder.Entity<AbilitySet>()
+				.HasKey(t => new { t.PokemonId, t.GenerationId })
+				.HasRequired<Generation>(e => e.Generation)
+				.WithMany(v => v.AbilitySets)
+				.HasForeignKey(e => e.GenerationId);
 
 			modelBuilder.Entity<Ability>()
 				.HasMany<AbilityEntry>(e => e.Entries)
 				.WithRequired(v => v.Ability)
 				.HasForeignKey(v => v.AbilityId);
+
+			modelBuilder.Entity<AbilityEntry>()
+				.HasRequired<Ability>(e => e.Ability)
+				.WithMany(f => f.Entries)
+				.HasForeignKey(e => e.AbilityId);
+
 
 			modelBuilder.Entity<AbilityEntry>()
 				.HasRequired<Pokemon>(e => e.Pokemon)
@@ -98,12 +105,7 @@ namespace DexComplete.Data
 			modelBuilder.Entity<AbilityEntry>()
 				.HasRequired<AbilitySet>(e => e.Set)
 				.WithMany(f => f.Entries)
-				.HasForeignKey(e => e.AbilitySetId);
-
-			modelBuilder.Entity<AbilitySet>()
-				.HasRequired<Generation>(e => e.Generation)
-				.WithMany(v => v.AbilitySets)
-				.HasForeignKey(e => e.GenerationId);
+				.HasForeignKey(e => new { e.AbilitySetId, e.GenerationId }); /**/
 
 			modelBuilder.Entity<BerryMap>()
 				.HasRequired<Berry>(e => e.Berry)
@@ -111,6 +113,7 @@ namespace DexComplete.Data
 				.HasForeignKey(e => e.BerryId);
 
 			modelBuilder.Entity<BerryMap>()
+				.HasKey( e => new { e.BerryId, e.GenerationId })
 				.HasRequired<Generation>(e => e.Generation)
 				.WithMany(v => v.Berries)
 				.HasForeignKey(e => e.GenerationId);
@@ -120,20 +123,19 @@ namespace DexComplete.Data
 				.WithMany(u => u.Games)
 				.Map(m => m.ToTable("GameCollectionMap").MapLeftKey("GameId").MapRightKey("CollectionId"));
 
-			modelBuilder.Entity<Game>()
+			/*modelBuilder.Entity<Game>()
 				.HasOptional<TMSet>(e => e.TMSet)
 				.WithMany(u => u.Games)
-				.HasForeignKey(v => v.TMSetId);
+				.HasForeignKey(v => v.TMSetId);/**/
 
-			modelBuilder.Entity<TMSet>()
-				.HasMany(e => e.TMs)
-				.WithRequired(u => u.TMSet)
-				.HasForeignKey(u => u.TmSetId);
+			modelBuilder.Entity<EggGroups>()
+				.HasKey(e => e.EggGroupId);
 
 			modelBuilder.Entity<TM>()
 				.HasRequired<Move>(e => e.Move)
 				.WithMany(u => u.Tms)
 				.HasForeignKey(e => e.MoveId);
+				
 		}
 	}
 }

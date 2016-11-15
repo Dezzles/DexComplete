@@ -13,13 +13,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DexComplete</RootNamespace>
     <AssemblyName>DexComplete</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>44301</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,17 +40,49 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BCrypt.Net">
+    <Reference Include="BCrypt.Net, Version=0.1.5073.29922, Culture=neutral, PublicKeyToken=6bcd409ee6bc9292, processorArchitecture=MSIL">
       <HintPath>..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.2-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpLogging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpLogging.1.0.0-CI00015\lib\net45\SharpLogging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -58,30 +91,22 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\abilities\abilities.html" />
@@ -289,8 +314,8 @@
     <Content Include="js\sparkline-chart.js" />
     <Content Include="js\sparklines.js" />
     <Content Include="js\xcharts.min.js" />
-    <Content Include="LICENSE.txt" />
     <EmbeddedResource Include="Templates\passwordReset.html" />
+    <Content Include="LICENSE.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -314,7 +339,8 @@
     <Compile Include="Data\ComingSoon.cs" />
     <Compile Include="Data\DatabaseTypes.cs" />
     <Compile Include="Data\EggGroups.cs" />
-    <Compile Include="Data\Entry.cs" />
+    <Compile Include="Data\NamedIndex.cs" />
+    <Compile Include="Data\PokedexEntry.cs" />
     <Compile Include="Data\Game.cs" />
     <Compile Include="Data\Generation.cs" />
     <Compile Include="Data\Move.cs" />
@@ -324,33 +350,56 @@
     <Compile Include="Data\Save.cs" />
     <Compile Include="Data\ServerSetting.cs" />
     <Compile Include="Data\TM.cs" />
-    <Compile Include="Data\TMSet.cs" />
     <Compile Include="Data\Token.cs" />
     <Compile Include="Data\Update.cs" />
     <Compile Include="Data\User.cs" />
+    <Compile Include="Dto\AbilityEntry.cs" />
+    <Compile Include="Dto\AbilitySet.cs" />
+    <Compile Include="Dto\Berry.cs" />
+    <Compile Include="Dto\Collection.cs" />
+    <Compile Include="Dto\Game.cs" />
+    <Compile Include="Dto\Generation.cs" />
+    <Compile Include="Dto\IndexedItem.cs" />
+    <Compile Include="Dto\Pokedex.cs" />
+    <Compile Include="Dto\PokedexEntry.cs" />
+    <Compile Include="Dto\Save.cs" />
+    <Compile Include="Dto\TM.cs" />
+    <Compile Include="Dto\Token.cs" />
+    <Compile Include="Dto\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Pokedex.cs" />
     <Compile Include="Models\Pokemon.cs" />
+    <Compile Include="Repository\Abilities.cs" />
+    <Compile Include="Repository\Berries.cs" />
+    <Compile Include="Repository\EggGroups.cs" />
+    <Compile Include="Repository\Games.cs" />
+    <Compile Include="Repository\Generations.cs" />
+    <Compile Include="Repository\Pokedexes.cs" />
+    <Compile Include="Repository\TMs.cs" />
+    <Compile Include="Repository\Updates.cs" />
+    <Compile Include="Repository\Users.cs" />
     <Compile Include="Transfer\Request.cs" />
     <Compile Include="Transfer\Response.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transfer\TransferTypes.cs" />
-    <Compile Include="Utilities\Email.cs" />
+    <Compile Include="Repository\EmailService.cs" />
     <Compile Include="Utilities\Encryption.cs" />
+    <Compile Include="Utilities\Logging.cs" />
     <Compile Include="Utilities\Templates.cs" />
-    <Compile Include="View\AbilityRepository.cs" />
-    <Compile Include="View\BerryRepository.cs" />
-    <Compile Include="View\EggGroupRepository.cs" />
-    <Compile Include="View\GameRepository.cs" />
-    <Compile Include="View\PokedexRepository.cs" />
-    <Compile Include="View\ServerRepository.cs" />
-    <Compile Include="View\TmRepository.cs" />
-    <Compile Include="View\UpdatesRepository.cs" />
-    <Compile Include="View\UserRepository.cs" />
+    <Compile Include="Services\AbilityService.cs" />
+    <Compile Include="Services\BerryService.cs" />
+    <Compile Include="Services\EggGroupService.cs" />
+    <Compile Include="Services\GameService.cs" />
+    <Compile Include="Services\PokedexService.cs" />
+    <Compile Include="Services\ServerService.cs" />
+    <Compile Include="Services\TmService.cs" />
+    <Compile Include="Services\UpdatesService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Utilities\UnityResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -1,4 +1,6 @@
 ﻿using DexComplete.Transfer;
+using DexComplete.Utilities;
+using SharpLogging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,29 +15,20 @@ namespace DexComplete.Api.V1
 	[RoutePrefix("api/v1")]
 	public class PokedexController : ApiController
 	{
-		[HttpGet, Route("pokedex/all")]
-		public Response GetAllPokedexes()
+		private readonly Services.ServerService ServerService_;
+		private readonly Services.PokedexService PokedexService_;
+		public PokedexController(Services.ServerService ServerService,
+			Services.PokedexService PokedexService)
 		{
-			View.ServerRepository.ThrowMaintenance();
-			Data.PokedexModel ctr = new Data.PokedexModel();
-			StringBuilder sb = new StringBuilder();
-			foreach (var game in ctr.Games)
-			{
-				sb.AppendLine(game.Title);
-				foreach (var dex in game.Pokedexes)
-				{
-					sb.AppendFormat("\t- {0}\n", dex.Title);
-				}
-				sb.AppendLine();
-			}
-			return Response.Succeed(sb.ToString());
+			this.ServerService_ = ServerService;
+			this.PokedexService_ = PokedexService;
 		}
 
-		[HttpGet, Route("pokedex/{gameId}/{pokedexId}")]
-		public Response GetPokedexByGameAndId(string gameId, string pokedexId)
+		[HttpGet, Route("pokedex/{pokedexId}")]
+		public Response GetPokedexByGameAndId(string pokedexId)
 		{
-			View.ServerRepository.ThrowMaintenance();
-			return Response.Succeed(View.PokedexRepository.GetPokedex(gameId, pokedexId));
+			ServerService_.ThrowMaintenance();
+			return Response.Succeed(PokedexService_.GetPokedex(pokedexId));
 		}
 	}
 }
