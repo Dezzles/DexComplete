@@ -24,7 +24,8 @@ namespace DexComplete.Utilities
 			var str = /*HttpContext.Current.Server.MapPath/**/("D:/logs/dexcomplete.log");
 			Logger = new SharpLogging.SharpLogging(new List<SLConfiguration>() {
 				new SharpLogging.Outputs.SLDebug(),
-				new SharpLogging.Outputs.SLFile(str) { LogLevel = SharpLogging.LoggingLevel.SILLY } });
+				//new SharpLogging.Outputs.SLFile(str) { LogLevel = SharpLogging.LoggingLevel.SILLY } 
+			});
 			Logger.Log(LoggingLevel.ERROR, "Test", Guid.NewGuid(), new { test = "test" });
 		}
 

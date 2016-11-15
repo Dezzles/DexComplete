@@ -76,7 +76,7 @@ namespace DexMigrator.Migrations
 				.WithColumn("GameId").AsString()
 				.WithColumn("PokedexId").AsString();
 
-			Create.PrimaryKey("PK_GamePokedex")
+			/*Create.PrimaryKey("PK_GamePokedex")
 				.OnTable("GamePokedex").Columns(new string[] { "GameId", "PokedexId" });
 
 			Create.ForeignKey("FK_UserToken")
@@ -139,21 +139,7 @@ namespace DexMigrator.Migrations
 				.OnTable("PokedexEntries")
 				.OnColumn("PokemonId");
 
-
-			// Load Generations Data
-			List<Dictionary<string, object>> generation = Utilities.GetEntries("DexMigrator.Data.S001_Generations.txt");
-			List<Dictionary<string, object>> games = Utilities.GetEntries("DexMigrator.Data.S002_Games.txt");
-			List<Dictionary<string, object>> pokedexes = Utilities.GetEntries("DexMigrator.Data.S003_Pokedexes.txt");
-			List<Dictionary<string, object>> pokedexgame = Utilities.GetEntries("DexMigrator.Data.S004_PokedexGame.txt");
-			List<Dictionary<string, object>> pokemon = Utilities.GetEntries("DexMigrator.Data.S005_Pokemon.txt");
-			List<Dictionary<string, object>> pokedexentries = Utilities.GetEntries("DexMigrator.Data.S006_PokedexEntries.txt");
-
-			MigrationTools.InputTable(this, "Generations", generation);
-			MigrationTools.InputTable(this, "Games", games);
-			MigrationTools.InputTable(this, "Pokedexes", pokedexes);
-			MigrationTools.InputTable(this, "GamePokedex", pokedexgame);
-			MigrationTools.InputTable(this, "Pokemon", pokemon);
-			MigrationTools.InputTable(this, "PokedexEntries", pokedexentries);
+			Console.WriteLine("Indexes Created"); /**/
 		}
 
 		public override void Down()
@@ -163,6 +149,126 @@ namespace DexMigrator.Migrations
 
 	}
 
+	[FluentMigrator.Migration(201508200001)]
+	public class M0002_AddGenerations : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> generation = Utilities.GetEntries("DexMigrator.Data.S001_Generations.txt");
+			MigrationTools.InputTable(this, "Generations", generation);
+		}
+		public override void Down(){}
+	}
+	[FluentMigrator.Migration(201508200002)]
+	public class M0002_AddGames : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> games = Utilities.GetEntries("DexMigrator.Data.S002_Games.txt");
+			MigrationTools.InputTable(this, "Games", games);
+		}
+		public override void Down() { }
+	}
+	[FluentMigrator.Migration(201508200003)]
+	public class M0002_AddPokedexes : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> pokedexes = Utilities.GetEntries("DexMigrator.Data.S003_Pokedexes.txt");
+			MigrationTools.InputTable(this, "Pokedexes", pokedexes);
+		}
+		public override void Down() { }
+	}
+	[FluentMigrator.Migration(201508200004)]
+	public class M0002_AddGamePokedex : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> pokedexgame = Utilities.GetEntries("DexMigrator.Data.S004_PokedexGame.txt");
+			MigrationTools.InputTable(this, "GamePokedex", pokedexgame);
+		}
+		public override void Down() { }
+	}
+	[FluentMigrator.Migration(201508200005)]
+	public class M0002_AddPokemon : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> pokemon = Utilities.GetEntries("DexMigrator.Data.S005_Pokemon.txt");
+			MigrationTools.InputTable(this, "Pokemon", pokemon);
+		}
+		public override void Down() { }
+	}
+	[FluentMigrator.Migration(201508200006)]
+	public class M0002_AddPokedexEntries_A : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> pokedexentries = Utilities.GetEntries("DexMigrator.Data.S006_PokedexEntries_A.txt");
+			MigrationTools.InputTable(this, "PokedexEntries", pokedexentries);
+		}
+		public override void Down() { }
+	}
+	[FluentMigrator.Migration(201508200007)]
+	public class M0002_AddPokedexEntries_B : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> pokedexentries = Utilities.GetEntries("DexMigrator.Data.S006_PokedexEntries_B.txt");
+			MigrationTools.InputTable(this, "PokedexEntries", pokedexentries);
+		}
+		public override void Down() { }
+	}
+	[FluentMigrator.Migration(201508200008)]
+	public class M0002_AddPokedexEntries_C : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> pokedexentries = Utilities.GetEntries("DexMigrator.Data.S006_PokedexEntries_C.txt");
+			MigrationTools.InputTable(this, "PokedexEntries", pokedexentries);
+		}
+		public override void Down() { }
+	}
+	[FluentMigrator.Migration(201508200009)]
+	public class M0002_AddPokedexEntries_D : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> pokedexentries = Utilities.GetEntries("DexMigrator.Data.S006_PokedexEntries_D.txt");
+			MigrationTools.InputTable(this, "PokedexEntries", pokedexentries);
+		}
+		public override void Down() { }
+	}
+	[FluentMigrator.Migration(201508200010)]
+	public class M0002_AddPokedexEntries_E : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> pokedexentries = Utilities.GetEntries("DexMigrator.Data.S006_PokedexEntries_E.txt");
+			MigrationTools.InputTable(this, "PokedexEntries", pokedexentries);
+		}
+		public override void Down() { }
+	}
+	[FluentMigrator.Migration(201508200011)]
+	public class M0002_AddPokedexEntries_F : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> pokedexentries = Utilities.GetEntries("DexMigrator.Data.S006_PokedexEntries_F.txt");
+			MigrationTools.InputTable(this, "PokedexEntries", pokedexentries);
+		}
+		public override void Down() { }
+	}
+	[FluentMigrator.Migration(201508200012)]
+	public class M0002_AddPokedexEntries_G : FluentMigrator.Migration
+	{
+		public override void Up()
+		{
+			List<Dictionary<string, object>> pokedexentries = Utilities.GetEntries("DexMigrator.Data.S006_PokedexEntries_G.txt");
+			MigrationTools.InputTable(this, "PokedexEntries", pokedexentries);
+		}
+		public override void Down() { }
+	}
 	[FluentMigrator.Migration(201509021714)]
 	public class M0003_AddAbilities : FluentMigrator.Migration
 	{

@@ -92,6 +92,27 @@
   <ItemGroup>
     <EmbeddedResource Include="Data\S016_GameCollections.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\S006_PokedexEntries_G.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\S006_PokedexEntries_A.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\S006_PokedexEntries_B.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\S006_PokedexEntries_C.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\S006_PokedexEntries_D.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\S006_PokedexEntries_E.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\S006_PokedexEntries_F.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
