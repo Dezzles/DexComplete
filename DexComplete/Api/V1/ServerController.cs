@@ -36,7 +36,9 @@ namespace DexComplete.Api.V1
 			var comingSoon = UpdatesService_.GetComingSoon();
 			var updates = UpdatesService_.GetRecentUpdates();
 
-			return Response.Succeed(new SiteUpdates() { ComingSoon = comingSoon, Updates = updates });
+			return Response.Succeed(new SiteUpdates() {
+				ComingSoon = comingSoon, Updates = updates }, 
+				false);
 		}
 
 	}

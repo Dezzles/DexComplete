@@ -30,7 +30,7 @@ namespace DexComplete.Api.V1
 			Log_.Info("GetEggGroups", new { gameId });
 			ServerService_.ThrowMaintenance();
 			var result = Service_.GetEggGroupsByGame(gameId);
-			return Response.Succeed(result);
+			return Response.Succeed(result, false);
 		}
 
 	}

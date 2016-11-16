@@ -6,6 +6,8 @@ var dexApp = angular.module('dexComplete', [
   'ngCookies',
   'RouteData',
   'DexCompleteService',
+  'HttpCommunicate',
+  'Cache',
   'dexComplete.gameItem',
   'dexComplete.dashboard',
   'dexComplete.login',

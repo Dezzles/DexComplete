@@ -11,40 +11,45 @@ namespace DexComplete.Transfer
 		public ResponseCode Status { get; set; }
 		public string Message { get; set; }
 		public object Value { get; set; }
-		public static Response Succeed()
-		{
-			return new Response()
-			{
-				Message = "",
-				Status = ResponseCode.Success
-			};
-		}
-		public static Response Succeed(object obj)
+		public bool Volatile { get; set; } = true;
+		public static Response Succeed(bool Volatile = true)
 		{
 			return new Response()
 			{
 				Message = "",
 				Status = ResponseCode.Success,
-				Value = obj
+				Volatile = Volatile
 			};
 		}
-		public static Response Error(string Error)
+		public static Response Succeed(object obj, bool Volatile = true)
+		{
+			return new Response()
+			{
+				Message = "",
+				Status = ResponseCode.Success,
+				Value = obj,
+				Volatile = Volatile
+			};
+		}
+		public static Response Error(string Error, bool Volatile = true)
 		{
 			return new Response()
 			{
 				Status = ResponseCode.Error,
 				Message = Error,
-				Value = null
+				Value = null,
+				Volatile = Volatile
 			};
 		}
 
-		public static Response Maintenance(string Message)
+		public static Response Maintenance(string Message, bool Volatile = true)
 		{
 			return new Response()
 			{
 				Status = ResponseCode.Maintenance,
 				Message = Message,
-				Value = null
+				Value = null,
+				Volatile = Volatile
 			};
 		}
 
@@ -52,7 +57,8 @@ namespace DexComplete.Transfer
 		{
 			return new Response()
 			{
-				Status = ResponseCode.NotLoggedIn
+				Status = ResponseCode.NotLoggedIn,
+				Volatile = true
 			};
 		}
 

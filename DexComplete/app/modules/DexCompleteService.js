@@ -1,9 +1,17 @@
 ﻿angular.module('DexCompleteService', [
         'ngCookies'
 ])
-    .factory('DexComplete', ['$cookieStore', '$http', function ($cookieStore, $http) {
+    .factory('DexComplete', ['$cookieStore', '$http', 'HttpCommunicate', function ($cookieStore, $http, Http) {
         var address = '';
         var _user = {};
+		var compl = function(r, c) {
+			if (r.Status == 0) {
+				c({ Result: 0, Value: r.Value });
+			}
+			else {
+				c({ Result: r.Status, Message: r.Message });
+			}
+		}
 
         return {
             Users: {
@@ -231,159 +239,112 @@
 
             Games: {
                 GetGameList: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/games/list'
-                    };
-
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
+					Http.get('/api/v1/games/list', null, function(results) {
+						if (results.Status == 0) {
+							onComplete({ Result: 0, Value: results.Value });
+						}
+						else {
+							onComplete({ Result: results.Status, Message: results.Message });
+						}
+					});
                 },
 
                 GetGamePokedexes: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/game/' + params + '/dex'
-                    };
-
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
+					Http.get('/api/v1/game/' + params + '/dex', null, function(results) {
+						if (results.Status == 0) {
+							onComplete({ Result: 0, Value: results.Value });
+						}
+						else {
+							onComplete({ Result: results.Status, Message: results.Message });
+						}
+					});
                 },
 
                 GetPokedexEntries: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/game/' + params.GameName + '/dex/' + params.DexName
-                    };
-
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
+					Http.get('/api/v1/game/' + params + '/dex/' + params.DexName, null, function(results) {
+						if (results.Status == 0) {
+							onComplete({ Result: 0, Value: results.Value });
+						}
+						else {
+							onComplete({ Result: results.Status, Message: results.Message });
+						}
+					});
                 },
 
                 GetGameTools: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/game/' + params.GameName + '/allTools'
-                    };
-
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
+					Http.get('/api/v1/game/' + params.GameName + '/allTools', null, function(results) {
+						if (results.Status == 0) {
+							onComplete({ Result: 0, Value: results.Value });
+						}
+						else {
+							onComplete({ Result: results.Status, Message: results.Message });
+						}
+					});
                 }
-
-
             },
 
             Pokedexes: {
                 GetPokedexEntries: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/pokedex/' + params.DexId
-                    };
-
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
+					Http.get('/api/v1/pokedex/' + params.DexId, null, function(results) {
+						if (results.Status == 0) {
+							onComplete({ Result: 0, Value: results.Value });
+						}
+						else {
+							onComplete({ Result: results.Status, Message: results.Message });
+						}
+					});
                 }
             },
 
             Abilities: {
                 GetAbilityList: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/ability/' + params.GameId
-                    };
-
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
+					Http.get('/api/v1/ability/' + params.GameId, null, function(results) {
+						if (results.Status == 0) {
+							onComplete({ Result: 0, Value: results.Value });
+						}
+						else {
+							onComplete({ Result: results.Status, Message: results.Message });
+						}
+					});
                 }
             },
 
             Berries: {
                 GetBerryList: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/berries/' + params.GameId
-                    };
-
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
+					Http.get('/api/v1/berries/' + params.GameId, null, function(results) {
+						if (results.Status == 0) {
+							onComplete({ Result: 0, Value: results.Value });
+						}
+						else {
+							onComplete({ Result: results.Status, Message: results.Message });
+						}
+					});
                 }
             },
 
             EggGroups: {
                 GetEggGroupList: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/eggGroups/' + params.GameId
-                    };
-
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
+					Http.get('/api/v1/eggGroups/' + params.GameId, null, function(results) {
+						if (results.Status == 0) {
+							onComplete({ Result: 0, Value: results.Value });
+						}
+						else {
+							onComplete({ Result: results.Status, Message: results.Message });
+						}
+					});
                 }
             },
 
             TMs: {
                 GetTMList: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/tms/' + params.GameId
-                    };
-
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
+					Http.get('/api/v1/tms/' + params.GameId, null, function(results) {
+						if (results.Status == 0) {
+							onComplete({ Result: 0, Value: results.Value });
+						}
+						else {
+							onComplete({ Result: results.Status, Message: results.Message });
+						}
+					});
                 }
             },
             
@@ -406,20 +367,14 @@
 
                 },
                 GetUpdates: function (params, onComplete) {
-                    var req = {
-                        method: 'GET',
-                        url: address + '/api/v1/server/updates'
-                    };
-
-                    $http(req).then(function (summary) {
-                        if (summary.data.Status == 0) {
-                            onComplete({ Result: 0, Value: summary.data.Value });
-                        }
-                        else {
-                            onComplete({ Result: 1, Message: summary.data.Message });
-                        }
-                    });
-
+					Http.get('/api/v1/server/updates', null, function(results) {
+						if (results.Status == 0) {
+							onComplete({ Result: 0, Value: results.Value });
+						}
+						else {
+							onComplete({ Result: results.Status, Message: results.Message });
+						}
+					});
                 }
             }
         };

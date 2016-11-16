@@ -28,7 +28,7 @@ namespace DexComplete.Api.V1
 		public Response GetPokedexByGameAndId(string pokedexId)
 		{
 			ServerService_.ThrowMaintenance();
-			return Response.Succeed(PokedexService_.GetPokedex(pokedexId));
+			return Response.Succeed(PokedexService_.GetPokedex(pokedexId), false);
 		}
 	}
 }

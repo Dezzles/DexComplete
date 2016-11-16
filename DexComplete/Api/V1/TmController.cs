@@ -27,7 +27,7 @@ namespace DexComplete.Api.V1
 		{
 			ServerService_.ThrowMaintenance();
 			var result = TmService_.GetTmsByGame(gameId);
-			return Response.Succeed(result);
+			return Response.Succeed(result, false);
 		}
 
 	}

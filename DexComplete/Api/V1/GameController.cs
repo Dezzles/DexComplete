@@ -31,7 +31,7 @@ namespace DexComplete.Api.V1
 		{
 			ServerService_.ThrowMaintenance();
 			var games = GameService_.GetGames();
-			return Response.Succeed(games);
+			return Response.Succeed(games, false);
 		}
 
 		[HttpGet, Route("game/{gameName}/dex")]
@@ -39,7 +39,7 @@ namespace DexComplete.Api.V1
 		{
 			ServerService_.ThrowMaintenance();
 			var dexList = PokedexService_.GetPokedexesByGame(gameName);
-			return Response.Succeed(dexList);
+			return Response.Succeed(dexList, false);
 		}
 
 		[HttpGet, Route("game/{gameName}/dex/{dexName}")]
@@ -47,7 +47,7 @@ namespace DexComplete.Api.V1
 		{
 			ServerService_.ThrowMaintenance();
 			var games = PokedexService_.GetPokedex(dexName);
-			return Response.Succeed(games);
+			return Response.Succeed(games, false);
 		}
 
 		[HttpGet, Route("game/{gameName}/allTools")]
@@ -55,7 +55,7 @@ namespace DexComplete.Api.V1
 		{
 			ServerService_.ThrowMaintenance();
 			var result = GameService_.GetGameTools(gameName);
-			return Response.Succeed(result);
+			return Response.Succeed(result, false);
 		}
 
 	}
