@@ -17,9 +17,11 @@ namespace DexComplete.Api.V1
 	{
 		private readonly Services.ServerService ServerService_;
 		private readonly Services.PokedexService PokedexService_;
+		private readonly Cache Cache_;
 		public PokedexController(Services.ServerService ServerService,
-			Services.PokedexService PokedexService)
+			Services.PokedexService PokedexService, Cache Cache)
 		{
+			Cache_ = Cache;
 			this.ServerService_ = ServerService;
 			this.PokedexService_ = PokedexService;
 		}
@@ -28,7 +30,8 @@ namespace DexComplete.Api.V1
 		public Response GetPokedexByGameAndId(string pokedexId)
 		{
 			ServerService_.ThrowMaintenance();
-			return Response.Succeed(PokedexService_.GetPokedex(pokedexId), false);
+			var result = Cache_.GetResult(PokedexService_.GetPokedex, pokedexId);
+			return Response.Succeed(result, false);
 		}
 	}
 }

@@ -20,11 +20,14 @@ namespace DexComplete.Services
 		private readonly BerryService BerryService_;
 		private readonly TmService TmService_;
 		private readonly EmailService EmailService_;
+		private readonly Cache Cache_;
 		public UserService(Data.PokedexModel Model, Services.ServerService ServerService,
 			GameService GameService, PokedexService PokedexService,
 			AbilityService AbilityService, EggGroupService EggGroupService,
-			BerryService BerryService, TmService TmService, EmailService EmailService)
+			BerryService BerryService, TmService TmService, EmailService EmailService,
+			Cache Cache)
 		{
+			this.Cache_ = Cache;
 			this.Model_ = Model;
 			this.ServerService_ = ServerService;
 			this.GameService_ = GameService;
@@ -278,8 +281,8 @@ namespace DexComplete.Services
 			{
 				throw new Code.Exception404();
 			}
-			var gameTools = GameService_.GetGameTools(saveData.Game.GameId);
-			var dexes = PokedexService_.GetPokedexesByGame(saveData.Game.GameId);
+			var gameTools = Cache_.GetResult(GameService_.GetGameTools, saveData.Game.GameId);
+			var dexes = Cache_.GetResult(PokedexService_.GetPokedexesByGame, saveData.Game.GameId);
 			int[] dex = ConvertData(saveData.Code, 2);
 			int[] tm = ConvertData(saveData.TMData);
 			int[] abilities = ConvertData(saveData.AbilityData, 2);
@@ -290,7 +293,7 @@ namespace DexComplete.Services
 			foreach (var d in dexes)
 			{
 				var item = new Transfer.ItemProgress();
-				var entries = PokedexService_.GetPokedex(d.PokedexId);
+				var entries = Cache_.GetResult(PokedexService_.GetPokedex, d.PokedexId);
 				item.Title = entries.Title;
 				item.Identifier = d.PokedexId;
 				item.Total = entries.Pokemon.Count();
@@ -305,7 +308,8 @@ namespace DexComplete.Services
 			if (gameTools.Collections.Any(u => u.Identifier == "abilities"))
 			{
 				var item = new Transfer.ItemProgress();
-				var entries = AbilityService_.GetAbilitiesByGame(saveData.Game.GameId);
+				var entries = Cache_.GetResult(AbilityService_.GetAbilitiesByGame, 
+					saveData.Game.GameId);
 				item.Title = "Hidden Abilities";
 				item.Total = entries.Count();
 				item.Identifier = "abilities";
@@ -320,7 +324,7 @@ namespace DexComplete.Services
 			if (gameTools.Collections.Any(u => u.Identifier == "eggGroups"))
 			{
 				var item = new Transfer.ItemProgress();
-				var entries = EggGroupService_.GetEggGroupsByGame(saveData.Game.GameId);
+				var entries = Cache_.GetResult(EggGroupService_.GetEggGroupsByGame, saveData.Game.GameId);
 				item.Title = "Egg Groups";
 				item.Total = entries.Count();
 				item.Identifier = "egggroups";
@@ -335,7 +339,7 @@ namespace DexComplete.Services
 			if (gameTools.Collections.Any(u => u.Identifier == "berries"))
 			{
 				var item = new Transfer.ItemProgress();
-				var entries = BerryService_.GetBerriesByGame(saveData.Game.GameId);
+				var entries = Cache_.GetResult(BerryService_.GetBerriesByGame, saveData.Game.GameId);
 				item.Title = "Berries";
 				item.Identifier = "berries";
 				item.Total = entries.Count();
@@ -364,7 +368,7 @@ namespace DexComplete.Services
 			if (gameTools.Collections.Any(u => u.Identifier == "tms"))
 			{
 				var item = new Transfer.ItemProgress();
-				var entries = TmService_.GetTmsByGame(saveData.Game.GameId);
+				var entries = Cache_.GetResult(TmService_.GetTmsByGame, saveData.Game.GameId);
 				item.Title = "Technical Machines";
 				item.Identifier = "tms";
 				item.Total = entries.Count();

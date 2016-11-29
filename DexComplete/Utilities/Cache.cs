@@ -10,6 +10,7 @@ namespace DexComplete.Utilities
 {
 	public class Cache
 	{
+		Dictionary<string, object> Data = new Dictionary<string, object>();
 		public string GetPath(string fn, params object[] p)
 		{
 			StringBuilder sb = new StringBuilder();
@@ -28,21 +29,76 @@ namespace DexComplete.Utilities
 		{
 			return "";
 		}
+		internal Out GetResult<Out, In1, In2, In3>(Func<In1, In2, In3, Out> F, 
+			In1 P1, In2 P2, In3 P3)
+		{
+			string t = Utilities.Helpers.GetName(F) + Utilities.Helpers.GetParameters(P1, P2, P3);
+			if (Data.ContainsKey(t))
+			{
+				return (Out)Data[t];
+			}
+			Out u = F.Invoke(P1, P2, P3);
+			try
+			{
+				Data.Add(t, u);
+			}
+			catch (ArgumentException)
+			{
+			}
+			return u;
+		}
+
 		internal Out GetResult<Out, In1, In2>(Func<In1, In2, Out> F, In1 P1, In2 P2)
 		{
-
-			return F.Invoke(P1, P2);
+			string t = Utilities.Helpers.GetName(F) + Utilities.Helpers.GetParameters(P1, P2);
+			if (Data.ContainsKey(t))
+			{
+				return (Out)Data[t];
+			}
+			Out u = F.Invoke(P1, P2);
+			try
+			{
+				Data.Add(t, u);
+			}
+			catch (ArgumentException)
+			{
+			}
+			return u;
 		}
 
 		internal Out GetResult<Out, In1>(Func<In1, Out> F, In1 P1)
 		{
-			string t = F.ToString();
-			return F.Invoke(P1);
-			//throw new NotImplementedException();
+			string t = Utilities.Helpers.GetName(F) + Utilities.Helpers.GetParameters(P1);
+			if (Data.ContainsKey(t))
+			{
+				return (Out)Data[t];
+			}
+			Out u = F.Invoke(P1);
+			try
+			{ 
+				Data.Add(t, u);
+			}
+			catch (ArgumentException)
+			{
+			}
+			return u;
 		}
 		internal Out GetResult<Out>(Func<Out> F)
 		{
-			throw new NotImplementedException();
+			string t = Utilities.Helpers.GetName(F) + Utilities.Helpers.GetParameters();
+			if (Data.ContainsKey(t))
+			{
+				return (Out)Data[t];
+			}
+			Out u = F.Invoke();
+			try
+			{
+				Data.Add(t, u);
+			}
+			catch (ArgumentException)
+			{
+			}
+			return u;
 		}
 	}
 }

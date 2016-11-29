@@ -11,7 +11,7 @@ namespace DexComplete.Services
 	public class PokedexService
 	{
 		private readonly Repository.Pokedexes Pokedexes_;
-		public PokedexService(Repository.Pokedexes Pokedexes)
+		public PokedexService(Repository.Pokedexes Pokedexes, Cache Cache)
 		{
 			Pokedexes_ = Pokedexes;
 		}

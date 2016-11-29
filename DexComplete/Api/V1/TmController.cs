@@ -15,10 +15,12 @@ namespace DexComplete.Api.V1
 	{
 		private readonly Services.ServerService ServerService_;
 		private readonly Services.TmService TmService_;
+		private readonly Cache Cache_;
 		public TmController(Services.ServerService ServerService,
-			Services.TmService TmService)
+			Services.TmService TmService, Cache Cache)
 		{
 			this.TmService_ = TmService;
+			this.Cache_ = Cache;
 			this.ServerService_ = ServerService;
 		}
 
@@ -26,9 +28,8 @@ namespace DexComplete.Api.V1
 		public Response GetTmList(string gameId)
 		{
 			ServerService_.ThrowMaintenance();
-			string name = Helpers.GetCurrentMethod(gameId);
-			Cache c = new Cache();
-			var result = c.GetResult(TmService_.GetTmsByGame, gameId);
+			//string name = Helpers.GetCurrentMethod(gameId);
+			var result = Cache_.GetResult(TmService_.GetTmsByGame, gameId);
 			return Response.Succeed(result, false);
 		}
 

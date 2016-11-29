@@ -15,18 +15,20 @@ namespace DexComplete.Api.V1
 	{
 		private readonly Services.ServerService ServerService_;
 		private readonly Services.BerryService BerryService_;
+		private readonly Cache Cache_;
 		public BerryController(Services.ServerService ServerService, 
-			Services.BerryService BerryService)
+			Services.BerryService BerryService, Cache Cache)
 		{
 			this.ServerService_ = ServerService;
 			this.BerryService_ = BerryService;
+			this.Cache_ = Cache;
 		}
 
 		[HttpGet, Route("berries/{gameId}")]
 		public Response GetBerryList(string gameId)
 		{
 			ServerService_.ThrowMaintenance();
-			var result = BerryService_.GetBerriesByGame(gameId);
+			var result = Cache_.GetResult(BerryService_.GetBerriesByGame, gameId);
 			return Response.Succeed(result, false);
 		}
 

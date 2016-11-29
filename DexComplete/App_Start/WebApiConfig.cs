@@ -13,7 +13,13 @@ namespace DexComplete
         {
 			SharpLogging.SLLogInstance.InstancedLog = Utilities.Logging.Logger;
 
+
+
 			var container = new UnityContainer();
+			var con = new ContainerControlledLifetimeManager();
+			con.SetValue(new Utilities.Cache());
+			container.RegisterType<Utilities.Cache, Utilities.Cache>(con);
+
 			container.RegisterType<Repository.Abilities, Repository.Abilities>(new HierarchicalLifetimeManager());
 			container.RegisterType<Repository.Berries, Repository.Berries>(new HierarchicalLifetimeManager());
 			container.RegisterType<Repository.EggGroups, Repository.EggGroups>(new HierarchicalLifetimeManager());

@@ -17,9 +17,11 @@ namespace DexComplete.Api.V1
 	{
 		private readonly Services.ServerService ServerService_;
 		private readonly Services.UserService UserService_;
+		private readonly Cache Cache_;
 		public UserController(Services.ServerService ServerService,
-			Services.UserService UserService)
+			Services.UserService UserService, Cache Cache)
 		{
+			Cache_ = Cache;
 			this.ServerService_ = ServerService;
 			this.UserService_ = UserService;
 		}

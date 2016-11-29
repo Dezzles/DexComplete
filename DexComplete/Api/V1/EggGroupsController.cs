@@ -16,11 +16,13 @@ namespace DexComplete.Api.V1
 		private readonly Services.EggGroupService Service_;
 		private readonly Services.ServerService ServerService_;
 		private readonly SLLog Log_;
+		private readonly Cache Cache_;
 		public EggGroupsController(Services.ServerService ServerService, Services.EggGroupService Service,
-			SLLog Log )
+			SLLog Log, Cache Cache )
 		{
 			Log_ = Log;
 			Service_ = Service;
+			Cache_ = Cache;
 			this.ServerService_ = ServerService;
 		}
 
@@ -29,7 +31,7 @@ namespace DexComplete.Api.V1
 		{
 			Log_.Info("GetEggGroups", new { gameId });
 			ServerService_.ThrowMaintenance();
-			var result = Service_.GetEggGroupsByGame(gameId);
+			var result = Cache_.GetResult(Service_.GetEggGroupsByGame, gameId);
 			return Response.Succeed(result, false);
 		}
 

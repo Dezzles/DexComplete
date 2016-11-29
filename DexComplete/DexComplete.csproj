@@ -355,6 +355,7 @@
     <Compile Include="Data\Token.cs" />
     <Compile Include="Data\Update.cs" />
     <Compile Include="Data\User.cs" />
+    <Compile Include="Data\VersionInfo.cs" />
     <Compile Include="Dto\AbilityEntry.cs" />
     <Compile Include="Dto\AbilitySet.cs" />
     <Compile Include="Dto\Berry.cs" />
