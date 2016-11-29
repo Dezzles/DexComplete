@@ -7,7 +7,7 @@
 
 		public PokedexEntry(Data.PokedexEntry Entry)
 		{
-			this.Index = Entry.Index;
+			this.Index = Entry.Pokemon.Index;
 			this.Name = Entry.Pokemon.Name;
 		}
 	}

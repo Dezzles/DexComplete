@@ -11,5 +11,6 @@ namespace DexComplete.Models
 		public string Name { get; set; }
 		public string Id { get; set; }
 		public int Index { get; set; }
+		public int Count { get; set; }
 	}
 }

@@ -47,13 +47,14 @@ namespace DexComplete.Services
 				Regional = dex.Regional
 			};
 			var entries = new List<Models.PokemonModel>();
-			var query2 = dex.Entries.OrderBy(e => e.Index);
-			foreach (var entry in query2)
+			int i = 1;
+			foreach (var entry in dex.Entries)
 			{
 				entries.Add(new Models.PokemonModel()
 					{
 						Index = entry.Index,
-						Name = entry.Name
+						Name = entry.Name, 
+						Count = i++
 					});
 			}
 			ret.Pokemon = entries;
