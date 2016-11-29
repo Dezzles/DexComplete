@@ -29,6 +29,18 @@
             </li>
         </ul>
     </li>
+    <li class="sub-menu" ng-if="regional.length > 0">
+        <a href="javascript:;" class="" onclick="hideMenu('regMenu')">
+            <i class="icon_document_alt"></i>
+            <span>Regional</span>
+            <span class="menu-arrow arrow_carrot-right" id="regMenu-Arrow"></span>
+        </a>
+        <ul class="sub-menu" id="regMenu">
+            <li ng-repeat="dex in regional" style="display: none;">
+                <a class="sidebar-menu" href="#/user/{{ User }}/game/{{ GameName }}/pokedex/{{ dex.PokedexId }}" onclick="hideAll()">{{ dex.Title }}</a>
+            </li>
+        </ul>
+    </li>
     <li class="sub-menu" ng-if="data.Collections.length > 0">
         <a href="javascript:;" class="sidebar-menu" onclick="hideMenu('collectionMenu')">
             <i class="icon_desktop"></i>

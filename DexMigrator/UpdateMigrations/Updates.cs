@@ -71,4 +71,66 @@ namespace DexMigrator.UpdateMigrations
 
 		}
 	}
+
+	[FluentMigrator.Migration(201611290836)]
+	public class Update_SunMoon_0002 : FluentMigrator.Migration
+	{
+		public override void Down()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override void Up()
+		{
+			UpdateUtil.AddUpdate(this, "Added Sun and Moon Pokedex data and initial collections");
+
+			var pokemon = Utilities.GetEntries("DexMigrator.Data.SM017_Pokemon.txt");
+			MigrationTools.InputTable(this, "Pokemon", pokemon);
+
+			var pokedexes = Utilities.GetEntries("DexMigrator.Data.SM018_Pokedex.txt");
+			MigrationTools.InputTable(this, "Pokedexes", pokedexes);
+
+			var pokedexGame = Utilities.GetEntries("DexMigrator.Data.SM019_PokedexGame.txt");
+			MigrationTools.InputTable(this, "GamePokedex", pokedexGame);
+
+			var entries = Utilities.GetEntries("DexMigrator.Data.SM020_PokedexEntries.txt");
+			MigrationTools.InputTable(this, "PokedexEntries", entries);
+
+			var collections = Utilities.GetEntries("DexMigrator.Data.SM021_Collections.txt");
+			MigrationTools.InputTable(this, "GameCollectionMap", collections);
+		}
+	}
+
+	[FluentMigrator.Migration(201611291943)]
+	public class Update_SunMoon_0003 : FluentMigrator.Migration
+	{
+		public override void Down()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override void Up()
+		{
+			Alter.Table("Pokedexes")
+				.AddColumn("Regional").AsBoolean().SetExistingRowsTo(false);
+
+			Update.Table("Pokedexes")
+				.Set(new { Regional = true })
+				.Where(new { PokedexId = "akala7" });
+			Update.Table("Pokedexes")
+				.Set(new { Regional = true })
+				.Where(new { PokedexId = "alolan7" });
+			Update.Table("Pokedexes")
+				.Set(new { Regional = true })
+				.Where(new { PokedexId = "melemele7" });
+			Update.Table("Pokedexes")
+				.Set(new { Regional = true })
+				.Where(new { PokedexId = "poni7" });
+			Update.Table("Pokedexes")
+				.Set(new { Regional = true })
+				.Where(new { PokedexId = "ulaula7" });
+
+
+		}
+	}
 }

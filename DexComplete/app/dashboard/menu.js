@@ -39,7 +39,16 @@ angular.module('dexComplete.menu', ['ngRoute'])
             DexComplete.Games.GetGameTools(
                 { GameName: RouteData.gameIdentifier() }, function (Result) {
                     if (Result.Result == 0) {
-                        $scope.dexes = Result.Value.Pokedex;
+						$scope.dexes = [];
+						$scope.regional = []
+						for (var u = 0; u < Result.Value.Pokedex.length; ++u) {
+							if (Result.Value.Pokedex[u].Regional) {
+								$scope.regional.push( Result.Value.Pokedex[u] );
+							}
+							else {
+								$scope.dexes.push( Result.Value.Pokedex[u] );
+							}
+						}
                         $scope.data = Result.Value;
                     }
                 })

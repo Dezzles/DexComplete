@@ -20,6 +20,8 @@ namespace DexComplete.Data
         [StringLength(255)]
         public string Title { get; set; }
 
+		public bool Regional { get; set; }
+
         public virtual ICollection<PokedexEntry> Entries { get; set; }
 
         public virtual ICollection<Game> Games { get; set; }

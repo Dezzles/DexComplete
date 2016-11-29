@@ -27,7 +27,8 @@ namespace DexComplete.Services
 				dexes.Add(new Models.PokedexModel()
 					{
 						PokedexId = q.PokedexId,
-						Title = q.Title
+						Title = q.Title,
+						Regional = q.Regional
 					});
 			}
 			return dexes;
@@ -42,7 +43,8 @@ namespace DexComplete.Services
 			var ret = new Models.PokedexModel()
 			{
 				PokedexId = dex.PokedexId,
-				Title = dex.Title
+				Title = dex.Title,
+				Regional = dex.Regional
 			};
 			var entries = new List<Models.PokemonModel>();
 			var query2 = dex.Entries.OrderBy(e => e.Index);

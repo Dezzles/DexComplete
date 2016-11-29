@@ -1,0 +1,11 @@
+﻿PokedexId|s	GameId|s
+alolan7	sun
+melemele7	sun
+akala7	sun
+ulaula7	sun
+poni7	sun
+alolan7	moon
+melemele7	moon
+akala7	moon
+ulaula7	moon
+poni7	moon

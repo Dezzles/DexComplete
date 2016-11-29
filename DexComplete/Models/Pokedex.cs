@@ -10,6 +10,7 @@ namespace DexComplete.Models
 	{
 		public string Title { get; set; }
 		public string PokedexId { get; set; }
+		public bool Regional { get; set; }
 		public IEnumerable<PokemonModel> Pokemon { get; set; }
 	}
 }

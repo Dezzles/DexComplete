@@ -1,0 +1,5 @@
+﻿CollectionId|s	GameId|s
+egggroups	sun
+egggroups	moon
+dittos	sun
+dittos	moon

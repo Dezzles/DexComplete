@@ -1,0 +1,6 @@
+﻿Title|s	PokedexId|s
+Alolan	alolan7
+Melemele	melemele7
+Akala	akala7
+Ula'ula	ulaula7
+Poni	poni7

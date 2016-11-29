@@ -62,7 +62,7 @@
             }
         }
         function hideMenu(menu) {
-            var items = ['dexMenu', 'collectionMenu', 'toolMenu'];
+            var items = ['dexMenu', 'regMenu', 'collectionMenu', 'toolMenu'];
             var ele = document.getElementById(menu);
             var andVis = !ele.notHidden;
             for (var u in items) {
@@ -71,7 +71,7 @@
             }
         }
         function hideAll() {
-            var items = ['dexMenu', 'collectionMenu', 'toolMenu'];
+            var items = ['dexMenu', 'regMenu', 'collectionMenu', 'toolMenu'];
             for (var u in items) {
                 hideMiniMenu(items[u], false);
             }

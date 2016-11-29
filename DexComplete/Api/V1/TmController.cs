@@ -26,7 +26,9 @@ namespace DexComplete.Api.V1
 		public Response GetTmList(string gameId)
 		{
 			ServerService_.ThrowMaintenance();
-			var result = TmService_.GetTmsByGame(gameId);
+			string name = Helpers.GetCurrentMethod(gameId);
+			Cache c = new Cache();
+			var result = c.GetResult(TmService_.GetTmsByGame, gameId);
 			return Response.Succeed(result, false);
 		}
 
